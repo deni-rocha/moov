@@ -30,8 +30,8 @@ const Login = (): JSX.Element => {
             <p className="font-bold">Senha de acesso</p>
             <InputPassword />
           </label>
-          <Link to="home">
-            <button className="rounded-xl h-16 w-full bg-[#4C4C4C] font-bold">
+          <Link to="painel">
+            <button className="rounded-xl h-16 w-full bg-[#4C4C4C] font-bold hover:brightness-125">
               Fazer Login
             </button>
           </Link>
