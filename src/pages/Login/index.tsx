@@ -1,5 +1,7 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Input from '../../components/Input'
+import InputPassword from '../../components/InputPassword'
 import Logo from '../../components/Logo'
 
 const Login = (): JSX.Element => {
@@ -26,15 +28,13 @@ const Login = (): JSX.Element => {
           </label>
           <label className="flex flex-col h-24">
             <p className="font-bold">Senha de acesso</p>
-            <Input
-              type="password"
-              name="password"
-              placeholder="****************"
-            />
+            <InputPassword />
           </label>
-          <button className="rounded-xl h-16 bg-[#4C4C4C] font-bold">
-            Fazer login
-          </button>
+          <Link to="painel">
+            <button className="rounded-xl h-16 w-full bg-[#4C4C4C] font-bold hover:brightness-125">
+              Fazer Login
+            </button>
+          </Link>
         </section>
       </div>
     </section>

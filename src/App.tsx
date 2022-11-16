@@ -1,11 +1,11 @@
 import React from 'react'
 import '../src/index.css'
-import Login from './pages/Login'
+import Rotas from './routes'
 
 const App = (): JSX.Element => {
   return (
     <div className="App">
-      <Login />
+      <Rotas />
     </div>
   )
 }
