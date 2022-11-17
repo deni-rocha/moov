@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-import iconToggleClose from '../../assets/painel/icon-toggle-close.png'
-import iconLogo from '../../assets/painel/icon-logo.png'
-import perfil from '../../assets/painel/perfil.png'
-import iconControlTrip from '../../assets/painel/icon-control-trip.png'
-import iconOnline from '../../assets/painel/icon-online.png'
-import iconEdit from '../../assets/painel/icon-edit.png'
-import iconReport from '../../assets/painel/icon-report.png'
-import iconHelp from '../../assets/painel/icon-help.png'
-import iconLogout from '../../assets/painel/icon-logout.png'
+import iconToggleClose from '../../assets/painel/sidebar/icon-toggle-close.png'
+import iconLogo from '../../assets/painel/sidebar/icon-logo.png'
+import perfil from '../../assets/painel/sidebar/perfil.png'
+import iconControlTrip from '../../assets/painel/sidebar/icon-control-trip.png'
+import iconOnline from '../../assets/painel/sidebar/icon-online.png'
+import iconEdit from '../../assets/painel/sidebar/icon-edit.png'
+import iconReport from '../../assets/painel/sidebar/icon-report.png'
+import iconHelp from '../../assets/painel/sidebar/icon-help.png'
+import iconLogout from '../../assets/painel/sidebar/icon-logout.png'
 import { Link } from 'react-router-dom'
 
 const Painel = (): JSX.Element => {
@@ -111,8 +111,11 @@ const Painel = (): JSX.Element => {
             </Link>
           </div>
         </section>
-        <section className="border-2 grow p-2 flex flex-col border-red-500">
-          <div className="bg-orange-600 w-full h-1/5">top</div>
+        <section className="grow p-2 flex flex-col">
+          <div className="bg-orange-600 w-full h-1/5">
+            <h2>Controle de viagens</h2>
+            <h1>Painel de controle de viagens</h1>
+          </div>
           <div className="bg-cyan-500 w-full h-4/5">bottom</div>
         </section>
       </div>
