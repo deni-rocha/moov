@@ -11,6 +11,8 @@ module.exports = {
         ...defaultTheme.screens
       },
       colors: {
+        primary: "#E5E5E5",
+        secondary: "#535353",
         ...defaultTheme.colors
       }
     }

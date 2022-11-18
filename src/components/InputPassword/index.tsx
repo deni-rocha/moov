@@ -1,5 +1,5 @@
 import Input from '../Input'
-import icon from '../../assets/Input/icon/icon.svg'
+import icon from '../../assets/input/icon/icon.svg'
 import React, { useState } from 'react'
 
 const InputPassword = (): JSX.Element => {
