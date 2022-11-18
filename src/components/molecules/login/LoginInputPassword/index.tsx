@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Input from '../../../atoms/login/Input'
+import LoginInput from '../../../atoms/login/LoginInput'
 import icon from '../../../../assets/input/icon/icon.svg'
 
 interface Props {
@@ -12,7 +12,7 @@ const InputLoginPassword = ({ placeholder, name }: Props): JSX.Element => {
 
   return (
     <div className="w-full relative flex">
-      <Input
+      <LoginInput
         type={showPassword ? 'text' : 'password'}
         name={name}
         placeholder={placeholder}

@@ -1,6 +1,6 @@
 import React, { InputHTMLAttributes } from 'react'
 
-const Input = ({
+const LoginInput = ({
   ...rest
 }: InputHTMLAttributes<HTMLInputElement>): JSX.Element => {
   return (
@@ -11,4 +11,4 @@ const Input = ({
   )
 }
 
-export default Input
+export default LoginInput
