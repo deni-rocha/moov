@@ -92,7 +92,9 @@ const Sidebar = (): JSX.Element => {
           </div>
         </button>
       </div>
-      <div className="w-full flex flex-col items-center gap-8">
+
+      {/* bottom */}
+      <div className="w-3/6 flex flex-col items-center gap-8 border-2 ml-10">
         <button className="w-28 h-4 flex gap-3 items-center rounded-md text-secondary">
           <div className="w-4 h-4">
             <img src={iconHelp} alt="icon-help" />
@@ -100,7 +102,7 @@ const Sidebar = (): JSX.Element => {
           <p>Me ajuda!</p>
         </button>
         <Link to="/">
-          <button className="w-28 h-7 flex gap-3 items-center rounded-md text-secondary">
+          <button className="w-28 h-7 gap-3 flex items-cente rounded-md text-secondary">
             <div className="w-4 h-4">
               <img src={iconLogout} alt="icon-loggout" />
             </div>
