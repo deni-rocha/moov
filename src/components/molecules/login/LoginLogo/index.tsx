@@ -1,7 +1,7 @@
 import React from 'react'
-import logo from '../../assets/login/logo.svg'
+import logo from '../../../../assets/login/logo.svg'
 
-const Logo = (): JSX.Element => {
+const LogoLogin = (): JSX.Element => {
   return (
     <div className="relative w-20 h-20">
       <div className="absolute">
@@ -10,4 +10,4 @@ const Logo = (): JSX.Element => {
     </div>
   )
 }
-export default Logo
+export default LogoLogin
