@@ -20,7 +20,7 @@ const Painel = (): JSX.Element => {
   return (
     <div className="bg-primary text-secondary flex justify-center">
       <div className="w-11/12 max-w-[1181px] py-4 flex">
-        <section className="w-4/12 max-w-[258px] flex gap-20 flex-col">
+        <section className="w-4/12 max-w-[258px] flex gap-20 flex-col border-r-2 border-r-zinc-300">
           <div className="w-full flex flex-col items-center gap-8">
             <div className="w-7 h-7 self-start">
               <img src={iconToggleClose} alt="close" />
@@ -112,11 +112,23 @@ const Painel = (): JSX.Element => {
           </div>
         </section>
         <section className="grow p-2 flex flex-col">
-          <div className="bg-orange-600 w-full h-1/5">
-            <h2>Controle de viagens</h2>
-            <h1>Painel de controle de viagens</h1>
+          <div className="w-full h-28 border-b-2 flex flex-col justify-center border-b-zinc-300 pl-10">
+            <h2 className="text-sm">Controle de viagens</h2>
+            <h1 className="text-lg font-bold text-black">
+              Painel de controle de viagens
+            </h1>
           </div>
-          <div className="bg-cyan-500 w-full h-4/5">bottom</div>
+          <div className=" w-full pl-10">
+            <div className="max-w-[1105px] border-2 items-center gap-80 border-red-600 h-[83px] flex">
+              <div className="w-7/12 border-2 border-green-700">
+                <p>Pesquisar</p>
+                <input type="text" name="search" className="w-full" />
+              </div>
+              <button className="bg-secondary text-white w-44 h-9 rounded-md">
+                pesquisar
+              </button>
+            </div>
+          </div>
         </section>
       </div>
     </div>
