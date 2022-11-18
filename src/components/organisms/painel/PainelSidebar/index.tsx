@@ -47,7 +47,7 @@ const Sidebar = (): JSX.Element => {
           }`}
         >
           <div className="w-4 h-4">
-            <img src={iconControlTrip} alt="report" />
+            <img src={iconControlTrip} alt="trip-icon" />
           </div>
           <p>Controle de viagens</p>
         </button>
@@ -61,7 +61,7 @@ const Sidebar = (): JSX.Element => {
         >
           <div className="ml-4 flex items-center gap-2">
             <div className="w-4 h-4">
-              <img src={iconEdit} alt="report" />
+              <img src={iconEdit} alt="edit-icon" />
             </div>
             <p>Cadastráveis</p>
           </div>
@@ -86,7 +86,7 @@ const Sidebar = (): JSX.Element => {
         >
           <div className="flex items-center gap-2 w-24">
             <div className="w-4 h-4">
-              <img src={iconReport} alt="report" />
+              <img src={iconReport} alt="icon-report" />
             </div>
             <p>Relatórios</p>
           </div>
@@ -95,14 +95,14 @@ const Sidebar = (): JSX.Element => {
       <div className="w-full flex flex-col items-center gap-8">
         <button className="w-28 h-4 flex gap-3 items-center rounded-md text-secondary">
           <div className="w-4 h-4">
-            <img src={iconHelp} alt="report" />
+            <img src={iconHelp} alt="icon-help" />
           </div>
           <p>Me ajuda!</p>
         </button>
         <Link to="/">
           <button className="w-28 h-7 flex gap-3 items-center rounded-md text-secondary">
             <div className="w-4 h-4">
-              <img src={iconLogout} alt="report" />
+              <img src={iconLogout} alt="icon-loggout" />
             </div>
             <p>Sair!</p>
           </button>
