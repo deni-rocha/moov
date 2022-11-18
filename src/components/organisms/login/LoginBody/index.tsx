@@ -1,7 +1,7 @@
 import React from 'react'
-import LoginBodyFooter from '../../molecules/login/LoginBodyFooter'
-import LoginBodyHeader from '../../molecules/login/LoginBodyHeader'
-import LoginBodyMain from '../../molecules/login/LoginBodyMain'
+import LoginBodyFooter from '../../../molecules/login/LoginBodyFooter'
+import LoginBodyHeader from '../../../molecules/login/LoginBodyHeader'
+import LoginBodyMain from '../../../molecules/login/LoginBodyMain'
 
 const LoginBody = (): JSX.Element => {
   return (
