@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Input from '../../components/Input'
-import InputPassword from '../../components/InputPassword'
-import Logo from '../../components/Logo'
+import InputLoginText from '../../components/molecules/login/InputLoginText'
+import InputPassword from '../../components/molecules/login/InputLoginPassword'
+import LogoLogin from '../../components/molecules/login/LogoLogin'
 
 const Login = (): JSX.Element => {
   return (
@@ -14,21 +14,25 @@ const Login = (): JSX.Element => {
             "
       >
         <div className="w-full h-32 flex flex-col mt-10 items-center">
-          <Logo />
+          <LogoLogin />
           <h1 className="text-2xl font-light">Acessar o moov</h1>
         </div>
 
         <section className="flex flex-col gap-6 w-10/12 mt-3">
           <label className="flex flex-col h-24">
             <p className="font-bold">E-mail de acesso</p>
-            <Input type="email" placeholder="Informação" name="email" />
+            <InputLoginText
+              type="email"
+              placeholder="Informação"
+              name="email"
+            />
             <p className="self-end text-sm pt-2 cursor-pointer">
               Esqueceu a sua <strong>senha?</strong>
             </p>
           </label>
           <label className="flex flex-col h-24">
             <p className="font-bold">Senha de acesso</p>
-            <InputPassword />
+            <InputPassword name="password" placeholder="****************" />
           </label>
           <Link to="painel">
             <button className="rounded-xl h-16 w-full bg-[#4C4C4C] font-bold hover:brightness-125">
