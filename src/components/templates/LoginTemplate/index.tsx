@@ -1,5 +1,5 @@
 import React from 'react'
-import LoginBody from '../../organisms/LoginBody'
+import LoginBody from '../../organisms/login/LoginBody'
 import LoginHeader from '../../molecules/login/LoginHeader'
 
 const LoginTemplate = (): JSX.Element => {
