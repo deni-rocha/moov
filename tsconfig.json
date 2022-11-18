@@ -19,23 +19,6 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-    "baseUrl": ".",
-    "paths": {
-      "@atoms/*": [
-        "./src/components/atoms/*"
-      ],
-      "@molecules/*": [
-        "./src/components/molecules/*"
-      ],
-      "@organisms/*": [
-        "./src/components/organisms/*"
-      ],
-      "@templates/*": [
-        "./src/components/templates/*"
-      ]
-    }
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }
