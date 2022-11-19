@@ -1,5 +1,5 @@
 import React from 'react'
-import LoginInput from '../../../atoms/login/LoginInput'
+import Input from '../../../atoms/Input'
 interface Props {
   placeholder: string
   type: string
@@ -10,7 +10,12 @@ interface Props {
 const InputLoginText = ({ placeholder, name }: Props): JSX.Element => {
   return (
     <div className="w-full relative flex">
-      <LoginInput type="text" name={name} placeholder={placeholder} />
+      <Input
+        type="text"
+        name={name}
+        placeholder={placeholder}
+        className="text-secondary placeholder:text-secondary"
+      />
     </div>
   )
 }
