@@ -1,13 +1,11 @@
 import * as React from 'react'
 
 interface PropSVG {
-  fill: string
   width: number
   height: number
   className: string
 }
 const SVGPainelDataHome = ({
-  fill,
   width,
   height,
   className
@@ -16,26 +14,11 @@ const SVGPainelDataHome = ({
     width={width}
     height={height}
     className={className}
-    viewBox="0 0 13 13"
+    viewBox="0 0 11 9"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <g clipPath="url(#clip0_704_8077)">
-      <path
-        d="M6.77545 3.50262L9.25985 5.73859V9.61923H8.26609V6.63794H5.28481V9.61923H4.29104V5.73859L6.77545 3.50262ZM6.77545 2.16602L1.80664 6.63794H3.29728V10.613H6.27857V7.6317H7.27233V10.613H10.2536V6.63794H11.7443L6.77545 2.16602Z"
-        fill={fill}
-      />
-    </g>
-    <defs>
-      <clipPath id="clip0_704_8077">
-        <rect
-          width="11.9251"
-          height="11.9251"
-          fill="white"
-          transform="translate(0.8125 0.675781)"
-        />
-      </clipPath>
-    </defs>
+    <path d="M5.77545 1.50262L8.25985 3.73859V7.61923H7.26609V4.63794H4.28481V7.61923H3.29104V3.73859L5.77545 1.50262ZM5.77545 0.166016L0.806641 4.63794H2.29728V8.61299H5.27857V5.6317H6.27233V8.61299H9.25361V4.63794H10.7443L5.77545 0.166016Z" />
   </svg>
 )
 export default SVGPainelDataHome
