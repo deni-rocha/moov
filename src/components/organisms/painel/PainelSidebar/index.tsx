@@ -20,9 +20,9 @@ const Sidebar = (): JSX.Element => {
   return (
     <section className="w-4/12 max-w-[258px] flex gap-20 flex-col border-r-2 border-r-zinc-300">
       <div className="w-full flex flex-col  items-center gap-8">
-        <div className="w-7 h-7 self-start">
+        <button className="w-7 h-7 self-start hover:contrast-0">
           <img src={iconToggleClose} alt="close" />
-        </div>
+        </button>
         <div className="w-48 h-14">
           <img src={iconLogo} alt="logo" />
         </div>
@@ -91,18 +91,14 @@ const Sidebar = (): JSX.Element => {
             <p>Relatórios</p>
           </div>
         </button>
-      </div>
-
-      {/* bottom */}
-      <div className="w-3/6 flex flex-col items-center gap-8 border-2 ml-10">
-        <button className="w-28 h-4 flex gap-3 items-center rounded-md text-secondary">
+        <button className="w-52 h-7 ml-10 flex gap-3 mt-36 items-center rounded-md text-secondary">
           <div className="w-4 h-4">
             <img src={iconHelp} alt="icon-help" />
           </div>
           <p>Me ajuda!</p>
         </button>
         <Link to="/">
-          <button className="w-28 h-7 gap-3 flex items-cente rounded-md text-secondary">
+          <button className="w-52 h-7 ml-10 gap-3 flex items-center rounded-md text-secondary">
             <div className="w-4 h-4">
               <img src={iconLogout} alt="icon-loggout" />
             </div>
