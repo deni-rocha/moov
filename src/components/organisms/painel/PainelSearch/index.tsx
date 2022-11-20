@@ -1,5 +1,5 @@
 import React from 'react'
-import iconSearch from '../../../../assets/painel/controltrips/icon-search.svg'
+import iconSearch from '../../../../assets/painel/painelSearch/icon-search.svg'
 
 const PainelSearch = (): JSX.Element => {
   return (
