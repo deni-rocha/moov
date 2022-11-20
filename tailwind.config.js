@@ -13,6 +13,7 @@ module.exports = {
       colors: {
         primary: "#ffffff",
         secondary: "#535353",
+        disabled: "#CACACA",
         ...defaultTheme.colors
       },
       fontFamily: {
