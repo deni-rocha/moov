@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import iconToggleClose from '../../../../assets/painel/sidebar/icon-toggle-close.svg'
 import iconLogo from '../../../../assets/painel/sidebar/icon-logo.svg'
 import perfil from '../../../../assets/painel/sidebar/perfil.png'
-import iconControlTrip from '../../../../assets/painel/sidebar/icon-control-trip.svg'
 import iconOnline from '../../../../assets/painel/sidebar/icon-online.svg'
 import iconEdit from '../../../../assets/painel/sidebar/icon-edit.svg'
 import iconReport from '../../../../assets/painel/sidebar/icon-report.svg'
 import iconHelp from '../../../../assets/painel/sidebar/icon-help.svg'
 import iconLogout from '../../../../assets/painel/sidebar/icon-logout.svg'
 import { Link } from 'react-router-dom'
+import SVGControlTrip from '../../../../assets/painel/sidebar/ControlTrip'
 
 const Sidebar = (): JSX.Element => {
   const [btnActive, setBtnActive] = useState('')
@@ -19,7 +19,7 @@ const Sidebar = (): JSX.Element => {
 
   return (
     <section className="w-4/12 max-w-[258px] flex gap-20 flex-col border-r-2 border-r-zinc-300">
-      <div className="w-full flex flex-col items-center gap-8">
+      <div className="w-full flex flex-col  items-center gap-8">
         <div className="w-7 h-7 self-start">
           <img src={iconToggleClose} alt="close" />
         </div>
@@ -43,12 +43,12 @@ const Sidebar = (): JSX.Element => {
         <button
           onClick={() => handleActiveBtn('controlTrip')}
           className={`w-52 h-14 flex justify-center items-center gap-2 rounded-md text-white  ${
-            btnActive === 'controlTrip' ? 'bg-secondary' : 'text-[#CACACA]'
+            btnActive === 'controlTrip'
+              ? 'bg-secondary'
+              : 'text-[#CACACA] hover:contrast-0'
           }`}
         >
-          <div className="w-4 h-4">
-            <img src={iconControlTrip} alt="trip-icon" />
-          </div>
+          <SVGControlTrip width={15} height={16} fill="#CACACA" />
           <p>Controle de viagens</p>
         </button>
         <button
@@ -56,10 +56,10 @@ const Sidebar = (): JSX.Element => {
           className={`w-52 h-14 flex flex-col gap-2 p-2 rounded-md text-white relative ${
             btnActive === 'register'
               ? 'bg-secondary h-48'
-              : 'text-[#CACACA] h-14'
+              : 'text-[#CACACA] h-14 hover:contrast-0'
           }`}
         >
-          <div className="ml-4 flex items-center gap-2">
+          <div className="ml-3 flex items-center gap-2">
             <div className="w-4 h-4">
               <img src={iconEdit} alt="edit-icon" />
             </div>
@@ -81,7 +81,7 @@ const Sidebar = (): JSX.Element => {
           className={`w-52 h-14 flex justify-start items-center gap-2 rounded-md text-white ${
             btnActive === 'report'
               ? 'bg-secondary justify-center'
-              : 'text-[#CACACA] ml-10'
+              : 'text-[#CACACA] ml-10 hover:contrast-0'
           }`}
         >
           <div className="flex items-center gap-2 w-24">
