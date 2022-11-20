@@ -10,7 +10,7 @@ const PainelTemplate = (): JSX.Element => {
       <PainelSidebar />
       <section className="grow p-2 flex flex-col">
         <PainelHeader
-          subTittle="Controle de viagens"
+          subTitle="Controle de viagens"
           tittle="Painel de controle de viagens"
         />
         <div className=" w-full pl-10 pt-4">
