@@ -11,10 +11,14 @@ module.exports = {
         ...defaultTheme.screens
       },
       colors: {
-        primary: "#E5E5E5",
+        primary: "#ffffff",
         secondary: "#535353",
         ...defaultTheme.colors
-      }
+      },
+      fontFamily: {
+        'inter': ['Inter', ...defaultTheme.fontFamily.sans],
+        'lato': ['Lato', ...defaultTheme.fontFamily.sans],
+      },
     }
   },
   plugins: []

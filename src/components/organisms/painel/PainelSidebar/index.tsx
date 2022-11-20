@@ -19,7 +19,7 @@ const Sidebar = (): JSX.Element => {
 
   return (
     <section className="w-4/12 max-w-[258px] flex gap-20 flex-col border-r-2 border-r-zinc-300">
-      <div className="w-full flex flex-col  items-center gap-8">
+      <div className="w-full flex flex-col font-lato items-center gap-8">
         <button className="w-7 h-7 self-start hover:contrast-0">
           <img src={iconToggleClose} alt="close" />
         </button>
@@ -36,16 +36,16 @@ const Sidebar = (): JSX.Element => {
             </div>
           </div>
           <div className="">
-            <p className="text-md font-semibold">Maria Santos</p>
-            <p className="text-sm">Administrativo</p>
+            <p className="text-md font-extrabold ">Maria Santos</p>
+            <p className="text-sm ">Administrativo</p>
           </div>
         </div>
         <button
           onClick={() => handleActiveBtn('controlTrip')}
           className={`w-52 h-14 flex justify-center items-center gap-2 rounded-md text-white  ${
             btnActive === 'controlTrip'
-              ? 'bg-secondary'
-              : 'text-[#CACACA] hover:contrast-0'
+              ? 'bg-secondary font-bold'
+              : 'text-[#CACACA] hover:contrast-0 font-lato'
           }`}
         >
           <SVGControlTrip width={15} height={16} fill="#CACACA" />
@@ -55,7 +55,7 @@ const Sidebar = (): JSX.Element => {
           onClick={() => handleActiveBtn('register')}
           className={`w-52 h-14 flex flex-col gap-2 p-2 rounded-md text-white relative ${
             btnActive === 'register'
-              ? 'bg-secondary h-48'
+              ? 'bg-secondary h-48 font-bold'
               : 'text-[#CACACA] h-14 hover:contrast-0'
           }`}
         >
@@ -67,7 +67,7 @@ const Sidebar = (): JSX.Element => {
           </div>
           <ul
             className={`ml-10 flex flex-col gap-3 items-start absolute top-9 ${
-              btnActive === 'register' ? 'flex' : 'hidden'
+              btnActive === 'register' ? 'flex font-normal' : 'hidden'
             }`}
           >
             <li>Usuários</li>
