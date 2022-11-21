@@ -1,11 +1,57 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { getSolicitation } from '../../../../api'
+import getFinished from '../../../../api/trips/finished'
+import getHappening from '../../../../api/trips/happening'
 import SVGPainelDataCorrect from '../../../../assets/painel/painelData/SVGPainelDataCorrect'
 import SVGPainelDataExclamation from '../../../../assets/painel/painelData/SVGPainelDataExclamation'
 import SVGPainelDataHome from '../../../../assets/painel/painelData/SVGPainelDataHome'
+import {
+  IApiAndamento,
+  IApiFinalizada,
+  IApiSolicitacao
+} from '../../../../types/InterfaceApi'
 import PainelDataNavLi from '../../../molecules/painel/PainelDataNavLi'
 
 const PainelData = (): JSX.Element => {
   const [btnActive, setBtnActive] = useState('')
+  const [tripSolicitationList, setTripSolicitationList] = useState<
+    IApiSolicitacao[] | []
+  >([])
+  const [tripHappeningList, setTripHappeningList] = useState<
+    IApiAndamento[] | []
+  >([])
+  const [tripFinishedList, setTripFinishedList] = useState<
+    IApiFinalizada[] | []
+  >([])
+
+  const isTripSolicitation = btnActive === 'trip solicitation'
+  const isTripHappening = btnActive === 'trip happening'
+  const isTripFinished = btnActive === 'trip finished'
+
+  useEffect(() => {
+    const fetch = async (): Promise<[]> => {
+      switch (btnActive) {
+        case 'trip solicitation': {
+          const res = await getSolicitation()
+          setTripSolicitationList(res)
+          break
+        }
+        case 'trip happening': {
+          const res = await getHappening()
+          setTripHappeningList(res)
+          break
+        }
+        case 'trip finished': {
+          const res = await getFinished()
+          setTripFinishedList(res)
+          break
+        }
+      }
+      return []
+    }
+
+    void fetch()
+  }, [btnActive])
 
   return (
     <div className=" w-full pt-4 mt-4 font-inter">
@@ -14,15 +60,13 @@ const PainelData = (): JSX.Element => {
           className={`border-b-2 pb-3 text-disabled flex gap-8 font-bold uppercase text-xs `}
         >
           <PainelDataNavLi
-            btnId="solicitation"
+            btnId="trip solicitation"
             btnActive={btnActive}
             setBtnActive={setBtnActive}
           >
             <SVGPainelDataExclamation
               className={`${
-                btnActive === 'solicitation'
-                  ? 'fill-secondary'
-                  : 'fill-disabled'
+                isTripSolicitation ? 'fill-secondary' : 'fill-disabled'
               }`}
               width={13}
               height={13}
@@ -36,9 +80,7 @@ const PainelData = (): JSX.Element => {
           >
             <SVGPainelDataCorrect
               className={`${
-                btnActive === 'trip happening'
-                  ? 'fill-secondary'
-                  : 'fill-disabled'
+                isTripHappening ? 'fill-secondary' : 'fill-disabled'
               }`}
               width={13}
               height={13}
@@ -52,9 +94,7 @@ const PainelData = (): JSX.Element => {
           >
             <SVGPainelDataHome
               className={`${
-                btnActive === 'trip finished'
-                  ? 'fill-secondary'
-                  : 'fill-disabled'
+                isTripFinished ? 'fill-secondary' : 'fill-disabled'
               }`}
               width={20}
               height={13}
@@ -63,8 +103,22 @@ const PainelData = (): JSX.Element => {
           </PainelDataNavLi>
         </ul>
       </nav>
-      <div className="mt-8 border-2 border-yellow-500">
-        <h1>Painel Data</h1>
+      <div className="mt-8">
+        {isTripSolicitation
+          ? tripSolicitationList.map((obj, index) => {
+              return <h1 key={index}>{obj.nome}</h1>
+            })
+          : ''}
+        {isTripHappening
+          ? tripHappeningList.map((obj, index) => {
+              return <h1 key={index}>{obj.titulo}</h1>
+            })
+          : ''}
+        {isTripFinished
+          ? tripFinishedList.map((obj, index) => {
+              return <h1 key={index}>{obj.remetente}</h1>
+            })
+          : ''}
       </div>
     </div>
   )
