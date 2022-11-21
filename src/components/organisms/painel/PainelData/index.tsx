@@ -104,19 +104,58 @@ const PainelData = (): JSX.Element => {
         </ul>
       </nav>
       <div className="mt-8">
+        {/* <ul className="flex">
+          <li>Nome</li>
+          <li>E-mail</li>
+          <li>Setor</li>
+          <li>Função</li>
+          <li>Data</li>
+        </ul> */}
         {isTripSolicitation
           ? tripSolicitationList.map((obj, index) => {
-              return <h1 key={index}>{obj.nome}</h1>
+              return (
+                <div key={index}>
+                  <ul className="flex gap-10">
+                    <li>{obj.nome}</li>
+                    <li>{obj.email}</li>
+                    <li>{obj.setor}</li>
+                    <li>{obj.funcao}</li>
+                    <li>{obj.data}</li>
+                  </ul>
+                </div>
+              )
             })
           : ''}
         {isTripHappening
           ? tripHappeningList.map((obj, index) => {
-              return <h1 key={index}>{obj.titulo}</h1>
+              return (
+                <div key={index}>
+                  <ul className="flex gap-10">
+                    <li>{obj.titulo}</li>
+                    <li>{obj.descricao}</li>
+                    <li>{obj.remetente}</li>
+                    <li>{obj.funcao}</li>
+                    <li>{obj.data}</li>
+                    <li>{obj.tipo}</li>
+                  </ul>
+                </div>
+              )
             })
           : ''}
         {isTripFinished
           ? tripFinishedList.map((obj, index) => {
-              return <h1 key={index}>{obj.remetente}</h1>
+              return (
+                <div key={index}>
+                  <ul className="flex gap-10">
+                    <li>{obj.titulo}</li>
+                    <li>{obj.descricao}</li>
+                    <li>{obj.remetente}</li>
+                    <li>{obj.funcao}</li>
+                    <li>{obj.data}</li>
+                    <li>{obj.tipo}</li>
+                  </ul>
+                </div>
+              )
             })
           : ''}
       </div>
