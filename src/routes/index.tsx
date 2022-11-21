@@ -1,15 +1,11 @@
-import React from 'react'
-import { Route, Routes } from 'react-router-dom'
-import Painel from '../pages/Painel'
-import Login from '../pages/Login'
+import React, { useContext } from 'react'
+import AuthContext from '../contexts/auth'
+import OtherRoutes from './OtherRoutes'
+import SignRoute from './SignRoute'
 
 const Rotas = (): JSX.Element => {
-  return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/painel" element={<Painel />} />
-    </Routes>
-  )
-}
+  const { signed } = useContext(AuthContext)
 
+  return signed ? <OtherRoutes /> : <SignRoute />
+}
 export default Rotas
