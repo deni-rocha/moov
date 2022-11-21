@@ -1,9 +1,9 @@
-import { api } from '../..'
+import { apiMock } from '../..'
 import { IApiAndamento } from '../../../types/InterfaceApi'
 
 async function getHappening(): Promise<IApiAndamento[] | []> {
   try {
-    const res = await api.get<IApiAndamento[]>('andamento')
+    const res = await apiMock.get<IApiAndamento[]>('andamento')
     console.log('conteúdo: ', res.data)
     return res.data
   } catch (err) {
