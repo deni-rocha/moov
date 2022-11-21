@@ -1,12 +1,19 @@
 import React, { useState } from 'react'
+import api from '../../../../api'
 import SVGPainelDataCorrect from '../../../../assets/painel/painelData/SVGPainelDataCorrect'
 import SVGPainelDataExclamation from '../../../../assets/painel/painelData/SVGPainelDataExclamation'
 import SVGPainelDataHome from '../../../../assets/painel/painelData/SVGPainelDataHome'
+import { IApiSolicitacao } from '../../../../types/InterfaceApi'
 import PainelDataNavLi from '../../../molecules/painel/PainelDataNavLi'
 
 const PainelData = (): JSX.Element => {
   const [btnActive, setBtnActive] = useState('')
 
+  async function fetchData(): Promise<IApiSolicitacao[]> {
+    const res = await api.get<IApiSolicitacao[]>('solicitacao')
+    console.log(res.data)
+    return res.data
+  }
   return (
     <div className=" w-full pt-4 mt-4 font-inter">
       <nav className="">
@@ -64,6 +71,13 @@ const PainelData = (): JSX.Element => {
         </ul>
       </nav>
       <div className="mt-8 border-2 border-yellow-500">
+        <button
+          onClick={() => {
+            void fetchData()
+          }}
+        >
+          buscar
+        </button>
         <h1>Painel Data</h1>
       </div>
     </div>
