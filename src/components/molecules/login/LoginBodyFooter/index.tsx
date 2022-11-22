@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import login, { ILogin } from '../../../../api/login'
 import AuthContext from '../../../../contexts/auth'
 
 interface Props {
@@ -6,10 +7,28 @@ interface Props {
   senha: string
 }
 const LoginBodyFooter = ({ email, senha }: Props): JSX.Element => {
-  const { signed } = useContext(AuthContext)
+  const { setSigned } = useContext(AuthContext)
 
   function submit(): void {
-    console.log(email, senha, signed)
+    const logar = async (): Promise<ILogin | null> => {
+      try {
+        const res = await login(email, senha)
+
+        if (res === null) return null
+
+        const data = { signed: false, token: res.token }
+
+        sessionStorage.setItem('@App-login', JSON.stringify(data))
+        setSigned(true)
+
+        return res
+      } catch (err) {
+        setSigned(false)
+        return null
+      }
+    }
+
+    void logar()
   }
   return (
     <button
