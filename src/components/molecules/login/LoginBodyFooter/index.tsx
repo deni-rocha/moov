@@ -1,4 +1,6 @@
 import React, { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
 import login, { ILogin } from '../../../../api/login'
 import AuthContext from '../../../../contexts/auth'
 
@@ -7,8 +9,18 @@ interface Props {
   senha: string
 }
 const LoginBodyFooter = ({ email, senha }: Props): JSX.Element => {
-  const { setSigned } = useContext(AuthContext)
-
+  const { signed, setSigned } = useContext(AuthContext)
+  const navigate = useNavigate()
+  function alertError(): void {
+    void Swal.fire({
+      background: '#4C4C4C',
+      width: '200px',
+      position: 'top-end',
+      icon: 'error',
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
   function submit(): void {
     const logar = async (): Promise<ILogin | null> => {
       try {
@@ -21,15 +33,17 @@ const LoginBodyFooter = ({ email, senha }: Props): JSX.Element => {
         sessionStorage.setItem('@App-login', JSON.stringify(data))
         setSigned(true)
 
+        navigate('/')
         return res
       } catch (err) {
-        setSigned(false)
         return null
       }
     }
 
     void logar()
+    if (!signed) alertError()
   }
+
   return (
     <button
       onClick={submit}

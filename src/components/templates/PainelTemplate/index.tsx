@@ -1,10 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PainelHeader from '../../organisms/painel/PainelHeader'
 import PainelSidebar from '../../organisms/painel/PainelSidebar'
 import PainelSearch from '../../organisms/painel/PainelSearch'
 import PainelData from '../../organisms/painel/PainelData'
+import Swal from 'sweetalert2'
 
 const PainelTemplate = (): JSX.Element => {
+  function alertSucess(): void {
+    void Swal.fire({
+      background: '#ffffff',
+      width: '300px',
+      title: 'login realizado',
+      position: 'top-end',
+      icon: 'success',
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+
+  useEffect(() => {
+    alertSucess()
+  }, [])
   return (
     <div className="w-11/12 max-w-[1181px] py-4 flex">
       <PainelSidebar />

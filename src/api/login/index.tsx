@@ -15,7 +15,6 @@ async function login(email: string, senha: string): Promise<ILogin | null> {
     const res = await apiMoov.post<ILogin>('/usuario/login', { email, senha })
     return res.data
   } catch (err) {
-    console.log('ops! Algo de errado!')
     return null
   }
 }
