@@ -1,11 +1,14 @@
 import React from 'react'
 import '../src/index.css'
+import { AuthProvider } from './contexts/auth'
 import Rotas from './routes'
 
 const App = (): JSX.Element => {
   return (
     <div className="App">
-      <Rotas />
+      <AuthProvider>
+        <Rotas />
+      </AuthProvider>
     </div>
   )
 }

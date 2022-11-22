@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import iconToggleClose from '../../../../assets/painel/sidebar/icon-toggle-close.svg'
 import iconLogo from '../../../../assets/painel/sidebar/icon-logo.svg'
 import perfil from '../../../../assets/painel/sidebar/perfil.png'
@@ -9,8 +9,10 @@ import iconHelp from '../../../../assets/painel/sidebar/icon-help.svg'
 import iconLogout from '../../../../assets/painel/sidebar/icon-logout.svg'
 import { Link } from 'react-router-dom'
 import SVGControlTrip from '../../../../assets/painel/sidebar/ControlTrip'
+import AuthContext from '../../../../contexts/auth'
 
 const Sidebar = (): JSX.Element => {
+  const { setSigned } = useContext(AuthContext)
   const [btnActive, setBtnActive] = useState('')
 
   function handleActiveBtn(value: string): void {
@@ -97,7 +99,13 @@ const Sidebar = (): JSX.Element => {
           </div>
           <p>Me ajuda!</p>
         </button>
-        <Link to="/">
+        <Link
+          onClick={() => {
+            sessionStorage.clear()
+            setSigned(false)
+          }}
+          to="/"
+        >
           <button className="w-52 h-7 ml-10 gap-3 flex items-center rounded-md text-secondary">
             <div className="w-4 h-4">
               <img src={iconLogout} alt="icon-loggout" />
