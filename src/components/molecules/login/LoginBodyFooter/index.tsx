@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
-import login, { ILogin } from '../../../../api/login'
 import AuthContext from '../../../../contexts/auth'
+import login from '../../../../services/api/login'
+import { alertLoginError, alertLoginSucess } from '../../../../utils/alert'
 
 interface Props {
   email: string
@@ -10,26 +11,17 @@ const LoginBodyFooter = ({ email, senha }: Props): JSX.Element => {
   const { setSigned } = useContext(AuthContext)
 
   function submit(): void {
-    const logar = async (): Promise<ILogin | null> => {
-      try {
-        const res = await login(email, senha)
-
-        if (res === null) return null
-
-        const data = { signed: false, token: res.token }
-
-        sessionStorage.setItem('@App-login', JSON.stringify(data))
+    void (async () => {
+      const res = await login(email, senha)
+      if (res === null) {
+        alertLoginError()
+      } else {
+        alertLoginSucess()
         setSigned(true)
-
-        return res
-      } catch (err) {
-        setSigned(false)
-        return null
       }
-    }
-
-    void logar()
+    })()
   }
+
   return (
     <button
       onClick={submit}

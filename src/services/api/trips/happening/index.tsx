@@ -1,5 +1,5 @@
 import { apiMock } from '../..'
-import { IApiAndamento } from '../../../types/InterfaceApi'
+import { IApiAndamento } from '../../../../types/InterfaceApi'
 
 async function getHappening(): Promise<IApiAndamento[] | []> {
   try {

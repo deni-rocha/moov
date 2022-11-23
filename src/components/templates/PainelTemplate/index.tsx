@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PainelHeader from '../../organisms/painel/PainelHeader'
 import PainelSidebar from '../../organisms/painel/PainelSidebar'
 import PainelSearch from '../../organisms/painel/PainelSearch'
 import PainelData from '../../organisms/painel/PainelData'
+import { alertLoginSucess } from '../../../utils/alert'
 
 const PainelTemplate = (): JSX.Element => {
+  useEffect(() => {
+    alertLoginSucess()
+  }, [])
   return (
     <div className="w-11/12 max-w-[1181px] py-4 flex">
       <PainelSidebar />

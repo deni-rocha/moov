@@ -1,5 +1,5 @@
 import { apiMock } from '../..'
-import { IApiSolicitacao } from '../../../types/InterfaceApi'
+import { IApiSolicitacao } from '../../../../types/InterfaceApi'
 
 async function getSolicitation(): Promise<IApiSolicitacao[] | []> {
   try {
