@@ -1,8 +1,7 @@
 import React, { useContext } from 'react'
-import Swal from 'sweetalert2'
-import login, { ILogin } from '../../../../api/login'
 import AuthContext from '../../../../contexts/auth'
-import { alertSucess } from '../../../templates/PainelTemplate'
+import login from '../../../../services/api/login'
+import { alertLoginError, alertLoginSucess } from '../../../../utils/alert'
 
 interface Props {
   email: string
@@ -11,38 +10,15 @@ interface Props {
 const LoginBodyFooter = ({ email, senha }: Props): JSX.Element => {
   const { setSigned } = useContext(AuthContext)
 
-  function alertError(): void {
-    void Swal.fire({
-      background: '#4C4C4C',
-      width: '200px',
-      position: 'top-end',
-      icon: 'error',
-      showConfirmButton: false,
-      timer: 1500
-    })
-  }
-
-  const logar = async (): Promise<ILogin | null> => {
-    try {
-      const res = await login(email, senha)
-
-      if (res === null) return null
-
-      const data = { signed: false, token: res.token }
-
-      sessionStorage.setItem('@App-login', JSON.stringify(data))
-      setSigned(true)
-
-      return res
-    } catch (err) {
-      return null
-    }
-  }
-
   function submit(): void {
     void (async () => {
-      const res = await logar()
-      res === null ? alertError() : alertSucess()
+      const res = await login(email, senha)
+      if (res === null) {
+        alertLoginError()
+      } else {
+        alertLoginSucess()
+        setSigned(true)
+      }
     })()
   }
 

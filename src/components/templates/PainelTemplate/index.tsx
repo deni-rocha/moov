@@ -3,23 +3,11 @@ import PainelHeader from '../../organisms/painel/PainelHeader'
 import PainelSidebar from '../../organisms/painel/PainelSidebar'
 import PainelSearch from '../../organisms/painel/PainelSearch'
 import PainelData from '../../organisms/painel/PainelData'
-import Swal from 'sweetalert2'
-
-export function alertSucess(): void {
-  void Swal.fire({
-    background: '#ffffff',
-    width: '300px',
-    title: 'conectado',
-    position: 'top-end',
-    icon: 'success',
-    showConfirmButton: false,
-    timer: 1500
-  })
-}
+import { alertLoginSucess } from '../../../utils/alert'
 
 const PainelTemplate = (): JSX.Element => {
   useEffect(() => {
-    alertSucess()
+    alertLoginSucess()
   }, [])
   return (
     <div className="w-11/12 max-w-[1181px] py-4 flex">
