@@ -1,5 +1,5 @@
 import { apiMock } from '../..'
-import { IApiFinalizada } from '../../../types/InterfaceApi'
+import { IApiFinalizada } from '../../../../types/InterfaceApi'
 
 async function getFinished(): Promise<IApiFinalizada[] | []> {
   try {
