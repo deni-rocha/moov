@@ -1,16 +1,16 @@
 import React, { useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import login, { ILogin } from '../../../../api/login'
 import AuthContext from '../../../../contexts/auth'
+import { alertSucess } from '../../../templates/PainelTemplate'
 
 interface Props {
   email: string
   senha: string
 }
 const LoginBodyFooter = ({ email, senha }: Props): JSX.Element => {
-  const { signed, setSigned } = useContext(AuthContext)
-  const navigate = useNavigate()
+  const { setSigned } = useContext(AuthContext)
+
   function alertError(): void {
     void Swal.fire({
       background: '#4C4C4C',
@@ -21,27 +21,29 @@ const LoginBodyFooter = ({ email, senha }: Props): JSX.Element => {
       timer: 1500
     })
   }
-  function submit(): void {
-    const logar = async (): Promise<ILogin | null> => {
-      try {
-        const res = await login(email, senha)
 
-        if (res === null) return null
+  const logar = async (): Promise<ILogin | null> => {
+    try {
+      const res = await login(email, senha)
 
-        const data = { signed: false, token: res.token }
+      if (res === null) return null
 
-        sessionStorage.setItem('@App-login', JSON.stringify(data))
-        setSigned(true)
+      const data = { signed: false, token: res.token }
 
-        navigate('/')
-        return res
-      } catch (err) {
-        return null
-      }
+      sessionStorage.setItem('@App-login', JSON.stringify(data))
+      setSigned(true)
+
+      return res
+    } catch (err) {
+      return null
     }
+  }
 
-    void logar()
-    if (!signed) alertError()
+  function submit(): void {
+    void (async () => {
+      const res = await logar()
+      res === null ? alertError() : alertSucess()
+    })()
   }
 
   return (

@@ -5,19 +5,19 @@ import PainelSearch from '../../organisms/painel/PainelSearch'
 import PainelData from '../../organisms/painel/PainelData'
 import Swal from 'sweetalert2'
 
-const PainelTemplate = (): JSX.Element => {
-  function alertSucess(): void {
-    void Swal.fire({
-      background: '#ffffff',
-      width: '300px',
-      title: 'login realizado',
-      position: 'top-end',
-      icon: 'success',
-      showConfirmButton: false,
-      timer: 1500
-    })
-  }
+export function alertSucess(): void {
+  void Swal.fire({
+    background: '#ffffff',
+    width: '300px',
+    title: 'conectado',
+    position: 'top-end',
+    icon: 'success',
+    showConfirmButton: false,
+    timer: 1500
+  })
+}
 
+const PainelTemplate = (): JSX.Element => {
   useEffect(() => {
     alertSucess()
   }, [])
