@@ -9,8 +9,8 @@ interface Props {
 }
 const PainelHeader = ({ tittle, subTitle }: Props): JSX.Element => {
   return (
-    <div className="w-full h-28 border-b-2 flex justify-between items-center border-b-zinc-300 pl-10">
-      <div>
+    <div className="w-full h-28 border-b-2 flex justify-between items-center border-b-zinc-300">
+      <div className="pl-10">
         <SubTitle subTitle={subTitle} className="text-[#9b9b9b] text-sm" />
         <Title
           tittle={tittle}

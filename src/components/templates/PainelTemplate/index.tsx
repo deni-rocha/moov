@@ -10,7 +10,7 @@ const PainelTemplate = (): JSX.Element => {
     // alertLoginSucess()
   }, [])
   return (
-    <div className="w-[94%] mx-auto py-4 flex">
+    <div className="w-[94%] mx-auto flex">
       <PainelSidebar />
       <section className="grow p-2 flex flex-col">
         <PainelHeader
