@@ -25,7 +25,7 @@ const Sidebar = (): JSX.Element => {
 
   function reportWindowSize(): void {
     const windowSize = window.innerWidth
-    if (windowSize <= 640) {
+    if (windowSize <= 800) {
       setIsExpanded(false)
     } else {
       setIsExpanded(true)
