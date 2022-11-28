@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import iconToggleClose from '../../../../assets/painel/sidebar/icon-toggle-close.svg'
 import iconToggleOpen from '../../../../assets/painel/sidebar/icon-toggle-open.svg'
 import iconLogo from '../../../../assets/painel/sidebar/icon-logo.svg'
@@ -13,6 +13,7 @@ import SVGControlTrip from '../../../../assets/painel/sidebar/ControlTrip'
 import AuthContext from '../../../../contexts/auth'
 import PainelBtn from '../../../molecules/painel/PainelBtn'
 import SVGCollapsedLogo from '../../../../assets/painel/sidebar/collapsed/SVGCollapsedLogo'
+import verifyWindowSize from '../../../../utils/verifyWindowSize'
 
 const Sidebar = (): JSX.Element => {
   const { setSigned } = useContext(AuthContext)
@@ -23,15 +24,13 @@ const Sidebar = (): JSX.Element => {
     setBtnActive(value)
   }
 
-  function reportWindowSize(): void {
-    const windowSize = window.innerWidth
-    if (windowSize <= 800) {
-      setIsExpanded(false)
-    } else {
-      setIsExpanded(true)
+  useEffect(() => {
+    setIsExpanded(verifyWindowSize)
+    window.onresize = () => {
+      setIsExpanded(verifyWindowSize)
     }
-  }
-  window.onresize = reportWindowSize
+  }, [])
+
   return (
     <section
       className={`${
