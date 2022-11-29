@@ -34,8 +34,8 @@ const Sidebar = (): JSX.Element => {
   return (
     <section
       className={`${
-        isExpanded ? ' w-4/12 max-w-[258px] ' : 'w-[140px]'
-      } py-8 flex gap-20 flex-col border-r-2 border-r-zinc-300`}
+        isExpanded ? 'w-[258px] ' : 'w-[140px]'
+      } transition-all duration-500 py-8 flex gap-20 flex-col border-r-2 border-r-zinc-300`}
     >
       <div
         className={`w-full flex flex-col font-lato gap-5 ${
@@ -79,7 +79,7 @@ const Sidebar = (): JSX.Element => {
         <PainelBtn
           isExpanded={isExpanded}
           onClick={() => handleActiveBtn('controlTrip')}
-          className={`text-white items-center ${
+          className={`text-white items-center transition-all duration-300 ${
             btnActive === 'controlTrip'
               ? 'bg-secondary font-bold justify-center'
               : 'text-[#CACACA] hover:contrast-0 font-lato'
@@ -94,7 +94,7 @@ const Sidebar = (): JSX.Element => {
         <PainelBtn
           isExpanded={isExpanded}
           onClick={() => handleActiveBtn('register')}
-          className={`flex-col gap-2 p-2 rounded-md text-white relative ${
+          className={`flex-col gap-2 p-2 rounded-md text-white relative transition-all duration-300 ${
             btnActive === 'register'
               ? 'bg-secondary h-48 font-bold'
               : 'text-[#CACACA] h-14 hover:contrast-0'
@@ -126,7 +126,7 @@ const Sidebar = (): JSX.Element => {
         <PainelBtn
           isExpanded={isExpanded}
           onClick={() => handleActiveBtn('report')}
-          className={`rounded-md text-white ${
+          className={`rounded-md text-white transition-all duration-300 ${
             btnActive === 'report'
               ? 'bg-secondary justify-center'
               : 'text-[#CACACA] hover:contrast-0'
