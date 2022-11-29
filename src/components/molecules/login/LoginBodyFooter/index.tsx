@@ -8,6 +8,7 @@ interface Props {
   email: string
   senha: string
 }
+
 const LoginBodyFooter = ({ email, senha }: Props): JSX.Element => {
   const { setSigned } = useContext(AuthContext)
   const { setLoading } = useContext(LoaderContext)
@@ -17,6 +18,7 @@ const LoginBodyFooter = ({ email, senha }: Props): JSX.Element => {
 
     void (async () => {
       const res = await login(email, senha)
+
       if (res === null) {
         alertLoginError()
       } else {
