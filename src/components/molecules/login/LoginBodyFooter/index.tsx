@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import AuthContext from '../../../../contexts/auth'
+import LoaderContext from '../../../../contexts/loader'
 import login from '../../../../services/api/login'
 import { alertLoginError, alertLoginSucess } from '../../../../utils/alert'
 
@@ -7,18 +8,25 @@ interface Props {
   email: string
   senha: string
 }
+
 const LoginBodyFooter = ({ email, senha }: Props): JSX.Element => {
   const { setSigned } = useContext(AuthContext)
+  const { setLoading } = useContext(LoaderContext)
 
   function submit(): void {
+    setLoading(true)
+
     void (async () => {
       const res = await login(email, senha)
+
       if (res === null) {
         alertLoginError()
       } else {
         alertLoginSucess()
         setSigned(true)
       }
+
+      setLoading(false)
     })()
   }
 
