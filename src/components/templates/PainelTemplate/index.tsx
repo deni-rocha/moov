@@ -3,14 +3,14 @@ import PainelHeader from '../../organisms/painel/PainelHeader'
 import PainelSidebar from '../../organisms/painel/PainelSidebar'
 import PainelSearch from '../../organisms/painel/PainelSearch'
 import PainelData from '../../organisms/painel/PainelData'
-import { alertLoginSucess } from '../../../utils/alert'
+// import { alertLoginSucess } from '../../../utils/alert'
 
 const PainelTemplate = (): JSX.Element => {
   useEffect(() => {
-    alertLoginSucess()
+    // alertLoginSucess()
   }, [])
   return (
-    <div className="w-11/12 max-w-[1181px] py-4 flex">
+    <div className="w-[94%] mx-auto flex">
       <PainelSidebar />
       <section className="grow p-2 flex flex-col">
         <PainelHeader
