@@ -1,18 +1,17 @@
 import React from 'react'
+import { IPainelBtn } from '../PainelBtn'
 
-export interface IPainelBtn
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  className: string
-  children: React.ReactNode
-  isExpanded: boolean
+interface Props extends IPainelBtn {
+  nome: string
+  perfil: string
 }
 
-const PainelBtn = ({
+const PainelAboutUser = ({
   className,
   children,
   isExpanded,
   ...rest
-}: IPainelBtn): JSX.Element => {
+}: Props): JSX.Element => {
   return (
     <button
       {...rest}
@@ -25,4 +24,4 @@ const PainelBtn = ({
   )
 }
 
-export default PainelBtn
+export default PainelAboutUser

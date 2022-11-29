@@ -1,7 +1,7 @@
 import React from 'react'
 import LoginBody from '../../organisms/login/LoginBody'
 import LoginHeader from '../../molecules/login/LoginHeader'
-import { LoaderProvider } from '../../../contexts/loader'
+import { LoaderProvider } from '../../../contexts/login/loader'
 
 const LoginTemplate = (): JSX.Element => {
   return (
