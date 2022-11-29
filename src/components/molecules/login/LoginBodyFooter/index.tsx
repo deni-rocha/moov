@@ -21,6 +21,7 @@ const LoginBodyFooter = ({ email, senha }: Props): JSX.Element => {
 
       if (res === null) {
         alertLoginError()
+        setSigned(true)
       } else {
         alertLoginSucess()
         setSigned(true)

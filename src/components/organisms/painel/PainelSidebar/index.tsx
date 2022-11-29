@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import iconToggleClose from '../../../../assets/painel/sidebar/icon-toggle-close.svg'
-import iconToggleOpen from '../../../../assets/painel/sidebar/icon-toggle-open.svg'
 import iconLogo from '../../../../assets/painel/sidebar/icon-logo.svg'
 import perfil from '../../../../assets/painel/sidebar/perfil.png'
 import iconOnline from '../../../../assets/painel/sidebar/icon-online.svg'
@@ -14,6 +12,8 @@ import AuthContext from '../../../../contexts/auth'
 import PainelBtn from '../../../molecules/painel/PainelBtn'
 import SVGCollapsedLogo from '../../../../assets/painel/sidebar/collapsed/SVGCollapsedLogo'
 import verifyWindowSize from '../../../../utils/verifyWindowSize'
+import SvgToggleOpen from '../../../../assets/painel/sidebar/SvgToggleOpen'
+import SvgToggleClose from '../../../../assets/painel/sidebar/SvgToggleClose'
 
 const Sidebar = (): JSX.Element => {
   const { setSigned } = useContext(AuthContext)
@@ -46,11 +46,7 @@ const Sidebar = (): JSX.Element => {
           className="w-7 h-7 mb-2 hover:contrast-75"
           onClick={() => setIsExpanded(!isExpanded)}
         >
-          {isExpanded ? (
-            <img src={iconToggleClose} alt="fechar-sidebar" />
-          ) : (
-            <img src={iconToggleOpen} alt="abrir-sidebar" />
-          )}
+          {isExpanded ? <SvgToggleClose /> : <SvgToggleOpen />}
         </button>
         <div className={`w-52 h-14 ${isExpanded ? '' : 'flex justify-center'}`}>
           {isExpanded ? (
