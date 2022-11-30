@@ -16,9 +16,13 @@ import SvgToggleClose from '../../../../assets/painel/sidebar/SvgToggleClose'
 import SvgIcon from '../../../../assets/painel/sidebar/SvgIcon'
 import UserContext from '../../../../contexts/painel/user'
 import PainelContext from '../../../../contexts/painel/painelData'
+import PainelRegisterContext from '../../../../contexts/painel/painelRegister'
 
 const Sidebar = (): JSX.Element => {
   const { setData } = useContext(PainelContext)
+  const { registerBtnActive, setRegisterBtn } = useContext(
+    PainelRegisterContext
+  )
   const { setSigned } = useContext(AuthContext)
   const { nome, email } = useContext(UserContext)
   const [btnActive, setBtnActive] = useState('')
@@ -31,6 +35,9 @@ const Sidebar = (): JSX.Element => {
           painelHeader: {
             subTitle: 'Controle de viagens',
             tittle: 'Painel de controle de viagens'
+          },
+          painelSidebar: {
+            btnActive: value
           }
         })
 
@@ -41,6 +48,9 @@ const Sidebar = (): JSX.Element => {
           painelHeader: {
             subTitle: 'Cadastráveis',
             tittle: 'Usuários'
+          },
+          painelSidebar: {
+            btnActive: value
           }
         })
         break
@@ -50,6 +60,9 @@ const Sidebar = (): JSX.Element => {
           painelHeader: {
             subTitle: 'análise de dados',
             tittle: 'Relatórios'
+          },
+          painelSidebar: {
+            btnActive: value
           }
         })
         break
@@ -148,7 +161,14 @@ const Sidebar = (): JSX.Element => {
             ${isExpanded ? 'ml-6' : 'ml-0 items-center'}
             `}
           >
-            <li>Usuários</li>
+            <li
+              className={`hover:bg-[#2E2D2D] hover:p-1 rounded-md ${
+                registerBtnActive === 'users' ? 'bg-[#2E2D2D] p-1' : ''
+              }`}
+              onClick={() => setRegisterBtn({ registerBtnActive: 'users' })}
+            >
+              Usuários
+            </li>
             <li>Setores</li>
             <li>Tipo de despesa</li>
             <li>Aprovação</li>

@@ -11,6 +11,7 @@ import {
   IApiSolicitacao
 } from '../../../../types/InterfaceApi'
 import PainelDataNavLi from '../../../molecules/painel/PainelDataNavLi'
+import PainelSearch from '../PainelSearch'
 
 const PainelData = (): JSX.Element => {
   const [btnActive, setBtnActive] = useState('')
@@ -54,112 +55,115 @@ const PainelData = (): JSX.Element => {
   }, [btnActive])
 
   return (
-    <div className=" w-full pt-4 mt-4 font-inter">
-      <nav className="">
-        <ul
-          className={`border-b-2 pb-3 text-disabled flex gap-8 font-bold uppercase text-xs `}
-        >
-          <PainelDataNavLi
-            btnId="trip solicitation"
-            btnActive={btnActive}
-            setBtnActive={setBtnActive}
+    <>
+      <PainelSearch title="Pesquisar" hasButton={true} />
+      <div className=" w-full pt-4 mt-4 font-inter">
+        <nav className="">
+          <ul
+            className={`border-b-2 pb-3 text-disabled flex gap-8 font-bold uppercase text-xs `}
           >
-            <SVGPainelDataExclamation
-              className={`${
-                isTripSolicitation ? 'fill-secondary' : 'fill-disabled'
-              }`}
-              width={13}
-              height={13}
-            />
-            solicitação de adiantamento
-          </PainelDataNavLi>
-          <PainelDataNavLi
-            btnId="trip happening"
-            btnActive={btnActive}
-            setBtnActive={setBtnActive}
-          >
-            <SVGPainelDataCorrect
-              className={`${
-                isTripHappening ? 'fill-secondary' : 'fill-disabled'
-              }`}
-              width={13}
-              height={13}
-            />
-            viagens em andamento
-          </PainelDataNavLi>
-          <PainelDataNavLi
-            btnId="trip finished"
-            btnActive={btnActive}
-            setBtnActive={setBtnActive}
-          >
-            <SVGPainelDataHome
-              className={`${
-                isTripFinished ? 'fill-secondary' : 'fill-disabled'
-              }`}
-              width={20}
-              height={13}
-            />
-            viagens finalizadas
-          </PainelDataNavLi>
-        </ul>
-      </nav>
-      <div className="mt-8">
-        {/* <ul className="flex">
+            <PainelDataNavLi
+              btnId="trip solicitation"
+              btnActive={btnActive}
+              setBtnActive={setBtnActive}
+            >
+              <SVGPainelDataExclamation
+                className={`${
+                  isTripSolicitation ? 'fill-secondary' : 'fill-disabled'
+                }`}
+                width={13}
+                height={13}
+              />
+              solicitação de adiantamento
+            </PainelDataNavLi>
+            <PainelDataNavLi
+              btnId="trip happening"
+              btnActive={btnActive}
+              setBtnActive={setBtnActive}
+            >
+              <SVGPainelDataCorrect
+                className={`${
+                  isTripHappening ? 'fill-secondary' : 'fill-disabled'
+                }`}
+                width={13}
+                height={13}
+              />
+              viagens em andamento
+            </PainelDataNavLi>
+            <PainelDataNavLi
+              btnId="trip finished"
+              btnActive={btnActive}
+              setBtnActive={setBtnActive}
+            >
+              <SVGPainelDataHome
+                className={`${
+                  isTripFinished ? 'fill-secondary' : 'fill-disabled'
+                }`}
+                width={20}
+                height={13}
+              />
+              viagens finalizadas
+            </PainelDataNavLi>
+          </ul>
+        </nav>
+        <div className="mt-8">
+          {/* <ul className="flex">
           <li>Nome</li>
           <li>E-mail</li>
           <li>Setor</li>
           <li>Função</li>
           <li>Data</li>
         </ul> */}
-        {isTripSolicitation
-          ? tripSolicitationList.map((obj, index) => {
-              return (
-                <div key={index}>
-                  <ul className="flex gap-10">
-                    <li>{obj.nome}</li>
-                    <li>{obj.email}</li>
-                    <li>{obj.setor}</li>
-                    <li>{obj.funcao}</li>
-                    <li>{obj.data}</li>
-                  </ul>
-                </div>
-              )
-            })
-          : ''}
-        {isTripHappening
-          ? tripHappeningList.map((obj, index) => {
-              return (
-                <div key={index}>
-                  <ul className="flex gap-10">
-                    <li>{obj.titulo}</li>
-                    <li>{obj.descricao}</li>
-                    <li>{obj.remetente}</li>
-                    <li>{obj.funcao}</li>
-                    <li>{obj.data}</li>
-                    <li>{obj.tipo}</li>
-                  </ul>
-                </div>
-              )
-            })
-          : ''}
-        {isTripFinished
-          ? tripFinishedList.map((obj, index) => {
-              return (
-                <div key={index}>
-                  <ul className="flex gap-10">
-                    <li>{obj.titulo}</li>
-                    <li>{obj.descricao}</li>
-                    <li>{obj.remetente}</li>
-                    <li>{obj.funcao}</li>
-                    <li>{obj.data}</li>
-                    <li>{obj.tipo}</li>
-                  </ul>
-                </div>
-              )
-            })
-          : ''}
+          {isTripSolicitation
+            ? tripSolicitationList.map((obj, index) => {
+                return (
+                  <div key={index}>
+                    <ul className="flex gap-10">
+                      <li>{obj.nome}</li>
+                      <li>{obj.email}</li>
+                      <li>{obj.setor}</li>
+                      <li>{obj.funcao}</li>
+                      <li>{obj.data}</li>
+                    </ul>
+                  </div>
+                )
+              })
+            : ''}
+          {isTripHappening
+            ? tripHappeningList.map((obj, index) => {
+                return (
+                  <div key={index}>
+                    <ul className="flex gap-10">
+                      <li>{obj.titulo}</li>
+                      <li>{obj.descricao}</li>
+                      <li>{obj.remetente}</li>
+                      <li>{obj.funcao}</li>
+                      <li>{obj.data}</li>
+                      <li>{obj.tipo}</li>
+                    </ul>
+                  </div>
+                )
+              })
+            : ''}
+          {isTripFinished
+            ? tripFinishedList.map((obj, index) => {
+                return (
+                  <div key={index}>
+                    <ul className="flex gap-10">
+                      <li>{obj.titulo}</li>
+                      <li>{obj.descricao}</li>
+                      <li>{obj.remetente}</li>
+                      <li>{obj.funcao}</li>
+                      <li>{obj.data}</li>
+                      <li>{obj.tipo}</li>
+                    </ul>
+                  </div>
+                )
+              })
+            : ''}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

@@ -1,16 +1,16 @@
 import React, { useContext, useEffect } from 'react'
 import PainelHeader from '../../organisms/painel/PainelHeader'
 import PainelSidebar from '../../organisms/painel/PainelSidebar'
-import PainelSearch from '../../organisms/painel/PainelSearch'
 import PainelData from '../../organisms/painel/PainelData'
 
-import { alertLoginSucess } from '../../../utils/alert'
+// import { alertLoginSucess } from '../../../utils/alert'
 import PainelContext from '../../../contexts/painel/painelData'
+import PainelRegister from '../../organisms/painel/PainelRegister'
 
 const PainelTemplate = (): JSX.Element => {
-  const { painelHeader } = useContext(PainelContext)
+  const { painelHeader, painelSidebar } = useContext(PainelContext)
   useEffect(() => {
-    alertLoginSucess()
+    // alertLoginSucess()
   }, [])
   return (
     <div className="w-[94%] mx-auto flex">
@@ -19,12 +19,10 @@ const PainelTemplate = (): JSX.Element => {
         <PainelHeader
           subTitle={painelHeader.subTitle}
           tittle={painelHeader.tittle}
-          // subTitle="Controle de viagens"
-          // tittle="Painel de controle de viagens"
         />
         <div className=" w-full pl-10 pt-4">
-          <PainelSearch />
-          <PainelData />
+          {painelSidebar.btnActive === 'controlTrip' ? <PainelData /> : ''}
+          {painelSidebar.btnActive === 'register' ? <PainelRegister /> : ''}
         </div>
       </section>
     </div>
