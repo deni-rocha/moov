@@ -3,10 +3,13 @@ import iconNewUser from '../../../../assets/painel/painelRegister/icon-new-user.
 import PainelRegisterContext from '../../../../contexts/painel/painelRegister'
 import PainelDataNavLi from '../../../molecules/painel/PainelDataNavLi'
 import PainelSearch from '../PainelSearch'
-import { userList } from '../../../../services/api'
+import { userDelete, userList } from '../../../../services/api'
 import { IUserList } from '../../../../types/IUserList'
 import Text from '../../../atoms/Text'
 import PainelRegisterFormUser from '../PainelRegisterFormUser'
+import SvgDelete from '../../../../assets/painel/painelRegister/SvgDelete'
+import SvgEdit from '../../../../assets/painel/painelRegister/SvgEdit'
+import Swal from 'sweetalert2'
 
 const PainelRegister = (): JSX.Element => {
   const { registerBtnActive, formUserChecked, setPainelRegister } = useContext(
@@ -14,6 +17,24 @@ const PainelRegister = (): JSX.Element => {
   )
   const [btnActive, setBtnActive] = useState('')
   const [dataList, setDataList] = useState<IUserList>([])
+
+  function alertConfirm(id: number): void {
+    void Swal.fire({
+      title: 'deletar usuário?',
+      color: 'white',
+      icon: 'warning',
+      customClass: 'custom-sweetalert',
+      width: '300px',
+      background: '#4C4C4C',
+      position: 'top-end',
+      showConfirmButton: true,
+      showCancelButton: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        void userDelete(id)
+      }
+    })
+  }
 
   useEffect(() => {
     const fetch = async (): Promise<[]> => {
@@ -24,6 +45,7 @@ const PainelRegister = (): JSX.Element => {
 
         return []
       } catch (err) {
+        console.log(err)
         return []
       }
     }
@@ -75,6 +97,7 @@ const PainelRegister = (): JSX.Element => {
               <Text content="Perfil" />
               <Text content="Sexo" />
               <Text content="Status" />
+              <Text content="Editar" />
             </ul>
           </nav>
           <ul className="">
@@ -90,6 +113,14 @@ const PainelRegister = (): JSX.Element => {
                     <Text content={item.perfil} />
                     <Text content={item.sexo} />
                     <Text content={`${item.ativo ? 'ativo' : 'desativado'}`} />
+                    <div className="w-32 h-7 flex items-center gap-3">
+                      <button>
+                        <SvgEdit />
+                      </button>
+                      <button onClick={() => alertConfirm(item.id)}>
+                        <SvgDelete />
+                      </button>
+                    </div>
                   </li>
                 )
               })

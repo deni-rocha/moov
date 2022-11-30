@@ -1,5 +1,5 @@
-import { apiMoov } from '..'
-import { IUserList } from '../../../types/IUserList'
+import { apiMoov } from '../..'
+import { IUserList } from '../../../../types/IUserList'
 
 const userList = async (): Promise<IUserList | null> => {
   try {
@@ -9,6 +9,7 @@ const userList = async (): Promise<IUserList | null> => {
 
     return data
   } catch (err) {
+    console.log(err)
     return null
   }
 }

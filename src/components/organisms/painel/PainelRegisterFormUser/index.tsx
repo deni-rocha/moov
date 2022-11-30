@@ -9,7 +9,7 @@ const initialState = {
   email: '',
   senha: '',
   sexo: '',
-  perfil: ''
+  perfil: 'NORMAL'
 }
 
 const PainelRegisterFormUser = (): JSX.Element => {
@@ -19,21 +19,14 @@ const PainelRegisterFormUser = (): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false)
   const [formValues, setFormValues] = useState(initialState)
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    let { name, value, type, checked } = e.target
-    const isCheckbox = type === 'checkbox'
-
-    if (isCheckbox) {
-      value = checked ? 'NORMAL' : ''
-    }
-
-    updateData(name, value)
-  }
-
-  function handleChangeSelect(e: React.ChangeEvent<HTMLSelectElement>): void {
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ): void {
     const { name, value } = e.target
+
     updateData(name, value)
   }
+
   function updateData(name: string, value: string): void {
     setFormValues({ ...formValues, [name]: value })
   }
@@ -118,15 +111,17 @@ const PainelRegisterFormUser = (): JSX.Element => {
             </div>
           </div>
           <div className="flex justify-between relative items-center gap-2">
-            <label className="h-12 w-8/12 flex flex-col">
+            <label className="h-12 w-full flex flex-col">
               <span className="self-start font-bold">Sexo</span>
               <div className="relative">
                 <select
                   name="sexo"
-                  onChange={handleChangeSelect}
+                  onChange={handleChange}
                   className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 >
-                  <option value="MASCULINO">Masculino</option>
+                  <option value="MASCULINO" selected>
+                    Masculino
+                  </option>
                   <option value="FEMININO">Feminino</option>
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -140,24 +135,8 @@ const PainelRegisterFormUser = (): JSX.Element => {
                 </div>
               </div>
             </label>
-            <div className="h-28 flex justify-end items-center pt-2">
-              <label
-                className="cursor-pointer
-             w-40 p-3
-             "
-              >
-                <input
-                  onChange={handleChange}
-                  name="perfil"
-                  type="checkbox"
-                  value={formValues.perfil}
-                  className="mr-2"
-                />
-                Perfil Normal
-              </label>
-            </div>
           </div>
-          <div className="w-full justify-end flex xs:flex-col  items-center xs:space-y-4 gap-2">
+          <div className="w-full justify-end pt-5 flex xs:flex-col items-center xs:space-y-4 gap-2">
             <button
               onClick={() => {
                 setPainelRegister({
