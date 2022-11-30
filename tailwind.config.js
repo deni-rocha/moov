@@ -8,6 +8,7 @@ module.exports = {
       screens: {
         xs: { max: '600px' },
         sm: '320px',
+        formWidth: {max: "948px"}, 
         ...defaultTheme.screens
       },
       colors: {

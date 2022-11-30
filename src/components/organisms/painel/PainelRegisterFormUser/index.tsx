@@ -2,25 +2,15 @@ import React, { useContext, useState } from 'react'
 import Input from '../../../atoms/Input'
 import icon from '../../../../assets/input/icon/icon.svg'
 import PainelRegisterContext from '../../../../contexts/painel/painelRegister'
+import { apiMoov } from '../../../../services/api'
 
 const initialState = {
-  email: '',
   nome: '',
+  email: '',
   senha: '',
-  permissao: '',
-  status: '',
-  setor: '',
-  captcha: ''
+  sexo: '',
+  perfil: ''
 }
-
-// const endState = {
-//   email: 'eu.denilsonrocha@gmail.com',
-//   nome: 'denilson rocha',
-//   empresa: 'audax company',
-//   assunto: 'vaga dev',
-//   textArea: 'quero muito uma vaga',
-//   captcha: 'false'
-// }
 
 const PainelRegisterFormUser = (): JSX.Element => {
   const { registerBtnActive, setPainelRegister } = useContext(
@@ -34,32 +24,45 @@ const PainelRegisterFormUser = (): JSX.Element => {
     const isCheckbox = type === 'checkbox'
 
     if (isCheckbox) {
-      console.log('sim, é um checkbox!', checked)
-
-      value = checked ? 'aceito' : 'recusado'
+      value = checked ? 'NORMAL' : ''
     }
 
     updateData(name, value)
   }
 
+  function handleChangeSelect(e: React.ChangeEvent<HTMLSelectElement>): void {
+    const { name, value } = e.target
+    updateData(name, value)
+  }
   function updateData(name: string, value: string): void {
     setFormValues({ ...formValues, [name]: value })
   }
 
   function submitForm(e: React.FormEvent<HTMLFormElement>): void {
-    const { nome, senha, permissao, email, setor, captcha } = formValues
+    const { nome, senha, email, sexo, perfil } = formValues
     e.preventDefault()
 
-    if (captcha !== 'aceito') return alert('por obséquio passe pelo captcha :)')
-    if (nome.length === 0) return alert('por favor corrija seu e-mail')
-    if (senha.length === 0) return alert('por favor colocar o nome da empresa')
-    if (permissao.length < 3)
-      return alert('por gentileza nos informe o assunto')
+    if (nome.length === 0) return alert('por favor insira um nome')
+    if (senha.length === 0) return alert('por favor informe sua senha')
     if (email.length < 3) return alert('por gentileza corrija o email')
-    if (setor.length < 3) return alert('por favor nos conte mais detalhes')
 
-    alert('Eviado! Obrigado, daremos retorno em breve.')
-    setFormValues(initialState)
+    void (async () => {
+      try {
+        const res = await apiMoov.post('/usuario', {
+          perfil,
+          email,
+          nome,
+          senha,
+          sexo
+        })
+
+        if (res.status === 200) alert('usuário cadastrado')
+        setFormValues(initialState)
+      } catch (err) {
+        alert('usuário não cadastrado')
+        console.log(err)
+      }
+    })()
   }
   return (
     <section className="bg-textPrimary">
@@ -73,25 +76,27 @@ const PainelRegisterFormUser = (): JSX.Element => {
         <form
           onSubmit={submitForm}
           className="
-        text-center text-xs font-inter space-y-4
-        md:text-sm
+          w-10/12
+          max-w-[770px]
+          text-center text-xs font-inter space-y-4
+          md:text-sm
         "
         >
           <input
-            value={formValues.email}
+            value={formValues.nome}
             onChange={handleChange}
-            type="email"
-            name="email"
-            placeholder="E-mail do usuário"
+            type="text"
+            name="nome"
+            placeholder="Nome do usuário"
             className="p-2 pl-7 h-12 w-full placeholder:text-bgDefault rounded-md bg-gray-200"
           />
           <div className="flex justify-between relative items-center gap-2">
             <input
-              value={formValues.nome}
+              value={formValues.email}
               onChange={handleChange}
-              type="text"
-              name="nome"
-              placeholder="Nome do usuário"
+              type="email"
+              name="email"
+              placeholder="E-mail do usuário"
               className="p-2 pl-7 h-12 w-full placeholder:text-bgDefault rounded-md bg-gray-200"
             />
             <Input
@@ -113,49 +118,44 @@ const PainelRegisterFormUser = (): JSX.Element => {
             </div>
           </div>
           <div className="flex justify-between relative items-center gap-2">
-            <input
-              value={formValues.nome}
-              onChange={handleChange}
-              type="text"
-              name="permissao"
-              placeholder="Permissão do usuário"
-              className="p-2 pl-7 h-12 w-full placeholder:text-bgDefault rounded-md bg-gray-200"
-            />
-            <input
-              value={formValues.status}
-              onChange={handleChange}
-              type="text"
-              name="status"
-              placeholder="Status"
-              className="p-2 pl-7 h-12  w-full placeholder:text-bgDefault rounded-md bg-gray-200"
-            />
-          </div>
-          <div className="flex justify-between relative items-center gap-2">
-            <input
-              value={formValues.nome}
-              onChange={handleChange}
-              type="text"
-              name="permissao"
-              placeholder="Setor do usuário"
-              className="p-2 pl-7 h-12 w-8/12 placeholder:text-bgDefault rounded-md bg-gray-200"
-            />
-            <label
-              className="cursor-pointer
-             w-40 p-3"
-            >
-              <input
-                onChange={handleChange}
-                name="captcha"
-                type="checkbox"
-                value={formValues.captcha}
-                className="mr-2"
-              />
-              Ultrapassar limites
+            <label className="h-12 w-8/12 flex flex-col">
+              <span className="self-start font-bold">Sexo</span>
+              <div className="relative">
+                <select
+                  name="sexo"
+                  onChange={handleChangeSelect}
+                  className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                >
+                  <option value="MASCULINO">Masculino</option>
+                  <option value="FEMININO">Feminino</option>
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                  <svg
+                    className="fill-current h-4 w-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                  </svg>
+                </div>
+              </div>
             </label>
-            <p className="text-center w-80 text-[#C6C6C6]">
-              Indica que este usuário pode gastar mais do que o limite de
-              despesa selecionado na viagem.
-            </p>
+            <div className="h-28 flex justify-end items-center pt-2">
+              <label
+                className="cursor-pointer
+             w-40 p-3
+             "
+              >
+                <input
+                  onChange={handleChange}
+                  name="perfil"
+                  type="checkbox"
+                  value={formValues.perfil}
+                  className="mr-2"
+                />
+                Perfil Normal
+              </label>
+            </div>
           </div>
           <div className="w-full justify-end flex xs:flex-col  items-center xs:space-y-4 gap-2">
             <button
@@ -165,13 +165,15 @@ const PainelRegisterFormUser = (): JSX.Element => {
                   registerBtnActive
                 })
               }}
-              className="w-52 h-11 text-white bg-[#EB5A46] rounded-md"
+              className="w-52 h-11 text-white font-bold bg-[#EB5A46] rounded-md"
             >
               cancelar
             </button>
-            <button className="w-52 h-11 text-white bg-[#31D760] rounded-md">
-              salvar usuário
-            </button>
+            <input
+              type="submit"
+              value="salvar usuário"
+              className="w-52 h-11 text-white font-bold bg-[#31D760] rounded-md cursor-pointer"
+            />
           </div>
         </form>
       </section>
