@@ -20,7 +20,7 @@ import PainelRegisterContext from '../../../../contexts/painel/painelRegister'
 
 const Sidebar = (): JSX.Element => {
   const { setData } = useContext(PainelContext)
-  const { registerBtnActive, setRegisterBtn } = useContext(
+  const { registerBtnActive, setPainelRegister } = useContext(
     PainelRegisterContext
   )
   const { setSigned } = useContext(AuthContext)
@@ -40,7 +40,7 @@ const Sidebar = (): JSX.Element => {
             btnActive: value
           }
         })
-        setRegisterBtn({ registerBtnActive: '', form: false })
+        setPainelRegister({ registerBtnActive: '', formUserChecked: false })
         break
       }
       case 'register': {
@@ -166,7 +166,10 @@ const Sidebar = (): JSX.Element => {
                 registerBtnActive === 'usuários' ? 'bg-[#2E2D2D] p-1' : ''
               }`}
               onClick={() => {
-                setRegisterBtn({ registerBtnActive: 'usuários', form: false })
+                setPainelRegister({
+                  registerBtnActive: 'usuários',
+                  formUserChecked: false
+                })
               }}
             >
               Usuários
@@ -176,7 +179,10 @@ const Sidebar = (): JSX.Element => {
                 registerBtnActive === 'setores' ? 'bg-[#2E2D2D] p-1' : ''
               }`}
               onClick={() =>
-                setRegisterBtn({ registerBtnActive: 'setores', form: false })
+                setPainelRegister({
+                  registerBtnActive: 'setores',
+                  formUserChecked: false
+                })
               }
             >
               Setores
@@ -188,9 +194,9 @@ const Sidebar = (): JSX.Element => {
                   : ''
               }`}
               onClick={() =>
-                setRegisterBtn({
+                setPainelRegister({
                   registerBtnActive: 'tipo de despesa',
-                  form: false
+                  formUserChecked: false
                 })
               }
             >
@@ -201,9 +207,9 @@ const Sidebar = (): JSX.Element => {
                 registerBtnActive === 'aprovação' ? 'bg-[#2E2D2D] p-1' : ''
               }`}
               onClick={() =>
-                setRegisterBtn({
+                setPainelRegister({
                   registerBtnActive: 'aprovação',
-                  form: false
+                  formUserChecked: false
                 })
               }
             >

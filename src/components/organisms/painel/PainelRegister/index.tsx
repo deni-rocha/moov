@@ -6,10 +6,10 @@ import PainelSearch from '../PainelSearch'
 import { userList } from '../../../../services/api'
 import { IUserList } from '../../../../types/IUserList'
 import Text from '../../../atoms/Text'
-import Form from '../PainelRegisterNewUser'
+import PainelRegisterFormUser from '../PainelRegisterFormUser'
 
 const PainelRegister = (): JSX.Element => {
-  const { registerBtnActive, form, setRegisterBtn } = useContext(
+  const { registerBtnActive, formUserChecked, setPainelRegister } = useContext(
     PainelRegisterContext
   )
   const [btnActive, setBtnActive] = useState('')
@@ -37,11 +37,14 @@ const PainelRegister = (): JSX.Element => {
       <div
         className={`max-w-[1105px] ${usersChecked} border-2 mb-3 items-center p-4 justify-between rounded-md border-zinc-300 flex`}
       >
-        {form ? <Form /> : ''}
+        {formUserChecked ? <PainelRegisterFormUser /> : ''}
         <p className="font-bold uppercase text-sm">cadastrar novos usuários</p>
         <button
           onClick={() => {
-            setRegisterBtn({ registerBtnActive: 'usuários', form: true })
+            setPainelRegister({
+              registerBtnActive: 'usuários',
+              formUserChecked: true
+            })
           }}
           className="bg-[#31d760] w-48 relative h-11 flex items-center justify-center rounded-md text-white p-4"
         >
@@ -103,7 +106,7 @@ const PainelRegister = (): JSX.Element => {
         <p className="font-bold uppercase text-sm">cadastrar novos usuários</p>
         <button
           onClick={() => {
-            setRegisterBtn({ registerBtnActive: 'users', form: true })
+            setPainelRegister({ registerBtnActive: 'users', form: true })
           }}
           className="bg-[#31d760] w-48 relative h-11 flex items-center justify-center rounded-md text-white p-4"
         >

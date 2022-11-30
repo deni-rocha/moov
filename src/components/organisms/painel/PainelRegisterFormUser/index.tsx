@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Input from '../../../atoms/Input'
 import icon from '../../../../assets/input/icon/icon.svg'
+import PainelRegisterContext from '../../../../contexts/painel/painelRegister'
 
 const initialState = {
   email: '',
@@ -21,7 +22,10 @@ const initialState = {
 //   captcha: 'false'
 // }
 
-const Form = (): JSX.Element => {
+const PainelRegisterFormUser = (): JSX.Element => {
+  const { registerBtnActive, setPainelRegister } = useContext(
+    PainelRegisterContext
+  )
   const [showPassword, setShowPassword] = useState(false)
   const [formValues, setFormValues] = useState(initialState)
 
@@ -154,7 +158,15 @@ const Form = (): JSX.Element => {
             </p>
           </div>
           <div className="w-full justify-end flex xs:flex-col  items-center xs:space-y-4 gap-2">
-            <button className="w-52 h-11 text-white bg-[#EB5A46] rounded-md">
+            <button
+              onClick={() => {
+                setPainelRegister({
+                  formUserChecked: false,
+                  registerBtnActive
+                })
+              }}
+              className="w-52 h-11 text-white bg-[#EB5A46] rounded-md"
+            >
               cancelar
             </button>
             <button className="w-52 h-11 text-white bg-[#31D760] rounded-md">
@@ -167,4 +179,4 @@ const Form = (): JSX.Element => {
   )
 }
 
-export default Form
+export default PainelRegisterFormUser
