@@ -20,7 +20,7 @@ const PainelTemplate = (): JSX.Element => {
           subTitle={painelHeader.subTitle}
           tittle={painelHeader.tittle}
         />
-        <div className=" w-full pl-10 pt-4">
+        <div className=" w-full pl-10 pt-4 relative">
           {painelSidebar.btnActive === 'controlTrip' ? <PainelData /> : ''}
           {painelSidebar.btnActive === 'register' ? <PainelRegister /> : ''}
         </div>

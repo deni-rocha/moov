@@ -165,7 +165,9 @@ const Sidebar = (): JSX.Element => {
               className={`hover:bg-[#2E2D2D] hover:p-1 rounded-md ${
                 registerBtnActive === 'users' ? 'bg-[#2E2D2D] p-1' : ''
               }`}
-              onClick={() => setRegisterBtn({ registerBtnActive: 'users' })}
+              onClick={() =>
+                setRegisterBtn({ registerBtnActive: 'users', form: false })
+              }
             >
               Usuários
             </li>

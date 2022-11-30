@@ -6,9 +6,12 @@ import PainelSearch from '../PainelSearch'
 import { userList } from '../../../../services/api'
 import { IUserList } from '../../../../types/IUserList'
 import Text from '../../../atoms/Text'
+import Form from '../PainelRegisterNewUser'
 
 const PainelRegister = (): JSX.Element => {
-  const { registerBtnActive } = useContext(PainelRegisterContext)
+  const { registerBtnActive, form, setRegisterBtn } = useContext(
+    PainelRegisterContext
+  )
   const [btnActive, setBtnActive] = useState('')
   const [dataList, setDataList] = useState<IUserList>([])
 
@@ -31,8 +34,14 @@ const PainelRegister = (): JSX.Element => {
   return (
     <>
       <div className="max-w-[1105px] border-2 mb-3 items-center p-4 justify-between rounded-md border-zinc-300 flex">
+        {form ? <Form /> : ''}
         <p className="font-bold uppercase text-sm">cadastrar novos usuários</p>
-        <button className="bg-[#31d760] w-48 relative h-11 flex items-center justify-center rounded-md text-white p-4">
+        <button
+          onClick={() => {
+            setRegisterBtn({ registerBtnActive: 'users', form: true })
+          }}
+          className="bg-[#31d760] w-48 relative h-11 flex items-center justify-center rounded-md text-white p-4"
+        >
           <img src={iconNewUser} alt="icon" className="absolute left-7 top-4" />
           <p className="uppercase text-xs font-semibold">novos usuários</p>
         </button>
@@ -58,7 +67,7 @@ const PainelRegister = (): JSX.Element => {
         </nav>
         <div className="mt-8">
           <nav>
-            <ul className="flex justify-around">
+            <ul className="flex justify-around p-2 border-y-2">
               <Text content="Nome" />
               <Text content="E-mail" className="w-48" />
               <Text content="Perfil" />

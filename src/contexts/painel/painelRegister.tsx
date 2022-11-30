@@ -6,6 +6,7 @@ interface Props {
 
 interface IPainelRegisterData {
   registerBtnActive: string
+  form: boolean
 }
 
 interface IPainelRegiter extends IPainelRegisterData {
@@ -14,12 +15,16 @@ interface IPainelRegiter extends IPainelRegisterData {
 
 const initialValue: IPainelRegiter = {
   registerBtnActive: '',
+  form: false,
   setRegisterBtn: () => {}
 }
 const PainelRegisterContext = createContext<IPainelRegiter>(initialValue)
 
 export const PainelRegisterProvider = ({ children }: Props): JSX.Element => {
-  const [data, setRegisterBtn] = useState({ registerBtnActive: '' })
+  const [data, setRegisterBtn] = useState({
+    registerBtnActive: '',
+    form: false
+  })
 
   return (
     <PainelRegisterContext.Provider value={{ ...data, setRegisterBtn }}>
