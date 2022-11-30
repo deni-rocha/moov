@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import iconLogo from '../../../../assets/painel/sidebar/icon-logo.svg'
 import perfil from '../../../../assets/painel/sidebar/perfil.png'
 import iconOnline from '../../../../assets/painel/sidebar/icon-online.svg'
 import iconEdit from '../../../../assets/painel/sidebar/icon-edit.svg'
@@ -14,13 +13,49 @@ import SVGCollapsedLogo from '../../../../assets/painel/sidebar/collapsed/SVGCol
 import verifyWindowSize from '../../../../utils/verifyWindowSize'
 import SvgToggleOpen from '../../../../assets/painel/sidebar/SvgToggleOpen'
 import SvgToggleClose from '../../../../assets/painel/sidebar/SvgToggleClose'
+import SvgIcon from '../../../../assets/painel/sidebar/SvgIcon'
+import UserContext from '../../../../contexts/painel/user'
+import PainelContext from '../../../../contexts/painel/painelData'
 
 const Sidebar = (): JSX.Element => {
+  const { setData } = useContext(PainelContext)
   const { setSigned } = useContext(AuthContext)
+  const { nome, email } = useContext(UserContext)
   const [btnActive, setBtnActive] = useState('')
   const [isExpanded, setIsExpanded] = useState(true)
 
   function handleActiveBtn(value: string): void {
+    switch (value) {
+      case 'controlTrip': {
+        setData({
+          painelHeader: {
+            subTitle: 'Controle de viagens',
+            tittle: 'Painel de controle de viagens'
+          }
+        })
+
+        break
+      }
+      case 'register': {
+        setData({
+          painelHeader: {
+            subTitle: 'Cadastráveis',
+            tittle: 'Usuários'
+          }
+        })
+        break
+      }
+      case 'report': {
+        setData({
+          painelHeader: {
+            subTitle: 'análise de dados',
+            tittle: 'Relatórios'
+          }
+        })
+        break
+      }
+    }
+
     setBtnActive(value)
   }
 
@@ -48,12 +83,12 @@ const Sidebar = (): JSX.Element => {
         >
           {isExpanded ? <SvgToggleClose /> : <SvgToggleOpen />}
         </button>
-        <div className={`w-52 h-14 ${isExpanded ? '' : 'flex justify-center'}`}>
-          {isExpanded ? (
-            <img src={iconLogo} alt="logo" />
-          ) : (
-            <SVGCollapsedLogo />
-          )}
+        <div
+          className={`w-52 h-14 transition-all duration-1000 ${
+            isExpanded ? '' : 'flex justify-center'
+          }`}
+        >
+          {isExpanded ? <SvgIcon /> : <SVGCollapsedLogo />}
         </div>
         <PainelBtn
           isExpanded={isExpanded}
@@ -67,15 +102,15 @@ const Sidebar = (): JSX.Element => {
               </div>
             </div>
           </div>
-          <div className={`${isExpanded ? '' : 'hidden'}`}>
-            <p className="text-md font-extrabold ">Maria Santos</p>
-            <p className="text-sm ">Administrativo</p>
+          <div className={`truncate ${isExpanded ? '' : 'hidden'}`}>
+            <p className="text-sm font-extrabold ">{nome}</p>
+            <p className="text-sm ">{email}</p>
           </div>
         </PainelBtn>
         <PainelBtn
           isExpanded={isExpanded}
           onClick={() => handleActiveBtn('controlTrip')}
-          className={`text-white items-center transition-all duration-300 ${
+          className={`text-white items-center ${
             btnActive === 'controlTrip'
               ? 'bg-secondary font-bold justify-center'
               : 'text-[#CACACA] hover:contrast-0 font-lato'
@@ -90,7 +125,7 @@ const Sidebar = (): JSX.Element => {
         <PainelBtn
           isExpanded={isExpanded}
           onClick={() => handleActiveBtn('register')}
-          className={`flex-col gap-2 p-2 rounded-md text-white relative transition-all duration-300 ${
+          className={`flex-col gap-2 p-2 rounded-md text-white relative ${
             btnActive === 'register'
               ? 'bg-secondary h-48 font-bold'
               : 'text-[#CACACA] h-14 hover:contrast-0'
@@ -122,7 +157,7 @@ const Sidebar = (): JSX.Element => {
         <PainelBtn
           isExpanded={isExpanded}
           onClick={() => handleActiveBtn('report')}
-          className={`rounded-md text-white transition-all duration-300 ${
+          className={`rounded-md text-white ${
             btnActive === 'report'
               ? 'bg-secondary justify-center'
               : 'text-[#CACACA] hover:contrast-0'

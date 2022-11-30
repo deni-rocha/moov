@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import AuthContext from '../../../../contexts/auth'
-import LoaderContext from '../../../../contexts/loader'
+import LoaderContext from '../../../../contexts/login/loader'
 import login from '../../../../services/api/login'
 import { alertLoginError, alertLoginSucess } from '../../../../utils/alert'
 
