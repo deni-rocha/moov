@@ -14,13 +14,48 @@ import verifyWindowSize from '../../../../utils/verifyWindowSize'
 import SvgToggleOpen from '../../../../assets/painel/sidebar/SvgToggleOpen'
 import SvgToggleClose from '../../../../assets/painel/sidebar/SvgToggleClose'
 import SvgIcon from '../../../../assets/painel/sidebar/SvgIcon'
+import UserContext from '../../../../contexts/painel/user'
+import PainelContext from '../../../../contexts/painel/painelData'
 
 const Sidebar = (): JSX.Element => {
+  const { setData } = useContext(PainelContext)
   const { setSigned } = useContext(AuthContext)
+  const { nome, email } = useContext(UserContext)
   const [btnActive, setBtnActive] = useState('')
   const [isExpanded, setIsExpanded] = useState(true)
 
   function handleActiveBtn(value: string): void {
+    switch (value) {
+      case 'controlTrip': {
+        setData({
+          painelHeader: {
+            subTitle: 'Controle de viagens',
+            tittle: 'Painel de controle de viagens'
+          }
+        })
+
+        break
+      }
+      case 'register': {
+        setData({
+          painelHeader: {
+            subTitle: 'Cadastráveis',
+            tittle: 'Usuários'
+          }
+        })
+        break
+      }
+      case 'report': {
+        setData({
+          painelHeader: {
+            subTitle: 'análise de dados',
+            tittle: 'Relatórios'
+          }
+        })
+        break
+      }
+    }
+
     setBtnActive(value)
   }
 
@@ -67,9 +102,9 @@ const Sidebar = (): JSX.Element => {
               </div>
             </div>
           </div>
-          <div className={`${isExpanded ? '' : 'hidden'}`}>
-            <p className="text-md font-extrabold ">Maria Santos</p>
-            <p className="text-sm ">Administrativo</p>
+          <div className={`truncate ${isExpanded ? '' : 'hidden'}`}>
+            <p className="text-sm font-extrabold ">{nome}</p>
+            <p className="text-sm ">{email}</p>
           </div>
         </PainelBtn>
         <PainelBtn
