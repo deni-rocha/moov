@@ -14,7 +14,7 @@ const PainelHeader = ({ tittle, subTitle }: Props): JSX.Element => {
         <SubTitle subTitle={subTitle} className="text-[#9b9b9b] text-sm" />
         <Title
           tittle={tittle}
-          className="text-lg font-inter font-bold text-[#303030] "
+          className="text-lg font-inter font-bold text-[#303030] capitalize"
         />
       </div>
       <SVGPainelHeaderLogo width={35} height={35} className={''} />

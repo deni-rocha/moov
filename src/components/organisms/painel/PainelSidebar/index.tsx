@@ -34,20 +34,20 @@ const Sidebar = (): JSX.Element => {
         setData({
           painelHeader: {
             subTitle: 'Controle de viagens',
-            tittle: 'Painel de controle de viagens'
+            title: 'Painel de controle de viagens'
           },
           painelSidebar: {
             btnActive: value
           }
         })
-
+        setRegisterBtn({ registerBtnActive: '', form: false })
         break
       }
       case 'register': {
         setData({
           painelHeader: {
             subTitle: 'Cadastráveis',
-            tittle: 'Usuários'
+            title: ''
           },
           painelSidebar: {
             btnActive: value
@@ -59,7 +59,7 @@ const Sidebar = (): JSX.Element => {
         setData({
           painelHeader: {
             subTitle: 'análise de dados',
-            tittle: 'Relatórios'
+            title: 'Relatórios'
           },
           painelSidebar: {
             btnActive: value
@@ -162,18 +162,53 @@ const Sidebar = (): JSX.Element => {
             `}
           >
             <li
-              className={`hover:bg-[#2E2D2D] hover:p-1 rounded-md ${
-                registerBtnActive === 'users' ? 'bg-[#2E2D2D] p-1' : ''
+              className={`hover:bg-[#848484] hover:p-1 rounded-md ${
+                registerBtnActive === 'usuários' ? 'bg-[#2E2D2D] p-1' : ''
               }`}
-              onClick={() =>
-                setRegisterBtn({ registerBtnActive: 'users', form: false })
-              }
+              onClick={() => {
+                setRegisterBtn({ registerBtnActive: 'usuários', form: false })
+              }}
             >
               Usuários
             </li>
-            <li>Setores</li>
-            <li>Tipo de despesa</li>
-            <li>Aprovação</li>
+            <li
+              className={`hover:bg-[#848484] hover:p-1 rounded-md ${
+                registerBtnActive === 'setores' ? 'bg-[#2E2D2D] p-1' : ''
+              }`}
+              onClick={() =>
+                setRegisterBtn({ registerBtnActive: 'setores', form: false })
+              }
+            >
+              Setores
+            </li>
+            <li
+              className={`hover:bg-[#848484] hover:p-1 rounded-md ${
+                registerBtnActive === 'tipo de despesa'
+                  ? 'bg-[#2E2D2D] p-1'
+                  : ''
+              }`}
+              onClick={() =>
+                setRegisterBtn({
+                  registerBtnActive: 'tipo de despesa',
+                  form: false
+                })
+              }
+            >
+              Tipo de despesa
+            </li>
+            <li
+              className={`hover:bg-[#848484] hover:p-1 rounded-md ${
+                registerBtnActive === 'aprovação' ? 'bg-[#2E2D2D] p-1' : ''
+              }`}
+              onClick={() =>
+                setRegisterBtn({
+                  registerBtnActive: 'aprovação',
+                  form: false
+                })
+              }
+            >
+              Aprovação
+            </li>
           </ul>
         </PainelBtn>
         <PainelBtn

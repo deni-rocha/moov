@@ -6,7 +6,7 @@ interface Props {
 
 interface IPainelData {
   painelHeader: {
-    tittle: string
+    title: string
     subTitle: string
   }
   painelSidebar: {
@@ -20,7 +20,7 @@ interface IPainel extends IPainelData {
 
 const initialValue: IPainel = {
   painelHeader: {
-    tittle: 'Olá, que bom ver você aqui :)',
+    title: 'Olá, que bom ver você aqui :)',
     subTitle: ''
   },
   painelSidebar: {
