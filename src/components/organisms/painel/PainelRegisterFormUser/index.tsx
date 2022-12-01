@@ -2,13 +2,15 @@ import React, { useContext, useState } from 'react'
 import Input from '../../../atoms/Input'
 import icon from '../../../../assets/input/icon/icon.svg'
 import PainelRegisterContext from '../../../../contexts/painel/painelRegister'
+import { alertError, alertSucess } from '../../../../utils/alert'
 import { apiMoov } from '../../../../services/api'
+import { AxiosError } from 'axios'
 
 const initialState = {
   nome: '',
   email: '',
   senha: '',
-  sexo: '',
+  sexo: 'MASCULINO',
   perfil: 'NORMAL'
 }
 
@@ -33,6 +35,7 @@ const PainelRegisterFormUser = (): JSX.Element => {
 
   function submitForm(e: React.FormEvent<HTMLFormElement>): void {
     const { nome, senha, email, sexo, perfil } = formValues
+
     e.preventDefault()
 
     if (nome.length === 0) return alert('por favor insira um nome')
@@ -49,11 +52,24 @@ const PainelRegisterFormUser = (): JSX.Element => {
           sexo
         })
 
-        if (res.status === 200) alert('usuário cadastrado')
+        switch (res.status) {
+          case 200:
+            alertSucess('usuário cadastrado', '#4C4C4C', '#ffffff')
+            break
+        }
         setFormValues(initialState)
-      } catch (err) {
-        alert('usuário não cadastrado')
-        console.log(err)
+      } catch (error) {
+        const err = error as AxiosError
+        switch (err.response?.status) {
+          case 500:
+            alertError('erro no servidor', '#4C4C4C', '#ffffff')
+            break
+          case 409:
+            alertError('e-mail já existe', '#4C4C4C', '#ffffff')
+            break
+          default:
+            alertError('usuário não cadastrado', '#4C4C4C', '#ffffff')
+        }
       }
     })()
   }
@@ -115,13 +131,12 @@ const PainelRegisterFormUser = (): JSX.Element => {
               <span className="self-start font-bold">Sexo</span>
               <div className="relative">
                 <select
+                  value={formValues.sexo}
                   name="sexo"
                   onChange={handleChange}
                   className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 >
-                  <option value="MASCULINO" selected>
-                    Masculino
-                  </option>
+                  <option value="MASCULINO">Masculino</option>
                   <option value="FEMININO">Feminino</option>
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
