@@ -35,3 +35,16 @@ export function alertSucess(
     timer: 1000
   })
 }
+
+export function alertErrorDeleteUser(title: string): void {
+  void Swal.fire({
+    title,
+    color: '#4C4C4C',
+    background: '#ffffff',
+    icon: 'error',
+    customClass: 'alertLogin',
+    position: 'center',
+    showConfirmButton: false,
+    timer: 1500
+  })
+}

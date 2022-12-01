@@ -10,8 +10,11 @@ import PainelRegisterFormUser from '../PainelRegisterFormUser'
 import SvgDelete from '../../../../assets/painel/painelRegister/SvgDelete'
 import SvgEdit from '../../../../assets/painel/painelRegister/SvgEdit'
 import Swal from 'sweetalert2'
+import UserContext from '../../../../contexts/painel/user'
+import { alertErrorDeleteUser } from '../../../../utils/alert'
 
 const PainelRegister = (): JSX.Element => {
+  const { token } = useContext(UserContext)
   const { registerBtnActive, formUserChecked, setPainelRegister } = useContext(
     PainelRegisterContext
   )
@@ -21,26 +24,39 @@ const PainelRegister = (): JSX.Element => {
   function alertConfirm(id: number): void {
     void Swal.fire({
       title: 'deletar usuário?',
-      color: 'white',
+      color: '#4C4C4C',
       icon: 'warning',
       customClass: 'custom-sweetalert',
       width: '300px',
-      background: '#4C4C4C',
+      background: '#ffffff',
       position: 'top-end',
+      confirmButtonText: 'deletar',
+      cancelButtonText: 'cancelar',
+      confirmButtonColor: '#EB5A46',
+      cancelButtonColor: '#31d760',
       showConfirmButton: true,
       showCancelButton: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-        void userDelete(id)
-      }
     })
+      .then((result) => {
+        if (result.isConfirmed) {
+          return userDelete(id, token)
+        }
+      })
+      .then((data) => {
+        switch (data) {
+          case 409:
+            alertErrorDeleteUser('OPS! Sem permissão para deletar esse usuário')
+            break
+          default:
+            alertErrorDeleteUser('OPS! Sua navegação expirou')
+        }
+      })
   }
 
   function getAllUsers(): void {
     void (async (): Promise<[]> => {
       try {
-        const res = await userList()
-
+        const res = await userList(token)
         if (res !== null) setDataList(res)
 
         return []
