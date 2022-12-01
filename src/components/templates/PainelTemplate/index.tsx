@@ -3,7 +3,7 @@ import PainelHeader from '../../organisms/painel/PainelHeader'
 import PainelSidebar from '../../organisms/painel/PainelSidebar'
 import PainelData from '../../organisms/painel/PainelData'
 
-import { alertLoginSucess } from '../../../utils/alert'
+import { alertSucess } from '../../../utils/alert'
 import PainelContext from '../../../contexts/painel/painelData'
 import PainelRegister from '../../organisms/painel/PainelRegister'
 import PainelRegisterContext from '../../../contexts/painel/painelRegister'
@@ -11,9 +11,11 @@ import PainelRegisterContext from '../../../contexts/painel/painelRegister'
 const PainelTemplate = (): JSX.Element => {
   const { painelHeader, painelSidebar } = useContext(PainelContext)
   const { registerBtnActive } = useContext(PainelRegisterContext)
+
   useEffect(() => {
-    alertLoginSucess()
+    alertSucess('conectado', '#4C4C4C', '#ffffff')
   }, [])
+
   return (
     <div className="w-[94%] mx-auto flex">
       <PainelSidebar />

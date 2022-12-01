@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState } from 'react'
 import iconNewUser from '../../../../assets/painel/painelRegister/icon-new-user.svg'
 import PainelRegisterContext from '../../../../contexts/painel/painelRegister'
 import PainelDataNavLi from '../../../molecules/painel/PainelDataNavLi'
@@ -36,8 +36,8 @@ const PainelRegister = (): JSX.Element => {
     })
   }
 
-  useEffect(() => {
-    const fetch = async (): Promise<[]> => {
+  function getAllUsers(): void {
+    void (async (): Promise<[]> => {
       try {
         const res = await userList()
 
@@ -48,11 +48,8 @@ const PainelRegister = (): JSX.Element => {
         console.log(err)
         return []
       }
-    }
-
-    void fetch()
-  })
-
+    })()
+  }
   const usersChecked = registerBtnActive === 'usuários' ? '' : 'hidden'
   return (
     <>
@@ -85,7 +82,7 @@ const PainelRegister = (): JSX.Element => {
               btnActive={btnActive}
               setBtnActive={setBtnActive}
             >
-              usuários cadastrados
+              <p onClick={getAllUsers}>usuários cadastrados</p>
             </PainelDataNavLi>
           </ul>
         </nav>
