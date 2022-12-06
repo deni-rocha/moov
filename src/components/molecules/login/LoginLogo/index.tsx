@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import logo from '../../../../assets/login/logo.svg'
+import SVGLoginLogo from '../../../../assets/login/SVGLoginLogo'
 import LoaderContext from '../../../../contexts/login/loader'
 
 const LogoLogin = (): JSX.Element => {
@@ -7,7 +7,7 @@ const LogoLogin = (): JSX.Element => {
   return (
     <div className={`relative w-20 h-20 ${loading ? 'animate-bounce' : ''}`}>
       <div className="absolute">
-        <img src={logo} alt="logo" />
+        <SVGLoginLogo width={71} height={71} />
       </div>
     </div>
   )
