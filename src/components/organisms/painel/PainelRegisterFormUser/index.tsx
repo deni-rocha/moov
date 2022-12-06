@@ -30,7 +30,9 @@ const PainelRegisterFormUser = (): JSX.Element => {
   }
 
   function updateData(name: string, value: string): void {
-    setFormValues({ ...formValues, [name]: value })
+    setFormValues((prev) => {
+      return { ...prev, [name]: value }
+    })
   }
 
   function submitForm(e: React.FormEvent<HTMLFormElement>): void {
