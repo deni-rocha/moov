@@ -7,71 +7,15 @@ import { apiMoov } from '../../../../services/api'
 import { AxiosError } from 'axios'
 import SvgCancel from '../../../../assets/painel/painelRegister/SvgCancel'
 import SvgConfirm from '../../../../assets/painel/painelRegister/SvgConfirm'
+import { initialState, reducerForm } from './reducerForm'
 
-const initialState = {
-  nome: '',
-  email: '',
-  senha: '',
-  sexo: 'MASCULINO',
-  perfil: 'NORMAL'
-}
-
-interface IState {
-  nome: string
-  email: string
-  senha: string
-  sexo: string
-  perfil: string
-}
-
-type Action =
-  | { type: 'nome'; payload: string }
-  | { type: 'email'; payload: string }
-  | { type: 'senha'; payload: string }
-  | { type: 'sexo'; payload: string }
-  | { type: 'perfil'; payload: string }
-  | { type: 'reset' }
-
-function reducer(state: IState, action: Action): IState {
-  switch (action.type) {
-    case 'nome':
-      return {
-        ...state,
-        nome: action.payload
-      }
-    case 'email':
-      return {
-        ...state,
-        email: action.payload
-      }
-    case 'senha':
-      return {
-        ...state,
-        senha: action.payload
-      }
-    case 'sexo':
-      return {
-        ...state,
-        sexo: action.payload
-      }
-    case 'perfil':
-      return {
-        ...state,
-        perfil: action.payload
-      }
-    case 'reset':
-      return initialState
-    default:
-      return state
-  }
-}
 const PainelRegisterFormUser = (): JSX.Element => {
   const { registerBtnActive, setPainelRegister } = useContext(
     PainelRegisterContext
   )
   const [showPassword, setShowPassword] = useState(false)
-  const [{ nome, email, senha, sexo, perfil }, dispatch] = useReducer(
-    reducer,
+  const [{ nome, email, senha, sexo, perfil }, dispatchForm] = useReducer(
+    reducerForm,
     initialState
   )
 
@@ -97,7 +41,7 @@ const PainelRegisterFormUser = (): JSX.Element => {
             alertSucess('usuário cadastrado', '#4C4C4C', '#ffffff')
             break
         }
-        dispatch({ type: 'reset' })
+        dispatchForm({ type: 'reset' })
       } catch (error) {
         const err = error as AxiosError
         switch (err.response?.status) {
@@ -138,7 +82,7 @@ const PainelRegisterFormUser = (): JSX.Element => {
             <input
               value={nome}
               onChange={(e) =>
-                dispatch({ type: 'nome', payload: e.target.value })
+                dispatchForm({ type: 'nome', payload: e.target.value })
               }
               type="text"
               name="nome"
@@ -155,7 +99,7 @@ const PainelRegisterFormUser = (): JSX.Element => {
               <input
                 value={email}
                 onChange={(e) =>
-                  dispatch({ type: 'email', payload: e.target.value })
+                  dispatchForm({ type: 'email', payload: e.target.value })
                 }
                 type="email"
                 name="email"
@@ -170,7 +114,7 @@ const PainelRegisterFormUser = (): JSX.Element => {
               <Input
                 value={senha}
                 onChange={(e) =>
-                  dispatch({ type: 'senha', payload: e.target.value })
+                  dispatchForm({ type: 'senha', payload: e.target.value })
                 }
                 type={showPassword ? 'text' : 'password'}
                 placeholder={'Escolha uma senha para esse usuário'}
@@ -198,7 +142,7 @@ const PainelRegisterFormUser = (): JSX.Element => {
                     value={sexo}
                     name="sexo"
                     onChange={(e) =>
-                      dispatch({ type: 'sexo', payload: e.target.value })
+                      dispatchForm({ type: 'sexo', payload: e.target.value })
                     }
                     className="block appearance-none w-full bg-white border border-gray-200 text-gray-500 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   >
