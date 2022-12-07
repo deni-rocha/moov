@@ -1,6 +1,6 @@
 import React from 'react'
 import PainelTemplate from '../../components/templates/PainelTemplate'
-import { PainelProvider } from '../../contexts/painel/painelData'
+import { PainelProvider } from '../../contexts/painel'
 import { PainelRegisterProvider } from '../../contexts/painel/painelRegister'
 import { UserProvider } from '../../contexts/painel/user'
 

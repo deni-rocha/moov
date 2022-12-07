@@ -15,11 +15,11 @@ import SvgToggleOpen from '../../../../assets/painel/sidebar/SvgToggleOpen'
 import SvgToggleClose from '../../../../assets/painel/sidebar/SvgToggleClose'
 import SvgIcon from '../../../../assets/painel/sidebar/SvgIcon'
 import UserContext from '../../../../contexts/painel/user'
-import PainelContext from '../../../../contexts/painel/painelData'
+import PainelContext from '../../../../contexts/painel'
 import PainelRegisterContext from '../../../../contexts/painel/painelRegister'
 
 const Sidebar = (): JSX.Element => {
-  const { setData } = useContext(PainelContext)
+  const { dispatch } = useContext(PainelContext)
   const { registerBtnActive, setPainelRegister } = useContext(
     PainelRegisterContext
   )
@@ -31,40 +31,45 @@ const Sidebar = (): JSX.Element => {
   function handleActiveBtn(value: string): void {
     switch (value) {
       case 'controlTrip': {
-        setData({
-          painelHeader: {
-            subTitle: 'Controle de viagens',
-            title: 'Painel de controle de viagens'
-          },
-          painelSidebar: {
+        dispatch({
+          type: 'ADD_HEADER',
+          payload: {
+            title: 'Painel de controle de viagens',
+            subTitle: 'Controle de viagens'
+          }
+        })
+        dispatch({
+          type: 'SIDEBAR_CHANGE_BTN',
+          payload: {
             btnActive: value
           }
         })
-        setPainelRegister({ registerBtnActive: '', formUserChecked: false })
+        dispatch({
+          type: 'REGISTER_CHANGE_BTN',
+          payload: ''
+        })
+        dispatch({
+          type: 'FORM_TOGGLE',
+          payload: false
+        })
         break
       }
+
       case 'register': {
-        setData({
-          painelHeader: {
-            subTitle: 'Cadastráveis',
-            title: ''
-          },
-          painelSidebar: {
-            btnActive: value
-          }
+        dispatch({
+          type: 'ADD_HEADER',
+          payload: { subTitle: 'Cadastráveis', title: '' }
         })
+        dispatch({ type: 'SIDEBAR_CHANGE_BTN', payload: { btnActive: value } })
         break
       }
+
       case 'report': {
-        setData({
-          painelHeader: {
-            subTitle: 'análise de dados',
-            title: 'Relatórios'
-          },
-          painelSidebar: {
-            btnActive: value
-          }
+        dispatch({
+          type: 'ADD_HEADER',
+          payload: { subTitle: 'análise de dados', title: 'Relatórios' }
         })
+        dispatch({ type: 'SIDEBAR_CHANGE_BTN', payload: { btnActive: value } })
         break
       }
     }

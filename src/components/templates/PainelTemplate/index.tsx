@@ -4,14 +4,15 @@ import PainelSidebar from '../../organisms/painel/PainelSidebar'
 import PainelData from '../../organisms/painel/PainelData'
 
 import { alertSucess } from '../../../utils/alert'
-import PainelContext from '../../../contexts/painel/painelData'
+import PainelContext from '../../../contexts/painel'
 import PainelRegister from '../../organisms/painel/PainelRegister'
 import PainelRegisterContext from '../../../contexts/painel/painelRegister'
 
 const PainelTemplate = (): JSX.Element => {
-  const { painelHeader, painelSidebar } = useContext(PainelContext)
+  const { state } = useContext(PainelContext)
   const { registerBtnActive } = useContext(PainelRegisterContext)
 
+  const { header, sidebar } = state.currentPage
   useEffect(() => {
     alertSucess('conectado', '#4C4C4C', '#ffffff')
   }, [])
@@ -21,16 +22,14 @@ const PainelTemplate = (): JSX.Element => {
       <PainelSidebar />
       <section className="grow p-2 flex flex-col formWidth:w-[500px]">
         <PainelHeader
-          subTitle={painelHeader.subTitle}
+          subTitle={header.subTitle}
           tittle={
-            painelSidebar.btnActive === 'register'
-              ? registerBtnActive
-              : painelHeader.title
+            sidebar.btnActive === 'register' ? registerBtnActive : header.title
           }
         />
         <div className="w-full pl-10 pt-4 relative">
-          {painelSidebar.btnActive === 'controlTrip' ? <PainelData /> : ''}
-          {painelSidebar.btnActive === 'register' ? <PainelRegister /> : ''}
+          {sidebar.btnActive === 'controlTrip' ? <PainelData /> : ''}
+          {sidebar.btnActive === 'register' ? <PainelRegister /> : ''}
         </div>
       </section>
     </div>
