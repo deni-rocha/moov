@@ -138,7 +138,7 @@ const Sidebar = (): JSX.Element => {
         <PainelBtn
           isExpanded={isExpanded}
           onClick={() => handleActiveBtn('register')}
-          className={`flex-col gap-2 p-2 rounded-md text-white relative ${
+          className={`flex-col gap-2 mr-2 p-2 rounded-md text-white relative ${
             btnActive === 'register'
               ? 'bg-secondary h-48 font-bold'
               : 'text-[#CACACA] h-14 hover:contrast-0'
