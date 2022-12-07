@@ -13,10 +13,10 @@ const AuthContext = createContext<IAuthContext>({
   setSigned: () => {}
 })
 
-interface PropsSession {
-  signed: boolean
-  token: string
-}
+// interface PropsSession {
+//   signed: boolean
+//   token: string
+// }
 
 export const AuthProvider = ({ children }: Props): JSX.Element => {
   const [signed, setSigned] = useState(false)
@@ -24,11 +24,8 @@ export const AuthProvider = ({ children }: Props): JSX.Element => {
   useEffect(() => {
     const signedSession = sessionStorage.getItem('@App-login')
 
-    console.log(signedSession)
     if (signedSession != null) {
-      const parsed: PropsSession = JSON.parse(signedSession)
       setSigned(true)
-      console.log(parsed)
     }
   }, [])
   return (

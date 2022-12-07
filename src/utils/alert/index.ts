@@ -1,29 +1,50 @@
 import Swal from 'sweetalert2'
 
-export function alertLoginError(): void {
+export function alertError(
+  title: string,
+  color: string,
+  background: string
+): void {
   void Swal.fire({
-    title: 'login inválido',
-    color: 'white',
+    title,
+    color,
+    background,
     icon: 'error',
-    customClass: 'custom-sweetalert',
+    customClass: 'alertLogin',
     width: '300px',
-    background: '#4C4C4C',
     position: 'top-end',
     showConfirmButton: false,
     timer: 1000
   })
 }
 
-export function alertLoginSucess(): void {
+export function alertSucess(
+  title: string,
+  color: string,
+  background: string
+): void {
   void Swal.fire({
-    title: 'conectado',
-    color: '#4C4C4C',
+    title,
+    color,
+    background,
     icon: 'success',
-    customClass: 'custom-sweetalert',
+    customClass: 'alertLogin',
     width: '300px',
-    background: '#ffffff',
     position: 'top-end',
     showConfirmButton: false,
     timer: 1000
+  })
+}
+
+export function alertErrorDeleteUser(title: string): void {
+  void Swal.fire({
+    title,
+    color: '#4C4C4C',
+    background: '#ffffff',
+    icon: 'error',
+    customClass: 'alertLogin',
+    position: 'center',
+    showConfirmButton: false,
+    timer: 1500
   })
 }

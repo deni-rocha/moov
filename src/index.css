@@ -5,16 +5,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Lato:ital,wght@0,400;0,900;1,700&display=swap');
 
 @layer utilities {
-  .custom-sweetalert {
-    height: 200px;
-
+  .alertLogin {
+    height: auto;
   }
 
-  .custom-sweetalert .swal2-icon {
+  .alertLogin .swal2-icon {
      margin-top: 1rem;
   }
 
-  .swal2-title {
+  .alertLogin .swal2-title {
     align-self: baseline;
   }
 }

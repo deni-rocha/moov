@@ -16,9 +16,13 @@ import SvgToggleClose from '../../../../assets/painel/sidebar/SvgToggleClose'
 import SvgIcon from '../../../../assets/painel/sidebar/SvgIcon'
 import UserContext from '../../../../contexts/painel/user'
 import PainelContext from '../../../../contexts/painel/painelData'
+import PainelRegisterContext from '../../../../contexts/painel/painelRegister'
 
 const Sidebar = (): JSX.Element => {
   const { setData } = useContext(PainelContext)
+  const { registerBtnActive, setPainelRegister } = useContext(
+    PainelRegisterContext
+  )
   const { setSigned } = useContext(AuthContext)
   const { nome, email } = useContext(UserContext)
   const [btnActive, setBtnActive] = useState('')
@@ -30,17 +34,23 @@ const Sidebar = (): JSX.Element => {
         setData({
           painelHeader: {
             subTitle: 'Controle de viagens',
-            tittle: 'Painel de controle de viagens'
+            title: 'Painel de controle de viagens'
+          },
+          painelSidebar: {
+            btnActive: value
           }
         })
-
+        setPainelRegister({ registerBtnActive: '', formUserChecked: false })
         break
       }
       case 'register': {
         setData({
           painelHeader: {
             subTitle: 'Cadastráveis',
-            tittle: 'Usuários'
+            title: ''
+          },
+          painelSidebar: {
+            btnActive: value
           }
         })
         break
@@ -49,7 +59,10 @@ const Sidebar = (): JSX.Element => {
         setData({
           painelHeader: {
             subTitle: 'análise de dados',
-            tittle: 'Relatórios'
+            title: 'Relatórios'
+          },
+          painelSidebar: {
+            btnActive: value
           }
         })
         break
@@ -125,7 +138,7 @@ const Sidebar = (): JSX.Element => {
         <PainelBtn
           isExpanded={isExpanded}
           onClick={() => handleActiveBtn('register')}
-          className={`flex-col gap-2 p-2 rounded-md text-white relative ${
+          className={`flex-col gap-2 mr-2 p-2 rounded-md text-white relative ${
             btnActive === 'register'
               ? 'bg-secondary h-48 font-bold'
               : 'text-[#CACACA] h-14 hover:contrast-0'
@@ -148,10 +161,60 @@ const Sidebar = (): JSX.Element => {
             ${isExpanded ? 'ml-6' : 'ml-0 items-center'}
             `}
           >
-            <li>Usuários</li>
-            <li>Setores</li>
-            <li>Tipo de despesa</li>
-            <li>Aprovação</li>
+            <li
+              className={`hover:bg-[#848484] hover:p-1 rounded-md ${
+                registerBtnActive === 'usuários' ? 'bg-[#2E2D2D] p-1' : ''
+              }`}
+              onClick={() => {
+                setPainelRegister({
+                  registerBtnActive: 'usuários',
+                  formUserChecked: false
+                })
+              }}
+            >
+              Usuários
+            </li>
+            <li
+              className={`hover:bg-[#848484] hover:p-1 rounded-md ${
+                registerBtnActive === 'setores' ? 'bg-[#2E2D2D] p-1' : ''
+              }`}
+              onClick={() =>
+                setPainelRegister({
+                  registerBtnActive: 'setores',
+                  formUserChecked: false
+                })
+              }
+            >
+              Setores
+            </li>
+            <li
+              className={`hover:bg-[#848484] hover:p-1 rounded-md ${
+                registerBtnActive === 'tipo de despesa'
+                  ? 'bg-[#2E2D2D] p-1'
+                  : ''
+              }`}
+              onClick={() =>
+                setPainelRegister({
+                  registerBtnActive: 'tipo de despesa',
+                  formUserChecked: false
+                })
+              }
+            >
+              Tipo de despesa
+            </li>
+            <li
+              className={`hover:bg-[#848484] hover:p-1 rounded-md ${
+                registerBtnActive === 'aprovação' ? 'bg-[#2E2D2D] p-1' : ''
+              }`}
+              onClick={() =>
+                setPainelRegister({
+                  registerBtnActive: 'aprovação',
+                  formUserChecked: false
+                })
+              }
+            >
+              Aprovação
+            </li>
           </ul>
         </PainelBtn>
         <PainelBtn

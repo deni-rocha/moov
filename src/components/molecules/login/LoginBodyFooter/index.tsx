@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import AuthContext from '../../../../contexts/auth'
 import LoaderContext from '../../../../contexts/login/loader'
 import login from '../../../../services/api/login'
-import { alertLoginError, alertLoginSucess } from '../../../../utils/alert'
+import { alertError, alertSucess } from '../../../../utils/alert'
 
 interface Props {
   email: string
@@ -20,9 +20,9 @@ const LoginBodyFooter = ({ email, senha }: Props): JSX.Element => {
       const res = await login(email, senha)
 
       if (res === null) {
-        alertLoginError()
+        alertError('login inválido', 'white', '#4C4C4C')
       } else {
-        alertLoginSucess()
+        alertSucess('conectado', '#4C4C4C', '#ffffff')
         setSigned(true)
       }
 
