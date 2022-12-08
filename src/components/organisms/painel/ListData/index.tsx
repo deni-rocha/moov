@@ -3,21 +3,21 @@ import PainelDataNavLi from '../../../molecules/painel/PainelDataNavLi'
 import Text from '../../../atoms/Text'
 import SvgDelete from '../../../../assets/painel/painelRegister/SvgDelete'
 import SvgEdit from '../../../../assets/painel/painelRegister/SvgEdit'
-import PainelRegisterContext from '../../../../contexts/painel/painelRegister'
 import Swal from 'sweetalert2'
-import UserContext from '../../../../contexts/painel/user'
 import { alertErrorDeleteUser } from '../../../../utils/alert'
 import { userDelete, userList } from '../../../../services/api'
 import { IUserList } from '../../../../types/IUserList'
+import PainelContext from '../../../../contexts/painel'
 
 interface Props {
   usersChecked: string
 }
 const ListData = ({ usersChecked }: Props): JSX.Element => {
-  const { token } = useContext(UserContext)
-  const [btnActive, setBtnActive] = useState('')
-  const { registerBtnActive } = useContext(PainelRegisterContext)
+  const { state } = useContext(PainelContext)
+  const { token } = state.user
+  const { registerBtnActive } = state.register
 
+  const [btnActive, setBtnActive] = useState('')
   const [dataList, setDataList] = useState<IUserList>([])
 
   function alertConfirm(id: number): void {

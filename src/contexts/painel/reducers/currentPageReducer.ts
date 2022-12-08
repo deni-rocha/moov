@@ -18,7 +18,7 @@ function currentPageReducer(
   const { type, payload } = action
 
   switch (type) {
-    case 'ADD_HEADER':
+    case 'CHANGE_TEXT_HEADER':
       return {
         ...state,
         header: {

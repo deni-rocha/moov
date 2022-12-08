@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react'
+import React, { createContext, useEffect, useReducer } from 'react'
 import { CurrentPageActions } from './actions/CurrentPageActions'
 import { RegisterActions } from './actions/RegisterActions'
 import { UserActions } from './actions/UserActions'
@@ -43,6 +43,15 @@ export const PainelProvider = (props: {
   children?: React.ReactNode
 }): JSX.Element => {
   const [state, dispatch] = useReducer(rootReducer, initialState)
+
+  useEffect(() => {
+    const dataStorage = sessionStorage.getItem('@App-login')
+
+    if (dataStorage !== null) {
+      const parsed: IUser = JSON.parse(dataStorage)
+      dispatch({ type: 'ADD_USER', payload: parsed })
+    }
+  }, [])
 
   return (
     <PainelContext.Provider value={{ state, dispatch }}>

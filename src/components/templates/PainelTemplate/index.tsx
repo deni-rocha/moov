@@ -6,12 +6,10 @@ import PainelData from '../../organisms/painel/PainelData'
 import { alertSucess } from '../../../utils/alert'
 import PainelContext from '../../../contexts/painel'
 import PainelRegister from '../../organisms/painel/PainelRegister'
-import PainelRegisterContext from '../../../contexts/painel/painelRegister'
 
 const PainelTemplate = (): JSX.Element => {
   const { state } = useContext(PainelContext)
-  const { registerBtnActive } = useContext(PainelRegisterContext)
-
+  const { registerBtnActive } = state.register
   const { header, sidebar } = state.currentPage
   useEffect(() => {
     alertSucess('conectado', '#4C4C4C', '#ffffff')

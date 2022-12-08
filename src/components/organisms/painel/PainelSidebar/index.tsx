@@ -14,25 +14,21 @@ import verifyWindowSize from '../../../../utils/verifyWindowSize'
 import SvgToggleOpen from '../../../../assets/painel/sidebar/SvgToggleOpen'
 import SvgToggleClose from '../../../../assets/painel/sidebar/SvgToggleClose'
 import SvgIcon from '../../../../assets/painel/sidebar/SvgIcon'
-import UserContext from '../../../../contexts/painel/user'
 import PainelContext from '../../../../contexts/painel'
-import PainelRegisterContext from '../../../../contexts/painel/painelRegister'
 
 const Sidebar = (): JSX.Element => {
-  const { dispatch } = useContext(PainelContext)
-  const { registerBtnActive, setPainelRegister } = useContext(
-    PainelRegisterContext
-  )
+  const { state, dispatch } = useContext(PainelContext)
+  const { registerBtnActive } = state.register
   const { setSigned } = useContext(AuthContext)
-  const { nome, email } = useContext(UserContext)
   const [btnActive, setBtnActive] = useState('')
   const [isExpanded, setIsExpanded] = useState(true)
+  const { nome, email } = state.user
 
   function handleActiveBtn(value: string): void {
     switch (value) {
       case 'controlTrip': {
         dispatch({
-          type: 'ADD_HEADER',
+          type: 'CHANGE_TEXT_HEADER',
           payload: {
             title: 'Painel de controle de viagens',
             subTitle: 'Controle de viagens'
@@ -57,7 +53,7 @@ const Sidebar = (): JSX.Element => {
 
       case 'register': {
         dispatch({
-          type: 'ADD_HEADER',
+          type: 'CHANGE_TEXT_HEADER',
           payload: { subTitle: 'Cadastráveis', title: '' }
         })
         dispatch({ type: 'SIDEBAR_CHANGE_BTN', payload: { btnActive: value } })
@@ -66,7 +62,7 @@ const Sidebar = (): JSX.Element => {
 
       case 'report': {
         dispatch({
-          type: 'ADD_HEADER',
+          type: 'CHANGE_TEXT_HEADER',
           payload: { subTitle: 'análise de dados', title: 'Relatórios' }
         })
         dispatch({ type: 'SIDEBAR_CHANGE_BTN', payload: { btnActive: value } })
@@ -171,10 +167,8 @@ const Sidebar = (): JSX.Element => {
                 registerBtnActive === 'usuários' ? 'bg-[#2E2D2D] p-1' : ''
               }`}
               onClick={() => {
-                setPainelRegister({
-                  registerBtnActive: 'usuários',
-                  formUserChecked: false
-                })
+                dispatch({ type: 'REGISTER_CHANGE_BTN', payload: 'usuários' })
+                dispatch({ type: 'FORM_TOGGLE', payload: false })
               }}
             >
               Usuários
@@ -183,12 +177,10 @@ const Sidebar = (): JSX.Element => {
               className={`hover:bg-[#848484] hover:p-1 rounded-md ${
                 registerBtnActive === 'setores' ? 'bg-[#2E2D2D] p-1' : ''
               }`}
-              onClick={() =>
-                setPainelRegister({
-                  registerBtnActive: 'setores',
-                  formUserChecked: false
-                })
-              }
+              onClick={() => {
+                dispatch({ type: 'REGISTER_CHANGE_BTN', payload: 'setores' })
+                dispatch({ type: 'FORM_TOGGLE', payload: false })
+              }}
             >
               Setores
             </li>
@@ -198,12 +190,13 @@ const Sidebar = (): JSX.Element => {
                   ? 'bg-[#2E2D2D] p-1'
                   : ''
               }`}
-              onClick={() =>
-                setPainelRegister({
-                  registerBtnActive: 'tipo de despesa',
-                  formUserChecked: false
+              onClick={() => {
+                dispatch({
+                  type: 'REGISTER_CHANGE_BTN',
+                  payload: 'tipo de despesa'
                 })
-              }
+                dispatch({ type: 'FORM_TOGGLE', payload: false })
+              }}
             >
               Tipo de despesa
             </li>
@@ -211,12 +204,10 @@ const Sidebar = (): JSX.Element => {
               className={`hover:bg-[#848484] hover:p-1 rounded-md ${
                 registerBtnActive === 'aprovação' ? 'bg-[#2E2D2D] p-1' : ''
               }`}
-              onClick={() =>
-                setPainelRegister({
-                  registerBtnActive: 'aprovação',
-                  formUserChecked: false
-                })
-              }
+              onClick={() => {
+                dispatch({ type: 'REGISTER_CHANGE_BTN', payload: 'aprovação' })
+                dispatch({ type: 'FORM_TOGGLE', payload: false })
+              }}
             >
               Aprovação
             </li>

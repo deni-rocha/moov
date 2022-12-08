@@ -1,16 +1,16 @@
 import React, { useContext } from 'react'
 import iconNewUser from '../../../../assets/painel/painelRegister/icon-new-user.svg'
-import PainelRegisterContext from '../../../../contexts/painel/painelRegister'
 import PainelSearch from '../PainelSearch'
 import PainelRegisterFormUser from '../PainelRegisterFormUser'
 import ListData from '../ListData'
+import PainelContext from '../../../../contexts/painel'
 
 const PainelRegister = (): JSX.Element => {
-  const { registerBtnActive, formUserChecked, setPainelRegister } = useContext(
-    PainelRegisterContext
-  )
+  const { state, dispatch } = useContext(PainelContext)
+  const { registerBtnActive, formUserChecked } = state.register
 
   const usersChecked = registerBtnActive === 'usuários' ? '' : 'hidden'
+
   return (
     <>
       <div
@@ -20,10 +20,8 @@ const PainelRegister = (): JSX.Element => {
         <p className="font-bold uppercase text-sm">cadastrar novos usuários</p>
         <button
           onClick={() => {
-            setPainelRegister({
-              registerBtnActive: 'usuários',
-              formUserChecked: true
-            })
+            dispatch({ type: 'REGISTER_CHANGE_BTN', payload: 'usuários' })
+            dispatch({ type: 'FORM_TOGGLE', payload: true })
           }}
           className="bg-[#31d760] w-48 relative h-11 flex items-center justify-center rounded-md text-white p-4"
         >

@@ -1,18 +1,17 @@
 import React, { useContext, useState, useReducer } from 'react'
 import Input from '../../../atoms/Input'
 import icon from '../../../../assets/input/icon/icon.svg'
-import PainelRegisterContext from '../../../../contexts/painel/painelRegister'
 import { alertError, alertSucess } from '../../../../utils/alert'
 import { apiMoov } from '../../../../services/api'
 import { AxiosError } from 'axios'
 import SvgCancel from '../../../../assets/painel/painelRegister/SvgCancel'
 import SvgConfirm from '../../../../assets/painel/painelRegister/SvgConfirm'
 import { initialState, reducerForm } from './reducerForm'
+import PainelContext from '../../../../contexts/painel'
 
 const PainelRegisterFormUser = (): JSX.Element => {
-  const { registerBtnActive, setPainelRegister } = useContext(
-    PainelRegisterContext
-  )
+  const { dispatch } = useContext(PainelContext)
+
   const [showPassword, setShowPassword] = useState(false)
   const [{ nome, email, senha, sexo, perfil }, dispatchForm] = useReducer(
     reducerForm,
@@ -180,10 +179,7 @@ const PainelRegisterFormUser = (): JSX.Element => {
           <div className="w-full justify-end pt-5 flex xs:flex-col items-center xs:space-y-4 gap-2">
             <button
               onClick={() => {
-                setPainelRegister({
-                  formUserChecked: false,
-                  registerBtnActive
-                })
+                dispatch({ type: 'FORM_TOGGLE', payload: false })
               }}
               className="w-52 relative h-11 text-white font-bold bg-[#EB5A46] rounded-md"
             >
