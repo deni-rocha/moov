@@ -13,6 +13,7 @@ const LoaderContext = createContext<ILoaderContext>({
   setLoading: () => {}
 })
 
+// colocar o auth e loader no mesmo context
 export const LoaderProvider = ({ children }: Props): JSX.Element => {
   const [loading, setLoading] = useState(false)
 
