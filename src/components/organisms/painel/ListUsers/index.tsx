@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import PainelDataNavLi from '../../../molecules/painel/PainelDataNavLi'
 import Text from '../../../atoms/Text'
 import SvgDelete from '../../../../assets/painel/painelRegister/SvgDelete'
@@ -8,17 +8,21 @@ import { alertErrorDeleteUser } from '../../../../utils/alert'
 import { userDelete, userList } from '../../../../services/api'
 import { IUserList } from '../../../../types/IUserList'
 import PainelContext from '../../../../contexts/painel'
+import SvgPainelRefresh from '../../../../assets/painel/painelData/SvgPainelRefresh'
+import AuthContext from '../../../../contexts/auth/AuthContext'
 
 interface Props {
   usersChecked: string
 }
-const ListData = ({ usersChecked }: Props): JSX.Element => {
+const ListUsers = ({ usersChecked }: Props): JSX.Element => {
   const { state } = useContext(PainelContext)
-  const { token } = state.user
+  const { user } = useContext(AuthContext)
+  const { token } = user
   const { registerBtnActive } = state.register
 
-  const [btnActive, setBtnActive] = useState('')
   const [dataList, setDataList] = useState<IUserList>([])
+
+  const existData = dataList.length > 1
 
   function alertConfirm(id: number): void {
     void Swal.fire({
@@ -52,33 +56,45 @@ const ListData = ({ usersChecked }: Props): JSX.Element => {
       })
   }
 
-  function getAllUsers(): void {
-    void (async (): Promise<[]> => {
-      try {
-        const res = await userList(token)
-        if (res !== null) setDataList(res)
+  useEffect(() => {
+    getAllUsers()
+  }, [token])
 
-        return []
-      } catch (err) {
-        console.log(err)
-        return []
+  function getAllUsers(): void {
+    void (async (): Promise<void> => {
+      const res = await userList(token)
+      const isError = typeof res === 'number'
+
+      if (!isError) {
+        console.log(
+          '%c lista de usuários atualizada',
+          'background: black; color: white;'
+        )
+        setDataList(res)
+        return
       }
+
+      console.log('%c atualizando token', 'background: yellow; color: black;')
     })()
   }
 
+  console.log(dataList)
   return (
     <div className={`w-full pt-4 mt-4 font-inter ${usersChecked}`}>
       <nav className="">
         <ul
           className={`border-b-2 pb-3 text-disabled flex gap-8 font-bold uppercase text-xs `}
         >
-          <PainelDataNavLi
-            btnId={registerBtnActive}
-            btnActive={btnActive}
-            setBtnActive={setBtnActive}
-          >
+          <PainelDataNavLi btnId="usuários">
             <p onClick={getAllUsers}>usuários cadastrados</p>
           </PainelDataNavLi>
+          <button
+            onClick={getAllUsers}
+            className="p-2 rounded-md items-center transition-colors ease-in gap-1 hover:text-white hover:bg-secondary cursor-pointer flex"
+          >
+            <SvgPainelRefresh />
+            <p className="uppercase">atualizar</p>
+          </button>
         </ul>
       </nav>
       <div className="mt-8">
@@ -92,9 +108,9 @@ const ListData = ({ usersChecked }: Props): JSX.Element => {
             <Text content="Editar" />
           </ul>
         </nav>
-        <ul className="">
-          {btnActive === 'usuários' ? (
-            dataList
+        {existData && registerBtnActive === 'usuários' ? (
+          <ul className="">
+            {dataList
               .filter((item, index) => index < 10)
               .map((item, index) => {
                 return (
@@ -117,16 +133,16 @@ const ListData = ({ usersChecked }: Props): JSX.Element => {
                     </div>
                   </li>
                 )
-              })
-          ) : (
-            <p className="m-auto h-28 justify-center flex items-end w-60">
-              por favor, atualize a lista!
-            </p>
-          )}
-        </ul>
+              })}
+          </ul>
+        ) : (
+          <p className="text-black m-auto h-28 justify-center flex items-end w-60">
+            carregando
+          </p>
+        )}
       </div>
     </div>
   )
 }
 
-export default ListData
+export default ListUsers

@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import iconNewUser from '../../../../assets/painel/painelRegister/icon-new-user.svg'
 import PainelSearch from '../PainelSearch'
 import PainelRegisterFormUser from '../PainelRegisterFormUser'
-import ListData from '../ListData'
+import ListUsers from '../ListUsers'
 import PainelContext from '../../../../contexts/painel'
 
 const PainelRegister = (): JSX.Element => {
@@ -30,7 +30,7 @@ const PainelRegister = (): JSX.Element => {
         </button>
       </div>
       <PainelSearch title="Pesquisar nome ou e-mail" hasButton={false} />
-      <ListData usersChecked={usersChecked} />
+      <ListUsers usersChecked={usersChecked} />
     </>
   )
 }

@@ -10,10 +10,10 @@ import {
   IApiFinalizada,
   IApiSolicitacao
 } from '../../../../types/InterfaceApi'
-import PainelDataNavLi from '../../../molecules/painel/PainelDataNavLi'
+import PainelTripsNavLi from '../../../molecules/painel/PainelTripsNavLi'
 import PainelSearch from '../PainelSearch'
 
-const PainelData = (): JSX.Element => {
+const PainelTrips = (): JSX.Element => {
   const [btnActive, setBtnActive] = useState('')
   const [tripSolicitationList, setTripSolicitationList] = useState<
     IApiSolicitacao[] | []
@@ -62,7 +62,7 @@ const PainelData = (): JSX.Element => {
           <ul
             className={`border-b-2 pb-3 text-disabled flex gap-8 font-bold uppercase text-xs `}
           >
-            <PainelDataNavLi
+            <PainelTripsNavLi
               btnId="trip solicitation"
               btnActive={btnActive}
               setBtnActive={setBtnActive}
@@ -75,8 +75,8 @@ const PainelData = (): JSX.Element => {
                 height={13}
               />
               solicitação de adiantamento
-            </PainelDataNavLi>
-            <PainelDataNavLi
+            </PainelTripsNavLi>
+            <PainelTripsNavLi
               btnId="trip happening"
               btnActive={btnActive}
               setBtnActive={setBtnActive}
@@ -89,8 +89,8 @@ const PainelData = (): JSX.Element => {
                 height={13}
               />
               viagens em andamento
-            </PainelDataNavLi>
-            <PainelDataNavLi
+            </PainelTripsNavLi>
+            <PainelTripsNavLi
               btnId="trip finished"
               btnActive={btnActive}
               setBtnActive={setBtnActive}
@@ -103,7 +103,7 @@ const PainelData = (): JSX.Element => {
                 height={13}
               />
               viagens finalizadas
-            </PainelDataNavLi>
+            </PainelTripsNavLi>
           </ul>
         </nav>
         <div className="mt-8">
@@ -167,4 +167,4 @@ const PainelData = (): JSX.Element => {
   )
 }
 
-export default PainelData
+export default PainelTrips

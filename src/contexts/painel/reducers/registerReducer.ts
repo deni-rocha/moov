@@ -2,7 +2,7 @@ import { RegisterActions } from '../actions/RegisterActions'
 import { IRegister } from '../interfaces/IRegister'
 
 export const initialStateRegister = {
-  registerBtnActive: '',
+  registerBtnActive: 'usuários',
   formUserChecked: false
 }
 

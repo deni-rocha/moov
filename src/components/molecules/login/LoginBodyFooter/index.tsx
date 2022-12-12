@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
-import AuthContext from '../../../../contexts/auth'
+import AuthContext from '../../../../contexts/auth/AuthContext'
 import LoaderContext from '../../../../contexts/login/loader'
-import login from '../../../../services/api/login'
 import { alertError, alertSucess } from '../../../../utils/alert'
 
 interface Props {
@@ -10,16 +9,16 @@ interface Props {
 }
 
 const LoginBodyFooter = ({ email, senha }: Props): JSX.Element => {
-  const { setSigned } = useContext(AuthContext)
+  const { signin, setSigned } = useContext(AuthContext)
   const { setLoading } = useContext(LoaderContext)
 
   function submit(): void {
     setLoading(true)
 
     void (async () => {
-      const res = await login(email, senha)
+      const res = await signin(email, senha)
 
-      if (res === null) {
+      if (!res) {
         alertError('login inválido', 'white', '#4C4C4C')
       } else {
         alertSucess('conectado', '#4C4C4C', '#ffffff')

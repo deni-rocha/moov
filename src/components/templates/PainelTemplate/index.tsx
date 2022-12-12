@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import PainelHeader from '../../organisms/painel/PainelHeader'
 import PainelSidebar from '../../organisms/painel/PainelSidebar'
-import PainelData from '../../organisms/painel/PainelData'
+import PainelTrips from '../../organisms/painel/PainelTrips'
 
 import { alertSucess } from '../../../utils/alert'
 import PainelContext from '../../../contexts/painel'
@@ -26,7 +26,7 @@ const PainelTemplate = (): JSX.Element => {
           }
         />
         <div className="w-full pl-10 pt-4 relative">
-          {sidebar.btnActive === 'controlTrip' ? <PainelData /> : ''}
+          {sidebar.btnActive === 'controlTrip' ? <PainelTrips /> : ''}
           {sidebar.btnActive === 'register' ? <PainelRegister /> : ''}
         </div>
       </section>

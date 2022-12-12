@@ -7,7 +7,7 @@ import iconHelp from '../../../../assets/painel/sidebar/icon-help.svg'
 import iconLogout from '../../../../assets/painel/sidebar/icon-logout.svg'
 import { Link } from 'react-router-dom'
 import SVGControlTrip from '../../../../assets/painel/sidebar/ControlTrip'
-import AuthContext from '../../../../contexts/auth'
+import AuthContext from '../../../../contexts/auth/AuthContext'
 import PainelBtn from '../../../molecules/painel/PainelBtn'
 import SVGCollapsedLogo from '../../../../assets/painel/sidebar/collapsed/SVGCollapsedLogo'
 import verifyWindowSize from '../../../../utils/verifyWindowSize'
@@ -19,10 +19,10 @@ import PainelContext from '../../../../contexts/painel'
 const Sidebar = (): JSX.Element => {
   const { state, dispatch } = useContext(PainelContext)
   const { registerBtnActive } = state.register
-  const { setSigned } = useContext(AuthContext)
+  const { setSigned, user, logout } = useContext(AuthContext)
   const [btnActive, setBtnActive] = useState('')
   const [isExpanded, setIsExpanded] = useState(true)
-  const { nome, email } = state.user
+  const { nome, email } = user
 
   function handleActiveBtn(value: string): void {
     switch (value) {
@@ -39,10 +39,6 @@ const Sidebar = (): JSX.Element => {
           payload: {
             btnActive: value
           }
-        })
-        dispatch({
-          type: 'REGISTER_CHANGE_BTN',
-          payload: ''
         })
         dispatch({
           type: 'FORM_TOGGLE',
@@ -248,7 +244,7 @@ const Sidebar = (): JSX.Element => {
         </PainelBtn>
         <Link
           onClick={() => {
-            sessionStorage.clear()
+            logout()
             setSigned(false)
           }}
           to="/"

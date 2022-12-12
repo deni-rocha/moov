@@ -1,7 +1,8 @@
+import { AxiosError } from 'axios'
 import { apiMoov } from '../..'
 import { IUserList } from '../../../../types/IUserList'
 
-const userList = async (token: string): Promise<IUserList | null> => {
+const userList = async (token: string): Promise<IUserList | number> => {
   try {
     const responseApi = await apiMoov.get<IUserList>('/usuario/list', {
       headers: {
@@ -12,9 +13,11 @@ const userList = async (token: string): Promise<IUserList | null> => {
     const data = responseApi.data
 
     return data
-  } catch (err) {
-    console.log(err)
-    return null
+  } catch (error) {
+    const err = error as AxiosError
+    const status = err.response?.status
+
+    return status ?? 777
   }
 }
 
