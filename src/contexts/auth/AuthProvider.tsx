@@ -13,10 +13,10 @@ export const AuthProvider = ({ children }: Props): JSX.Element => {
   const api = useApi()
 
   useEffect(() => {
-    const storageData = localStorage.getItem('@App-User')
-    if (storageData != null) {
+    const storageData = sessionStorage.getItem('@App-User')
+
+    if (storageData !== null) {
       const parsedDate: IUser = JSON.parse(storageData)
-      console.log('passando aqui')
       setUser(parsedDate)
       setSigned(true)
     }
