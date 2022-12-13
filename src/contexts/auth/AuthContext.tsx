@@ -12,23 +12,19 @@ export const initialStateUser = {
   token: ''
 }
 interface IAuthContext {
-  signed: boolean
-  setSigned: React.Dispatch<React.SetStateAction<boolean>>
   user: IUser
   signin: (email: string, password: string) => Promise<boolean>
   logout: () => boolean
+  token: string | null
+  setToken: React.Dispatch<React.SetStateAction<string | null>>
 }
 
 const AuthContext = createContext<IAuthContext>({
-  signed: false,
-  setSigned: () => {},
   user: initialStateUser,
-  signin: async function () {
-    return false
-  },
-  logout: function () {
-    return false
-  }
+  signin: async () => false,
+  logout: () => false,
+  token: null,
+  setToken: () => {}
 })
 
 export default AuthContext

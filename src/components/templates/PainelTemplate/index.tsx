@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useLayoutEffect } from 'react'
 import PainelHeader from '../../organisms/painel/PainelHeader'
 import PainelSidebar from '../../organisms/painel/PainelSidebar'
 import PainelTrips from '../../organisms/painel/PainelTrips'
@@ -11,7 +11,8 @@ const PainelTemplate = (): JSX.Element => {
   const { state } = useContext(PainelContext)
   const { registerBtnActive } = state.register
   const { header, sidebar } = state.currentPage
-  useEffect(() => {
+
+  useLayoutEffect(() => {
     alertSucess('conectado', '#4C4C4C', '#ffffff')
   }, [])
 

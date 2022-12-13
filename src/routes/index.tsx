@@ -4,8 +4,8 @@ import OtherRoutes from './OtherRoutes'
 import SignRoute from './SignRoute'
 
 const Rotas = (): JSX.Element => {
-  const { signed } = useContext(AuthContext)
+  const { token } = useContext(AuthContext)
 
-  return signed ? <OtherRoutes /> : <SignRoute />
+  return token !== null ? <OtherRoutes /> : <SignRoute />
 }
 export default Rotas

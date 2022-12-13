@@ -16,12 +16,10 @@ interface Props {
 }
 const ListUsers = ({ usersChecked }: Props): JSX.Element => {
   const { state } = useContext(PainelContext)
-  const { user } = useContext(AuthContext)
-  const { token } = user
   const { registerBtnActive } = state.register
 
   const [dataList, setDataList] = useState<IUserList>([])
-
+  const { token } = useContext(AuthContext)
   const existData = dataList.length > 1
 
   function alertConfirm(id: number): void {
@@ -42,7 +40,7 @@ const ListUsers = ({ usersChecked }: Props): JSX.Element => {
     })
       .then((result) => {
         if (result.isConfirmed) {
-          return userDelete(id, token)
+          return userDelete(id, token ?? 'token nulo')
         }
       })
       .then((data) => {
@@ -62,7 +60,7 @@ const ListUsers = ({ usersChecked }: Props): JSX.Element => {
 
   function getAllUsers(): void {
     void (async (): Promise<void> => {
-      const res = await userList(token)
+      const res = await userList(token ?? 'token nulo')
       const isError = typeof res === 'number'
 
       if (!isError) {
@@ -110,30 +108,28 @@ const ListUsers = ({ usersChecked }: Props): JSX.Element => {
         </nav>
         {existData && registerBtnActive === 'usuários' ? (
           <ul className="">
-            {dataList
-              .filter((item, index) => index < 10)
-              .map((item, index) => {
-                return (
-                  <li
-                    key={index}
-                    className="flex h-11 p-2 mb-1 bg-[#f7f9fb] gap-4 justify-around lowercase"
-                  >
-                    <Text content={item.nome} />
-                    <Text content={item.email} className="w-48" />
-                    <Text content={item.perfil} />
-                    <Text content={item.sexo} />
-                    <Text content={`${item.ativo ? 'ativo' : 'desativado'}`} />
-                    <div className="w-32 h-7 flex items-center gap-3">
-                      <button>
-                        <SvgEdit />
-                      </button>
-                      <button onClick={() => alertConfirm(item.id)}>
-                        <SvgDelete />
-                      </button>
-                    </div>
-                  </li>
-                )
-              })}
+            {dataList.map((item, index) => {
+              return (
+                <li
+                  key={index}
+                  className="flex h-11 p-2 mb-1 bg-[#f7f9fb] gap-4 justify-around lowercase"
+                >
+                  <Text content={item.nome} />
+                  <Text content={item.email} className="w-48" />
+                  <Text content={item.perfil} />
+                  <Text content={item.sexo} />
+                  <Text content={`${item.ativo ? 'ativo' : 'desativado'}`} />
+                  <div className="w-32 h-7 flex items-center gap-3">
+                    <button>
+                      <SvgEdit />
+                    </button>
+                    <button onClick={() => alertConfirm(item.id)}>
+                      <SvgDelete />
+                    </button>
+                  </div>
+                </li>
+              )
+            })}
           </ul>
         ) : (
           <p className="text-black m-auto h-28 justify-center flex items-end w-60">

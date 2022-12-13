@@ -1,31 +1,79 @@
-import axios from 'axios'
-import { IUseApi } from '../@types/IUseApi'
-import { IUser } from '../@types/IUser'
+import axios, { AxiosResponse } from 'axios'
+import { useContext } from 'react'
+import { ILogin } from '../@types/ILogin'
+import AuthContext from '../contexts/auth/AuthContext'
+import { IUserList } from '../types/IUserList'
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_API
 })
 
-export const useApi = (): IUseApi => ({
-  signin: async (email: string, senha: string): Promise<IUser | null> => {
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const useApi = () => {
+  const { user, token, setToken } = useContext(AuthContext)
+  const { email, senha } = user
+
+  const verifyLogin = async (
+    emailLogin: string,
+    senhaLogin: string
+  ): Promise<AxiosResponse<ILogin, any> | null> => {
     try {
-      // no objeto de retorno não existe a propriedade "senha"
-      const responseApi = await api.post<IUser>('/usuario/login', {
-        email,
-        senha
+      const response = await api.post<ILogin>('/usuario/login', {
+        email: emailLogin,
+        senha: senhaLogin
       })
 
-      // adiciona a propriedade senha no json
-      const data = { ...responseApi.data, senha }
-
-      // adicionando os dados no armazenamento do navegador (persiste apenas na sessão atual)
-      sessionStorage.setItem('@App-User', JSON.stringify(data))
-      return data
+      return response
     } catch (err) {
       return null
     }
-  },
-  logout: () => {
-    sessionStorage.removeItem('@App-User')
   }
-})
+  return {
+    signin: async (emailLogin: string, senhaLogin: string) => {
+      const responseApi = await verifyLogin(emailLogin, senhaLogin)
+
+      if (responseApi !== null) {
+        const responseToken = responseApi.data.token
+        // deixa um session separado para o Token
+        sessionStorage.setItem('@App-Token', responseToken)
+
+        // adiciona a propriedade senha no json e deixa o token vazio
+        // para o session de User nao ter acesso ao token
+        const userData = { ...responseApi.data, senha: senhaLogin, token: '' }
+        sessionStorage.setItem('@App-User', JSON.stringify(userData))
+
+        console.log('valor do token no signin', responseToken)
+
+        return { userData, responseToken }
+      }
+
+      return null
+    },
+    refreshToken: () => {
+      const refresh = async (): Promise<void> => {
+        const res = await verifyLogin(email, senha)
+        const newToken = res?.data.token
+
+        if (newToken !== undefined) {
+          sessionStorage.setItem('@App-Token', newToken)
+          setToken(newToken)
+        }
+      }
+
+      void refresh()
+    },
+    getAllUsers: async () => {
+      try {
+        const reponse = await api.get<IUserList>('/usuario/list', {
+          headers: {
+            Authorization: `Bearer ${token ?? 'token inválido'}`
+          }
+        })
+
+        return reponse.data
+      } catch (error) {
+        return null
+      }
+    }
+  }
+}

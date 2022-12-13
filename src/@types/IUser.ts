@@ -1,10 +1,5 @@
-export interface IUser {
-  id: number
-  nome: string
-  sexo: string
-  email: string
-  ativo: boolean
-  perfil: string
+import { ILogin } from './ILogin'
+
+export interface IUser extends ILogin {
   senha: string
-  token: string
 }

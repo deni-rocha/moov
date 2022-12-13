@@ -21,7 +21,8 @@
     "prettier"
   ],
   "rules": {
-    "import/no-unresolved": "error"
+    "import/no-unresolved": "error",
+    "@typescript-eslint/explicit-function-return-type": "warn"
   },
   "settings": {
     "import/resolver": {

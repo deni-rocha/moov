@@ -19,7 +19,7 @@ import PainelContext from '../../../../contexts/painel'
 const Sidebar = (): JSX.Element => {
   const { state, dispatch } = useContext(PainelContext)
   const { registerBtnActive } = state.register
-  const { setSigned, user, logout } = useContext(AuthContext)
+  const { user, logout } = useContext(AuthContext)
   const [btnActive, setBtnActive] = useState('')
   const [isExpanded, setIsExpanded] = useState(true)
   const { nome, email } = user
@@ -245,7 +245,6 @@ const Sidebar = (): JSX.Element => {
         <Link
           onClick={() => {
             logout()
-            setSigned(false)
           }}
           to="/"
         >
