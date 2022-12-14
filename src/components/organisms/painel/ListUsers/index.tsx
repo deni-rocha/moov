@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import PainelDataNavLi from '../../../molecules/painel/PainelDataNavLi'
 import Text from '../../../atoms/Text'
 import SvgDelete from '../../../../assets/painel/painelRegister/SvgDelete'
@@ -7,21 +7,34 @@ import Swal from 'sweetalert2'
 import { alertErrorDeleteUser } from '../../../../utils/alert'
 import { userDelete } from '../../../../services/api'
 import { IUserList } from '../../../../types/IUserList'
-import PainelContext from '../../../../contexts/painel'
+// import PainelContext from '../../../../contexts/painel'
 import SvgPainelRefresh from '../../../../assets/painel/painelData/SvgPainelRefresh'
 import AuthContext from '../../../../contexts/auth/AuthContext'
 import { useApi } from '../../../../hooks/useApi'
+import Pagination from '../../Pagination'
 
 interface Props {
   usersChecked: string
 }
+
+const PageSize = 10
+
 const ListUsers = ({ usersChecked }: Props): JSX.Element => {
-  const { state } = useContext(PainelContext)
-  const { registerBtnActive } = state.register
+  // const { state } = useContext(PainelContext)
+  // const { registerBtnActive } = state.register
   const { getAllUsers } = useApi()
   const [dataList, setDataList] = useState<IUserList>([])
   const { token } = useContext(AuthContext)
-  const existData = dataList.length > 1
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const currentDataList = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * PageSize
+    const lastPageIndex = firstPageIndex + PageSize
+
+    console.log('%c atualizando page list', 'background: yellow; color: black;')
+
+    return dataList.slice(firstPageIndex, lastPageIndex)
+  }, [dataList, currentPage])
 
   function alertConfirm(id: number): void {
     void Swal.fire({
@@ -97,36 +110,37 @@ const ListUsers = ({ usersChecked }: Props): JSX.Element => {
             <Text content="Editar" />
           </ul>
         </nav>
-        {existData && registerBtnActive === 'usuários' ? (
-          <ul className="">
-            {dataList.map((item, index) => {
-              return (
-                <li
-                  key={index}
-                  className="flex h-11 p-2 mb-1 bg-[#f7f9fb] gap-4 justify-around lowercase"
-                >
-                  <Text content={item.nome} />
-                  <Text content={item.email} className="w-48" />
-                  <Text content={item.perfil} />
-                  <Text content={item.sexo} />
-                  <Text content={`${item.ativo ? 'ativo' : 'desativado'}`} />
-                  <div className="w-32 h-7 flex items-center gap-3">
-                    <button>
-                      <SvgEdit />
-                    </button>
-                    <button onClick={() => alertConfirm(item.id)}>
-                      <SvgDelete />
-                    </button>
-                  </div>
-                </li>
-              )
-            })}
-          </ul>
-        ) : (
-          <p className="text-black m-auto h-28 justify-center flex items-end w-60">
-            carregando
-          </p>
-        )}
+
+        <ul className="">
+          {currentDataList.map((item, index) => {
+            return (
+              <li
+                key={index}
+                className="flex h-11 p-2 mb-1 bg-[#f7f9fb] gap-4 justify-around lowercase"
+              >
+                <Text content={item.nome} />
+                <Text content={item.email} className="w-48" />
+                <Text content={item.perfil} />
+                <Text content={item.sexo} />
+                <Text content={`${item.ativo ? 'ativo' : 'desativado'}`} />
+                <div className="w-32 h-7 flex items-center gap-3">
+                  <button>
+                    <SvgEdit />
+                  </button>
+                  <button onClick={() => alertConfirm(item.id)}>
+                    <SvgDelete />
+                  </button>
+                </div>
+              </li>
+            )
+          })}
+        </ul>
+        <Pagination
+          currentPage={currentPage}
+          totalCount={dataList.length}
+          pageSize={PageSize}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
       </div>
     </div>
   )
