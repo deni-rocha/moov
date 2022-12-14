@@ -1,4 +1,19 @@
-export const useNada = (): void => {}
+import { useEffect, useState } from 'react'
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export function usePagination<T>(fetchData: () => Promise<T[]>) {
+  const [list, setList] = useState<T[]>([])
+
+  useEffect(() => {
+    void (async () => {
+      const response = await fetchData()
+      setList(response)
+    })
+  }, [])
+
+  return { list }
+}
+
 // import { useContext, useEffect, useState } from 'react'
 // import AuthContext from '../contexts/auth/AuthContext'
 

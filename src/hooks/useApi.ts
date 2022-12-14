@@ -28,6 +28,20 @@ export const useApi = () => {
       return null
     }
   }
+  const refreshToken = (): void => {
+    const refresh = async (): Promise<void> => {
+      const res = await verifyLogin(email, senha)
+      const newToken = res?.data.token
+
+      if (newToken !== undefined) {
+        sessionStorage.setItem('@App-Token', newToken)
+        setToken(newToken)
+      }
+    }
+
+    void refresh()
+  }
+
   return {
     signin: async (emailLogin: string, senhaLogin: string) => {
       const responseApi = await verifyLogin(emailLogin, senhaLogin)
@@ -42,36 +56,23 @@ export const useApi = () => {
         const userData = { ...responseApi.data, senha: senhaLogin, token: '' }
         sessionStorage.setItem('@App-User', JSON.stringify(userData))
 
-        console.log('valor do token no signin', responseToken)
-
         return { userData, responseToken }
       }
 
       return null
     },
-    refreshToken: () => {
-      const refresh = async (): Promise<void> => {
-        const res = await verifyLogin(email, senha)
-        const newToken = res?.data.token
-
-        if (newToken !== undefined) {
-          sessionStorage.setItem('@App-Token', newToken)
-          setToken(newToken)
-        }
-      }
-
-      void refresh()
-    },
     getAllUsers: async () => {
       try {
         const reponse = await api.get<IUserList>('/usuario/list', {
           headers: {
-            Authorization: `Bearer ${token ?? 'token inválido'}`
+            Authorization: `Bearer ${token}`
           }
         })
 
         return reponse.data
       } catch (error) {
+        console.log('deu ruim expirou o bagulho')
+        refreshToken()
         return null
       }
     }

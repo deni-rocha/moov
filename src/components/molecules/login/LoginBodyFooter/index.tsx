@@ -15,9 +15,9 @@ const LoginBodyFooter = ({ email, senha }: Props): JSX.Element => {
     setLoading(true)
 
     void (async () => {
-      const res = await signin(email, senha)
+      await signin(email, senha)
 
-      if (res !== null) setLoading(false)
+      setLoading(false)
     })()
   }
 

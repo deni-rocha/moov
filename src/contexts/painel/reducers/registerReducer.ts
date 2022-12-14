@@ -2,8 +2,7 @@ import { RegisterActions } from '../actions/RegisterActions'
 import { IRegister } from '../interfaces/IRegister'
 
 export const initialStateRegister = {
-  registerBtnActive: 'usuários',
-  formUserChecked: false
+  registerBtnActive: 'usuários'
 }
 
 function registerReducer(state: IRegister, action: RegisterActions): IRegister {
@@ -15,11 +14,7 @@ function registerReducer(state: IRegister, action: RegisterActions): IRegister {
         ...state,
         registerBtnActive: payload
       }
-    case 'FORM_TOGGLE':
-      return {
-        ...state,
-        formUserChecked: payload
-      }
+
     default:
       return state
   }

@@ -40,10 +40,6 @@ const Sidebar = (): JSX.Element => {
             btnActive: value
           }
         })
-        dispatch({
-          type: 'FORM_TOGGLE',
-          payload: false
-        })
         break
       }
 
@@ -164,7 +160,6 @@ const Sidebar = (): JSX.Element => {
               }`}
               onClick={() => {
                 dispatch({ type: 'REGISTER_CHANGE_BTN', payload: 'usuários' })
-                dispatch({ type: 'FORM_TOGGLE', payload: false })
               }}
             >
               Usuários
@@ -175,7 +170,6 @@ const Sidebar = (): JSX.Element => {
               }`}
               onClick={() => {
                 dispatch({ type: 'REGISTER_CHANGE_BTN', payload: 'setores' })
-                dispatch({ type: 'FORM_TOGGLE', payload: false })
               }}
             >
               Setores
@@ -191,7 +185,6 @@ const Sidebar = (): JSX.Element => {
                   type: 'REGISTER_CHANGE_BTN',
                   payload: 'tipo de despesa'
                 })
-                dispatch({ type: 'FORM_TOGGLE', payload: false })
               }}
             >
               Tipo de despesa
@@ -202,7 +195,6 @@ const Sidebar = (): JSX.Element => {
               }`}
               onClick={() => {
                 dispatch({ type: 'REGISTER_CHANGE_BTN', payload: 'aprovação' })
-                dispatch({ type: 'FORM_TOGGLE', payload: false })
               }}
             >
               Aprovação

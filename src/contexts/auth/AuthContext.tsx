@@ -15,15 +15,15 @@ interface IAuthContext {
   user: IUser
   signin: (email: string, password: string) => Promise<boolean>
   logout: () => boolean
-  token: string | null
-  setToken: React.Dispatch<React.SetStateAction<string | null>>
+  token: string
+  setToken: React.Dispatch<React.SetStateAction<string>>
 }
 
 const AuthContext = createContext<IAuthContext>({
   user: initialStateUser,
   signin: async () => false,
   logout: () => false,
-  token: null,
+  token: '',
   setToken: () => {}
 })
 

@@ -10,7 +10,7 @@ interface Props {
 
 export const AuthProvider = ({ children }: Props): JSX.Element => {
   const [user, setUser] = useState<IUser>(initialStateUser)
-  const [token, setToken] = useState<string | null>(null)
+  const [token, setToken] = useState<string>('')
   const api = useApi()
 
   useEffect(() => {
@@ -40,10 +40,9 @@ export const AuthProvider = ({ children }: Props): JSX.Element => {
   }
 
   const logout = (): boolean => {
-    console.log('logout está sendo executada.')
     sessionStorage.removeItem('@App-User')
     sessionStorage.removeItem('@App-Token')
-    setToken(null)
+    setToken('')
     return true
   }
 
