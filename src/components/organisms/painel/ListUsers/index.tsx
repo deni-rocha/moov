@@ -12,6 +12,7 @@ import SvgPainelRefresh from '../../../../assets/painel/painelData/SvgPainelRefr
 import AuthContext from '../../../../contexts/auth/AuthContext'
 import { useApi } from '../../../../hooks/useApi'
 import Pagination from '../../Pagination'
+import { useFilter } from '../../../../hooks/useFilter'
 
 interface Props {
   usersChecked: string
@@ -26,6 +27,7 @@ const ListUsers = ({ usersChecked }: Props): JSX.Element => {
   const [dataList, setDataList] = useState<IUserList>([])
   const { token } = useContext(AuthContext)
   const [currentPage, setCurrentPage] = useState(1)
+  const { searchFilter, searchActive } = useFilter(dataList)
 
   const currentDataList = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize
@@ -33,8 +35,12 @@ const ListUsers = ({ usersChecked }: Props): JSX.Element => {
 
     console.log('%c atualizando page list', 'background: yellow; color: black;')
 
+    if (searchActive) {
+      return searchFilter.slice(firstPageIndex, lastPageIndex)
+    }
+
     return dataList.slice(firstPageIndex, lastPageIndex)
-  }, [dataList, currentPage])
+  }, [dataList, currentPage, searchFilter])
 
   function alertConfirm(id: number): void {
     void Swal.fire({

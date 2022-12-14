@@ -4,6 +4,7 @@ import PainelSearch from '../PainelSearch'
 import PainelRegisterFormUser from '../PainelRegisterFormUser'
 import ListUsers from '../ListUsers'
 import PainelContext from '../../../../contexts/painel'
+import { SearchListProvider } from '../../../../contexts/searchList/SearchListProvider'
 
 const PainelRegister = (): JSX.Element => {
   const { state, dispatch } = useContext(PainelContext)
@@ -29,8 +30,10 @@ const PainelRegister = (): JSX.Element => {
           <p className="uppercase text-xs font-semibold">novos usuários</p>
         </button>
       </div>
-      <PainelSearch title="Pesquisar nome ou e-mail" hasButton={false} />
-      <ListUsers usersChecked={usersChecked} />
+      <SearchListProvider>
+        <PainelSearch title="Pesquisar nome ou e-mail" hasButton={false} />
+        <ListUsers usersChecked={usersChecked} />
+      </SearchListProvider>
     </>
   )
 }
