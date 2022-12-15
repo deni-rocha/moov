@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios'
+import axios, { AxiosError, AxiosResponse } from 'axios'
 import { useContext } from 'react'
 import { ILogin } from '../@types/ILogin'
 import AuthContext from '../contexts/auth/AuthContext'
@@ -74,6 +74,55 @@ export const useApi = () => {
         console.log('deu ruim expirou o bagulho')
         refreshToken()
         return null
+      }
+    },
+    deleteUser: async (id: number) => {
+      try {
+        const responseApi = await api.delete(`/usuario/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+
+        return responseApi.status
+      } catch (error) {
+        const err = error as AxiosError
+        const status = err.response?.status
+
+        throw new Error('algo deu errado', { cause: status })
+      }
+    },
+    updateUser: async (
+      id: number,
+      perfil: string,
+      email: string,
+      nome: string,
+      senha: string,
+      sexo: string
+    ) => {
+      try {
+        const res = await api.put(
+          '/usuario/',
+          {
+            perfil,
+            email,
+            nome,
+            senha,
+            sexo,
+            id
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        )
+
+        return res
+      } catch (error) {
+        const err = error as AxiosError
+
+        throw new Error('erro', err.cause)
       }
     }
   }

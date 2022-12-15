@@ -1,39 +1,45 @@
 import React, { useState, useReducer } from 'react'
 import Input from '../../../atoms/Input'
 import icon from '../../../../assets/input/icon/icon.svg'
-import { alertError } from '../../../../utils/alert'
-import { apiMoov } from '../../../../services/api'
+import { alertError, alertSucess } from '../../../../utils/alert'
 import { AxiosError } from 'axios'
 import SvgCancel from '../../../../assets/painel/painelRegister/SvgCancel'
 import SvgConfirm from '../../../../assets/painel/painelRegister/SvgConfirm'
-import { initialState, reducerForm } from './reducerForm'
-import Swal from 'sweetalert2'
+import { reducerFormEdit } from './reducerFormEdit'
+import { useApi } from '../../../../hooks/useApi'
 
 interface Props {
-  setRefreshList: React.Dispatch<React.SetStateAction<boolean>>
-  setFormIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+  currentId: number
+  currentNome: string
+  currentEmail: string
+  currentSexo: string
+  currentPerfil: string
+  setFormEditIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
-const PainelRegisterFormUser = ({
-  setFormIsOpen,
-  setRefreshList
+
+const PinelFormEditUser = ({
+  currentId,
+  currentNome,
+  currentEmail,
+  currentSexo,
+  currentPerfil,
+  setFormEditIsOpen
 }: Props): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false)
   const [{ nome, email, senha, sexo, perfil }, dispatchForm] = useReducer(
-    reducerForm,
-    initialState
+    reducerFormEdit,
+    {
+      nome: currentNome,
+      email: currentEmail,
+      senha: '',
+      sexo: currentSexo,
+      perfil: currentPerfil
+    }
   )
 
-  const alertSuccessed = (): void => {
-    void Swal.fire({
-      title: 'usuário cadastrado!',
-      background: '#ffffff',
-      confirmButtonColor: '#4C4C4C'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        setFormIsOpen(false)
-      }
-    })
-  }
+  const api = useApi()
+
+  window.scrollTo(0, 0)
 
   function submitForm(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault()
@@ -44,18 +50,20 @@ const PainelRegisterFormUser = ({
 
     void (async () => {
       try {
-        const res = await apiMoov.post('/usuario', {
+        const res = await api.updateUser(
+          currentId,
           perfil,
           email,
           nome,
           senha,
           sexo
-        })
+        )
+
+        console.log(res)
 
         switch (res.status) {
           case 200:
-            alertSuccessed()
-            setRefreshList(true)
+            alertSucess('usuário atualizado', '#4C4C4C', '#ffffff')
             break
         }
         dispatchForm({ type: 'reset' })
@@ -65,11 +73,11 @@ const PainelRegisterFormUser = ({
           case 500:
             alertError('erro no servidor', '#4C4C4C', '#ffffff')
             break
-          case 409:
-            alertError('e-mail já está em uso', '#4C4C4C', '#ffffff')
-            break
+          // case 409:
+          //   alertError('e-mail já está em uso', '#4C4C4C', '#ffffff')
+          //   break
           default:
-            alertError('usuário não cadastrado', '#4C4C4C', '#ffffff')
+            alertError('usuário não atualizado', '#4C4C4C', '#ffffff')
         }
       }
     })()
@@ -81,7 +89,7 @@ const PainelRegisterFormUser = ({
         "
       >
         <h2 className="font-bold font-roboto text-center text-lg w-60 my-4 ">
-          Novo usuário
+          Editar usuário
         </h2>
         <form
           onSubmit={submitForm}
@@ -134,7 +142,7 @@ const PainelRegisterFormUser = ({
                   dispatchForm({ type: 'senha', payload: e.target.value })
                 }
                 type={showPassword ? 'text' : 'password'}
-                placeholder={'Escolha uma senha para esse usuário'}
+                placeholder={'nova senha para esse usuário'}
                 name="senha"
                 id="senha"
                 className="formWidth:pr-7 p-2 border-2 truncate pl-4 h-12 w-full placeholder:text-bgDefault rounded-md border-gray-200"
@@ -197,7 +205,7 @@ const PainelRegisterFormUser = ({
           <div className="w-full justify-end pt-5 flex xs:flex-col items-center xs:space-y-4 gap-2">
             <button
               onClick={() => {
-                setFormIsOpen(false)
+                setFormEditIsOpen(false)
               }}
               className="w-52 relative h-11 text-white font-bold bg-[#EB5A46] rounded-md"
             >
@@ -208,8 +216,8 @@ const PainelRegisterFormUser = ({
               type="submit"
               className="w-52 h-11 relative text-white font-bold bg-[#31D760] rounded-md cursor-pointer"
             >
-              <SvgConfirm className="absolute left-8 top-4" />
-              salvar usuário
+              <SvgConfirm className="absolute left-6 top-4" />
+              atualizar usuário
             </button>
           </div>
         </form>
@@ -218,4 +226,4 @@ const PainelRegisterFormUser = ({
   )
 }
 
-export default PainelRegisterFormUser
+export default PinelFormEditUser

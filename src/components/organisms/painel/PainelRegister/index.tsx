@@ -12,12 +12,18 @@ const PainelRegister = (): JSX.Element => {
   const [formIsOpen, setFormIsOpen] = useState(false)
   const usersChecked = registerBtnActive === 'usuários' ? '' : 'hidden'
 
+  const [refreshList, setRefreshList] = useState(false)
   return (
     <>
       <div
         className={`max-w-[1105px] ${usersChecked} border-2 mb-3 items-center p-4 justify-between rounded-md border-zinc-300 flex`}
       >
-        {formIsOpen && <PainelRegisterFormUser setFormIsOpen={setFormIsOpen} />}
+        {formIsOpen && (
+          <PainelRegisterFormUser
+            setFormIsOpen={setFormIsOpen}
+            setRefreshList={setRefreshList}
+          />
+        )}
         <p className="font-bold uppercase text-sm">cadastrar novos usuários</p>
         <button
           onClick={() => {
@@ -32,7 +38,7 @@ const PainelRegister = (): JSX.Element => {
       </div>
       <SearchListProvider>
         <PainelSearch title="Pesquisar nome ou e-mail" hasButton={false} />
-        <ListUsers usersChecked={usersChecked} />
+        <ListUsers usersChecked={usersChecked} refreshList={refreshList} />
       </SearchListProvider>
     </>
   )
