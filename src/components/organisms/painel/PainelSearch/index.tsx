@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import SVGPainelSearch from '../../../../assets/painel/painelSearch/SVGPainelSearch'
-import { SearchListContext } from '../../../../contexts/searchList/SearchListContext'
+import { SearchListContext } from '../../../../contexts/painel/SearchList'
 import Input from '../../../atoms/Input'
 
 interface Props {
@@ -8,7 +8,8 @@ interface Props {
   hasButton: boolean
 }
 const PainelSearch = ({ title, hasButton }: Props): JSX.Element => {
-  const { inputValue, setInputValue } = useContext(SearchListContext)
+  const { searchState, dispatchSearch } = useContext(SearchListContext)
+  const { inputValue } = searchState
   return (
     <div className="max-w-[1105px] border-2 items-center p-4 justify-between rounded-md border-zinc-300 flex">
       <div className=" w-full">
@@ -16,7 +17,12 @@ const PainelSearch = ({ title, hasButton }: Props): JSX.Element => {
         <div className="relative  max-w-[480px]">
           <Input
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={(e) =>
+              dispatchSearch({
+                type: 'USERS_CHANGE_VALUE',
+                payload: e.target.value
+              })
+            }
             type="text"
             name="search"
             className="bg-[#f7f9fb] border-2"

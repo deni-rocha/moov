@@ -1,4 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
+import {
+  SvgIcon,
+  SvgToggleClose,
+  SvgToggleOpen,
+  SVGControlTrip
+} from '../../../../assets/painel/sidebar'
 import perfil from '../../../../assets/painel/sidebar/perfil.png'
 import iconOnline from '../../../../assets/painel/sidebar/icon-online.svg'
 import iconEdit from '../../../../assets/painel/sidebar/icon-edit.svg'
@@ -6,18 +12,14 @@ import iconReport from '../../../../assets/painel/sidebar/icon-report.svg'
 import iconHelp from '../../../../assets/painel/sidebar/icon-help.svg'
 import iconLogout from '../../../../assets/painel/sidebar/icon-logout.svg'
 import { Link } from 'react-router-dom'
-import SVGControlTrip from '../../../../assets/painel/sidebar/ControlTrip'
 import AuthContext from '../../../../contexts/auth/AuthContext'
 import PainelBtn from '../../../molecules/painel/PainelBtn'
 import SVGCollapsedLogo from '../../../../assets/painel/sidebar/collapsed/SVGCollapsedLogo'
 import verifyWindowSize from '../../../../utils/verifyWindowSize'
-import SvgToggleOpen from '../../../../assets/painel/sidebar/SvgToggleOpen'
-import SvgToggleClose from '../../../../assets/painel/sidebar/SvgToggleClose'
-import SvgIcon from '../../../../assets/painel/sidebar/SvgIcon'
-import PainelContext from '../../../../contexts/painel'
+import PainelGlobalContext from '../../../../contexts/painel/PainelGlobalContext'
 
 const Sidebar = (): JSX.Element => {
-  const { state, dispatch } = useContext(PainelContext)
+  const { state, dispatch } = useContext(PainelGlobalContext)
   const { registerBtnActive } = state.register
   const { user, logout } = useContext(AuthContext)
   const [btnActive, setBtnActive] = useState('')

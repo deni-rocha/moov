@@ -4,11 +4,11 @@ import PainelSidebar from '../../organisms/painel/PainelSidebar'
 import PainelTrips from '../../organisms/painel/PainelTrips'
 
 import { alertSucess } from '../../../utils/alert'
-import PainelContext from '../../../contexts/painel'
+import PainelGlobalContext from '../../../contexts/painel/PainelGlobalContext'
 import PainelRegister from '../../organisms/painel/PainelRegister'
 
 const PainelTemplate = (): JSX.Element => {
-  const { state } = useContext(PainelContext)
+  const { state } = useContext(PainelGlobalContext)
   const { registerBtnActive } = state.register
   const { header, sidebar } = state.currentPage
 

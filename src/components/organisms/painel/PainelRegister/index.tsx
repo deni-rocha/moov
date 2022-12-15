@@ -3,11 +3,11 @@ import iconNewUser from '../../../../assets/painel/painelRegister/icon-new-user.
 import PainelSearch from '../PainelSearch'
 import PainelRegisterFormUser from '../PainelRegisterFormUser'
 import ListUsers from '../ListUsers'
-import PainelContext from '../../../../contexts/painel'
-import { SearchListProvider } from '../../../../contexts/searchList/SearchListProvider'
+import PainelGlobalContext from '../../../../contexts/painel/PainelGlobalContext'
+import { SearchListProvider } from '../../../../contexts/painel/SearchList'
 
 const PainelRegister = (): JSX.Element => {
-  const { state, dispatch } = useContext(PainelContext)
+  const { state, dispatch } = useContext(PainelGlobalContext)
   const { registerBtnActive } = state.register
   const [formIsOpen, setFormIsOpen] = useState(false)
   const usersChecked = registerBtnActive === 'usuários' ? '' : 'hidden'

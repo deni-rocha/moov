@@ -1,5 +1,5 @@
 import React, { ReactNode, useContext } from 'react'
-import PainelContext from '../../../../contexts/painel'
+import PainelContext from '../../../../contexts/painel/PainelGlobalContext'
 import BorderSelected from '../../../atoms/BorderSelected'
 
 interface Props {

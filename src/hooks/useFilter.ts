@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react'
-import { SearchListContext } from '../contexts/searchList/SearchListContext'
+import { SearchListContext } from '../contexts/painel/SearchList'
 import { IUserList } from '../types/IUserList'
 
 interface IUseFilterType {
@@ -8,7 +8,8 @@ interface IUseFilterType {
 }
 export function useFilter(data?: IUserList): IUseFilterType {
   const [searchFilter, setSearchFilter] = useState<IUserList | []>([])
-  const { inputValue } = useContext(SearchListContext)
+  const { searchState } = useContext(SearchListContext)
+  const { inputValue } = searchState
 
   const searchActive = inputValue.length > 0
 

@@ -28,21 +28,21 @@ const rootReducer = (
   currentPage: currentPageReducer(currentPage, action as CurrentPageActions)
 })
 
-const PainelContext = createContext<{
+const PainelGlobalContext = createContext<{
   state: initialStateType
   dispatch: React.Dispatch<RegisterActions | CurrentPageActions>
 }>({ state: initialState as unknown as initialStateType, dispatch: () => null })
 
-export const PainelProvider = (props: {
+export const PainelGlobalProvider = (props: {
   children?: React.ReactNode
 }): JSX.Element => {
   const [state, dispatch] = useReducer(rootReducer, initialState)
 
   return (
-    <PainelContext.Provider value={{ state, dispatch }}>
+    <PainelGlobalContext.Provider value={{ state, dispatch }}>
       {props.children}
-    </PainelContext.Provider>
+    </PainelGlobalContext.Provider>
   )
 }
 
-export default PainelContext
+export default PainelGlobalContext
