@@ -76,6 +76,38 @@ export const useApi = () => {
         return null
       }
     },
+    createUser: async (
+      perfil: string,
+      email: string,
+      nome: string,
+      senha: string,
+      sexo: string
+    ) => {
+      try {
+        const res = await api.post(
+          '/usuario/',
+          {
+            perfil,
+            email,
+            nome,
+            senha,
+            sexo
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        )
+
+        return res.status
+      } catch (error) {
+        const err = error as AxiosError
+        const status = err.response?.status
+
+        throw new Error('algo deu errado', { cause: status })
+      }
+    },
     deleteUser: async (id: number) => {
       try {
         const responseApi = await api.delete(`/usuario/${id}`, {
@@ -118,11 +150,12 @@ export const useApi = () => {
           }
         )
 
-        return res
+        return res.status
       } catch (error) {
         const err = error as AxiosError
+        const status = err.response?.status
 
-        throw new Error('erro', err.cause)
+        throw new Error('algo deu errado', { cause: status })
       }
     }
   }
