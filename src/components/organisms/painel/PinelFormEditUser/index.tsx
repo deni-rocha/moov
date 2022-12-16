@@ -1,12 +1,12 @@
 import React, { useState, useReducer } from 'react'
 import Input from '../../../atoms/Input'
 import icon from '../../../../assets/input/icon/icon.svg'
-import { alertError, alertSucess } from '../../../../utils/alert'
-import { AxiosError } from 'axios'
 import SvgCancel from '../../../../assets/painel/painelRegister/SvgCancel'
 import SvgConfirm from '../../../../assets/painel/painelRegister/SvgConfirm'
 import { reducerFormEdit } from './reducerFormEdit'
 import { useApi } from '../../../../hooks/useApi'
+import Swal from 'sweetalert2'
+import { useErrors } from '../../../../hooks/useErrors'
 
 interface Props {
   currentId: number
@@ -15,6 +15,7 @@ interface Props {
   currentSexo: string
   currentPerfil: string
   setFormEditIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setRefreshList: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const PinelFormEditUser = ({
@@ -23,7 +24,8 @@ const PinelFormEditUser = ({
   currentEmail,
   currentSexo,
   currentPerfil,
-  setFormEditIsOpen
+  setFormEditIsOpen,
+  setRefreshList
 }: Props): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false)
   const [{ nome, email, senha, sexo, perfil }, dispatchForm] = useReducer(
@@ -37,9 +39,88 @@ const PinelFormEditUser = ({
     }
   )
 
-  const api = useApi()
+  const { updateUser } = useApi()
 
   window.scrollTo(0, 0)
+
+  const alertSuccessed = (): void => {
+    void Swal.fire({
+      title: 'usuário atualizado!',
+      background: '#ffffff',
+      confirmButtonColor: '#4C4C4C'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setFormEditIsOpen(false)
+      }
+    })
+  }
+
+  function alertPreviewData(): void {
+    void Swal.fire({
+      title: 'Deseja prosseguir?',
+      html: `
+      <ul class="preview-data">
+      <li class="preview-data-li">
+        <p class="preview-data-key">nome</p>
+        <p class="preview-data-value">${nome}</p>
+      </li>
+      <li class="preview-data-li">
+        <p class="preview-data-key">email</p>
+        <p class="preview-data-value">${email}</p>
+      </li>
+      <li class="preview-data-li">
+        <p class="preview-data-key">senha</p>
+        <p class="preview-data-value">${senha}</p>
+      </li>
+      <li class="preview-data-li">
+        <p class="preview-data-key">sexo</p>
+        <p class="preview-data-value">${sexo}</p>
+      </li>
+      <li class="preview-data-li">
+        <p class="preview-data-key">perfil</p>
+        <p class="preview-data-value">${perfil}</p>
+      </li>
+    </ul>
+        `,
+      color: '#4C4C4C',
+      icon: 'question',
+      background: '#ffffff',
+      customClass: { confirmButton: 'preview-data-confirmBtn' },
+      position: 'top-end',
+      confirmButtonText: 'Sim. Atualizar usuário',
+      cancelButtonText: 'Não. Voltar para editar',
+      confirmButtonColor: '#31d760',
+      cancelButtonColor: '#EB5A46',
+      showConfirmButton: true,
+      showCancelButton: true
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          return updateUser(currentId, perfil, email, nome, senha, sexo)
+        } else {
+          return 0
+        }
+      })
+      .then((res) => {
+        switch (res) {
+          case 200: {
+            alertSuccessed()
+            setRefreshList(true)
+            break
+          }
+          case 0:
+            break
+        }
+      })
+      .catch((err: Error) => {
+        const status = err.cause as number
+        useErrors(status, {
+          '409': 'Erro de conflito. Confira os dados e tente novamente.',
+          defaut:
+            'Não foi possóvel atualizar o usuário. tente novamente mais tarde.'
+        })
+      })
+  }
 
   function submitForm(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault()
@@ -48,39 +129,7 @@ const PinelFormEditUser = ({
     if (senha.length === 0) return alert('por favor informe sua senha')
     if (email.length < 3) return alert('por gentileza corrija o email')
 
-    void (async () => {
-      try {
-        const res = await api.updateUser(
-          currentId,
-          perfil,
-          email,
-          nome,
-          senha,
-          sexo
-        )
-
-        console.log(res)
-
-        switch (res.status) {
-          case 200:
-            alertSucess('usuário atualizado', '#4C4C4C', '#ffffff')
-            break
-        }
-        dispatchForm({ type: 'reset' })
-      } catch (error) {
-        const err = error as AxiosError
-        switch (err.response?.status) {
-          case 500:
-            alertError('erro no servidor', '#4C4C4C', '#ffffff')
-            break
-          // case 409:
-          //   alertError('e-mail já está em uso', '#4C4C4C', '#ffffff')
-          //   break
-          default:
-            alertError('usuário não atualizado', '#4C4C4C', '#ffffff')
-        }
-      }
-    })()
+    alertPreviewData()
   }
   return (
     <section className="bg-textPrimary">

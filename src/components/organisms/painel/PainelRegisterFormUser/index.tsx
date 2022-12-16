@@ -1,13 +1,12 @@
 import React, { useState, useReducer } from 'react'
 import Input from '../../../atoms/Input'
 import icon from '../../../../assets/input/icon/icon.svg'
-import { alertError } from '../../../../utils/alert'
-import { apiMoov } from '../../../../services/api'
-import { AxiosError } from 'axios'
 import SvgCancel from '../../../../assets/painel/painelRegister/SvgCancel'
 import SvgConfirm from '../../../../assets/painel/painelRegister/SvgConfirm'
 import { initialState, reducerForm } from './reducerForm'
 import Swal from 'sweetalert2'
+import { useErrors } from '../../../../hooks/useErrors'
+import { useApi } from '../../../../hooks/useApi'
 
 interface Props {
   setRefreshList: React.Dispatch<React.SetStateAction<boolean>>
@@ -22,7 +21,7 @@ const PainelRegisterFormUser = ({
     reducerForm,
     initialState
   )
-
+  const { createUser } = useApi()
   const alertSuccessed = (): void => {
     void Swal.fire({
       title: 'usuário cadastrado!',
@@ -34,7 +33,71 @@ const PainelRegisterFormUser = ({
       }
     })
   }
-
+  function alertPreviewData(): void {
+    void Swal.fire({
+      title: 'Deseja prosseguir?',
+      html: `
+      <ul class="preview-data">
+      <li class="preview-data-li">
+        <p class="preview-data-key">nome</p>
+        <p class="preview-data-value">${nome}</p>
+      </li>
+      <li class="preview-data-li">
+        <p class="preview-data-key">email</p>
+        <p class="preview-data-value">${email}</p>
+      </li>
+      <li class="preview-data-li">
+        <p class="preview-data-key">senha</p>
+        <p class="preview-data-value">${senha}</p>
+      </li>
+      <li class="preview-data-li">
+        <p class="preview-data-key">sexo</p>
+        <p class="preview-data-value">${sexo}</p>
+      </li>
+      <li class="preview-data-li">
+        <p class="preview-data-key">perfil</p>
+        <p class="preview-data-value">${perfil}</p>
+      </li>
+    </ul>
+        `,
+      color: '#4C4C4C',
+      icon: 'question',
+      background: '#ffffff',
+      customClass: { confirmButton: 'preview-data-confirmBtn' },
+      position: 'top-end',
+      confirmButtonText: 'Sim. Cadastrar usuário',
+      cancelButtonText: 'Não. Voltar para editar',
+      confirmButtonColor: '#31d760',
+      cancelButtonColor: '#EB5A46',
+      showConfirmButton: true,
+      showCancelButton: true
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          return createUser(perfil, email, nome, senha, sexo)
+        } else {
+          return 0
+        }
+      })
+      .then((res) => {
+        switch (res) {
+          case 200: {
+            alertSuccessed()
+            setRefreshList(true)
+            break
+          }
+          case 0:
+            break
+        }
+      })
+      .catch((err: Error) => {
+        const status = err.cause as number
+        useErrors(status, {
+          '409': 'e-mail já está em uso',
+          defaut: 'usuário não cadastrado'
+        })
+      })
+  }
   function submitForm(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault()
 
@@ -42,37 +105,7 @@ const PainelRegisterFormUser = ({
     if (senha.length === 0) return alert('por favor informe sua senha')
     if (email.length < 3) return alert('por gentileza corrija o email')
 
-    void (async () => {
-      try {
-        const res = await apiMoov.post('/usuario', {
-          perfil,
-          email,
-          nome,
-          senha,
-          sexo
-        })
-
-        switch (res.status) {
-          case 200:
-            alertSuccessed()
-            setRefreshList(true)
-            break
-        }
-        dispatchForm({ type: 'reset' })
-      } catch (error) {
-        const err = error as AxiosError
-        switch (err.response?.status) {
-          case 500:
-            alertError('erro no servidor', '#4C4C4C', '#ffffff')
-            break
-          case 409:
-            alertError('e-mail já está em uso', '#4C4C4C', '#ffffff')
-            break
-          default:
-            alertError('usuário não cadastrado', '#4C4C4C', '#ffffff')
-        }
-      }
-    })()
+    alertPreviewData()
   }
   return (
     <section className="bg-textPrimary">
