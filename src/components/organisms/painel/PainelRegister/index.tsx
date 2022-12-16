@@ -38,7 +38,11 @@ const PainelRegister = (): JSX.Element => {
       </div>
       <SearchListProvider>
         <PainelSearch title="Pesquisar nome ou e-mail" hasButton={false} />
-        <ListUsers usersChecked={usersChecked} refreshList={refreshList} />
+        <ListUsers
+          usersChecked={usersChecked}
+          refreshList={refreshList}
+          setRefreshList={setRefreshList}
+        />
       </SearchListProvider>
     </>
   )

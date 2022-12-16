@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useReducer, useState } from 'react'
+import React, {
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState
+} from 'react'
 import PainelDataNavLi from '../../../molecules/painel/PainelDataNavLi'
 import Text from '../../../atoms/Text'
 import SvgDelete from '../../../../assets/painel/painelRegister/SvgDelete'
@@ -6,16 +12,17 @@ import SvgEdit from '../../../../assets/painel/painelRegister/SvgEdit'
 import Swal from 'sweetalert2'
 import { alertErrorDeleteUser } from '../../../../utils/alert'
 import { IUserList } from '../../../../types/IUserList'
-// import PainelContext from '../../../../contexts/painel'
 import { useApi } from '../../../../hooks/useApi'
 import Pagination from '../../Pagination'
 import { useFilter } from '../../../../hooks/useFilter'
 import PinelFormEditUser from '../PinelFormEditUser'
 import { reducerUserEdit } from './reducerUserEdit'
+import AuthContext from '../../../../contexts/auth/AuthContext'
 
 interface Props {
   usersChecked: string
   refreshList: boolean
+  setRefreshList: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const PageSize = 10
@@ -27,9 +34,13 @@ const dataUserForEdit = {
   currentSexo: '',
   currentPerfil: ''
 }
-const ListUsers = ({ usersChecked, refreshList }: Props): JSX.Element => {
-  // const { state } = useContext(PainelContext)
-  // const { registerBtnActive } = state.register
+const ListUsers = ({
+  usersChecked,
+  refreshList,
+  setRefreshList
+}: Props): JSX.Element => {
+  const { token } = useContext(AuthContext)
+
   const { getAllUsers, deleteUser } = useApi()
   const [dataList, setDataList] = useState<IUserList>([])
   const [currentPage, setCurrentPage] = useState(1)
@@ -54,7 +65,7 @@ const ListUsers = ({ usersChecked, refreshList }: Props): JSX.Element => {
 
   const alertDeleteSuccessed = (): void => {
     void Swal.fire({
-      title: 'deletado com sucesso!',
+      title: 'Excluído com sucesso!',
       background: '#ffffff',
       confirmButtonColor: '#4C4C4C'
     })
@@ -63,7 +74,7 @@ const ListUsers = ({ usersChecked, refreshList }: Props): JSX.Element => {
     void Swal.fire({
       position: 'center',
       icon: 'error',
-      title: 'Não é possível deletar esse usuário',
+      title: 'Não é possível excluir esse usuário',
       background: '#ffffff',
       confirmButtonColor: '#4C4C4C'
     })
@@ -71,14 +82,14 @@ const ListUsers = ({ usersChecked, refreshList }: Props): JSX.Element => {
 
   function alertConfirm(id: number): void {
     void Swal.fire({
-      title: 'deletar usuário?',
+      title: 'Você deseja excluir o usuário?',
       color: '#4C4C4C',
       icon: 'warning',
       customClass: 'custom-sweetalert',
       width: '300px',
       background: '#ffffff',
       position: 'top-end',
-      confirmButtonText: 'deletar',
+      confirmButtonText: 'excluir',
       cancelButtonText: 'cancelar',
       confirmButtonColor: '#EB5A46',
       cancelButtonColor: '#31d760',
@@ -125,7 +136,7 @@ const ListUsers = ({ usersChecked, refreshList }: Props): JSX.Element => {
 
   useEffect(() => {
     fetchUsers()
-  }, [])
+  }, [token])
 
   useEffect(() => {
     if (refreshList) fetchUsers()
@@ -157,6 +168,7 @@ const ListUsers = ({ usersChecked, refreshList }: Props): JSX.Element => {
     <div className={`w-full pt-4 mt-4 font-inter ${usersChecked}`}>
       {formEditIsOpen && (
         <PinelFormEditUser
+          setRefreshList={setRefreshList}
           setFormEditIsOpen={setFormEditIsOpen}
           {...stateUserEdit}
         />
