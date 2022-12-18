@@ -135,7 +135,7 @@ const Sidebar = (): JSX.Element => {
           onClick={() => handleActiveBtn('register')}
           className={`flex-col gap-2 mr-2 p-2 rounded-md text-white relative ${
             btnActive === 'register'
-              ? 'bg-secondary h-48 font-bold'
+              ? 'bg-secondary h-44 font-bold'
               : 'text-[#CACACA] h-14 hover:contrast-0'
           }
           ${isExpanded ? '' : 'items-center'}
@@ -150,7 +150,7 @@ const Sidebar = (): JSX.Element => {
             <p className={`${isExpanded ? '' : 'hidden'}`}>Cadastráveis</p>
           </div>
           <ul
-            className={`flex flex-col gap-3 items-start absolute top-9 ${
+            className={`flex flex-col gap-3 items-start absolute top-12 ${
               btnActive === 'register' ? 'flex font-normal' : 'hidden'
             }
             ${isExpanded ? 'ml-6' : 'ml-0 items-center'}
@@ -165,16 +165,6 @@ const Sidebar = (): JSX.Element => {
               }}
             >
               Usuários
-            </li>
-            <li
-              className={`hover:bg-[#848484] hover:p-1 rounded-md ${
-                registerBtnActive === 'setores' ? 'bg-[#2E2D2D] p-1' : ''
-              }`}
-              onClick={() => {
-                dispatch({ type: 'REGISTER_CHANGE_BTN', payload: 'setores' })
-              }}
-            >
-              Setores
             </li>
             <li
               className={`hover:bg-[#848484] hover:p-1 rounded-md ${

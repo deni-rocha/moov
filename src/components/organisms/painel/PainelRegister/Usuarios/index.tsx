@@ -5,22 +5,21 @@ import React, {
   useReducer,
   useState
 } from 'react'
-import PainelDataNavLi from '../../../molecules/painel/PainelDataNavLi'
-import Text from '../../../atoms/Text'
-import SvgDelete from '../../../../assets/painel/painelRegister/SvgDelete'
-import SvgEdit from '../../../../assets/painel/painelRegister/SvgEdit'
+import PainelDataNavLi from '../../../../molecules/painel/PainelDataNavLi'
+import Text from '../../../../atoms/Text'
+import SvgDelete from '../../../../../assets/painel/painelRegister/SvgDelete'
+import SvgEdit from '../../../../../assets/painel/painelRegister/SvgEdit'
 import Swal from 'sweetalert2'
-import { alertErrorDeleteUser } from '../../../../utils/alert'
-import { IUserList } from '../../../../types/IUserList'
-import { useApi } from '../../../../hooks/useApi'
-import Pagination from '../../Pagination'
-import { useFilter } from '../../../../hooks/useFilter'
-import PinelFormEditUser from '../PinelFormEditUser'
+import { alertErrorDeleteUser } from '../../../../../utils/alert'
+import { IUserList } from '../../../../../types/IUserList'
+import { useApi } from '../../../../../hooks/useApi'
+import Pagination from '../../../Pagination'
+import { useFilter } from '../../../../../hooks/useFilter'
+import { FormEditUser } from '../Forms'
 import { reducerUserEdit } from './reducerUserEdit'
-import AuthContext from '../../../../contexts/auth/AuthContext'
+import AuthContext from '../../../../../contexts/auth/AuthContext'
 
 interface Props {
-  usersChecked: string
   refreshList: boolean
   setRefreshList: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -34,11 +33,7 @@ const dataUserForEdit = {
   currentSexo: '',
   currentPerfil: ''
 }
-const ListUsers = ({
-  usersChecked,
-  refreshList,
-  setRefreshList
-}: Props): JSX.Element => {
+const Usuarios = ({ refreshList, setRefreshList }: Props): JSX.Element => {
   const { token } = useContext(AuthContext)
 
   const { getAllUsers, deleteUser } = useApi()
@@ -125,7 +120,6 @@ const ListUsers = ({
   }
 
   const fetchUsers = (): void => {
-    console.log('ATUALIZANDO')
     void (async () => {
       const res = await getAllUsers()
 
@@ -142,32 +136,10 @@ const ListUsers = ({
     if (refreshList) fetchUsers()
   }, [refreshList])
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  // function useHandleEdit(
-  //   nome: string,
-  //   email: string,
-  //   sexo: string,
-  //   perfil: string
-  // ) {
-
-  //   const initialState = {
-  //     currentNome: nome,
-  //     currentEmail: email,
-  //     currentSexo: sexo,
-  //     currentPerfil: perfil
-  //   }
-  //   return {
-  //     currentNome: nome,
-  //     currentEmail: email,
-  //     currentSexo: sexo,
-  //     currentPerfil: perfil
-  //   }
-  // }
-
   return (
-    <div className={`w-full pt-4 mt-4 font-inter ${usersChecked}`}>
+    <div className={`w-full pt-4 mt-4 font-inter`}>
       {formEditIsOpen && (
-        <PinelFormEditUser
+        <FormEditUser
           setRefreshList={setRefreshList}
           setFormEditIsOpen={setFormEditIsOpen}
           {...stateUserEdit}
@@ -254,4 +226,4 @@ const ListUsers = ({
   )
 }
 
-export default ListUsers
+export default Usuarios

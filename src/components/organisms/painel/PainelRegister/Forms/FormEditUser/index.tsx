@@ -1,38 +1,60 @@
 import React, { useState, useReducer } from 'react'
-import Input from '../../../atoms/Input'
-import icon from '../../../../assets/input/icon/icon.svg'
-import SvgCancel from '../../../../assets/painel/painelRegister/SvgCancel'
-import SvgConfirm from '../../../../assets/painel/painelRegister/SvgConfirm'
-import { initialState, reducerForm } from './reducerForm'
+import Input from '../../../../../atoms/Input'
+import icon from '../../../../../../assets/input/icon/icon.svg'
+import SvgCancel from '../../../../../../assets/painel/painelRegister/SvgCancel'
+import SvgConfirm from '../../../../../../assets/painel/painelRegister/SvgConfirm'
+import { reducerFormEdit } from './reducerFormEdit'
+import { useApi } from '../../../../../../hooks/useApi'
 import Swal from 'sweetalert2'
-import { useErrors } from '../../../../hooks/useErrors'
-import { useApi } from '../../../../hooks/useApi'
+import { useErrors } from '../../../../../../hooks/useErrors'
 
 interface Props {
+  currentId: number
+  currentNome: string
+  currentEmail: string
+  currentSexo: string
+  currentPerfil: string
+  setFormEditIsOpen: React.Dispatch<React.SetStateAction<boolean>>
   setRefreshList: React.Dispatch<React.SetStateAction<boolean>>
-  setFormIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
-const PainelRegisterFormUser = ({
-  setFormIsOpen,
+
+const FormEditUser = ({
+  currentId,
+  currentNome,
+  currentEmail,
+  currentSexo,
+  currentPerfil,
+  setFormEditIsOpen,
   setRefreshList
 }: Props): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false)
   const [{ nome, email, senha, sexo, perfil }, dispatchForm] = useReducer(
-    reducerForm,
-    initialState
+    reducerFormEdit,
+    {
+      nome: currentNome,
+      email: currentEmail,
+      senha: '',
+      sexo: currentSexo,
+      perfil: currentPerfil
+    }
   )
-  const { createUser } = useApi()
+
+  const { updateUser } = useApi()
+
+  window.scrollTo(0, 0)
+
   const alertSuccessed = (): void => {
     void Swal.fire({
-      title: 'usuário cadastrado!',
+      title: 'usuário atualizado!',
       background: '#ffffff',
       confirmButtonColor: '#4C4C4C'
     }).then((result) => {
       if (result.isConfirmed) {
-        setFormIsOpen(false)
+        setFormEditIsOpen(false)
       }
     })
   }
+
   function alertPreviewData(): void {
     void Swal.fire({
       title: 'Deseja prosseguir?',
@@ -65,7 +87,7 @@ const PainelRegisterFormUser = ({
       background: '#ffffff',
       customClass: { confirmButton: 'preview-data-confirmBtn' },
       position: 'top-end',
-      confirmButtonText: 'Sim. Cadastrar usuário',
+      confirmButtonText: 'Sim. Atualizar usuário',
       cancelButtonText: 'Não. Voltar para editar',
       confirmButtonColor: '#31d760',
       cancelButtonColor: '#EB5A46',
@@ -74,7 +96,7 @@ const PainelRegisterFormUser = ({
     })
       .then((result) => {
         if (result.isConfirmed) {
-          return createUser(perfil, email, nome, senha, sexo)
+          return updateUser(currentId, perfil, email, nome, senha, sexo)
         } else {
           return 0
         }
@@ -93,11 +115,13 @@ const PainelRegisterFormUser = ({
       .catch((err: Error) => {
         const status = err.cause as number
         useErrors(status, {
-          '409': 'e-mail já está em uso',
-          defaut: 'usuário não cadastrado'
+          '409': 'Erro de conflito. Confira os dados e tente novamente.',
+          defaut:
+            'Não foi possóvel atualizar o usuário. tente novamente mais tarde.'
         })
       })
   }
+
   function submitForm(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault()
 
@@ -114,7 +138,7 @@ const PainelRegisterFormUser = ({
         "
       >
         <h2 className="font-bold font-roboto text-center text-lg w-60 my-4 ">
-          Novo usuário
+          Editar usuário
         </h2>
         <form
           onSubmit={submitForm}
@@ -167,7 +191,7 @@ const PainelRegisterFormUser = ({
                   dispatchForm({ type: 'senha', payload: e.target.value })
                 }
                 type={showPassword ? 'text' : 'password'}
-                placeholder={'Escolha uma senha para esse usuário'}
+                placeholder={'nova senha para esse usuário'}
                 name="senha"
                 id="senha"
                 className="formWidth:pr-7 p-2 border-2 truncate pl-4 h-12 w-full placeholder:text-bgDefault rounded-md border-gray-200"
@@ -230,7 +254,7 @@ const PainelRegisterFormUser = ({
           <div className="w-full justify-end pt-5 flex xs:flex-col items-center xs:space-y-4 gap-2">
             <button
               onClick={() => {
-                setFormIsOpen(false)
+                setFormEditIsOpen(false)
               }}
               className="w-52 relative h-11 text-white font-bold bg-[#EB5A46] rounded-md"
             >
@@ -241,8 +265,8 @@ const PainelRegisterFormUser = ({
               type="submit"
               className="w-52 h-11 relative text-white font-bold bg-[#31D760] rounded-md cursor-pointer"
             >
-              <SvgConfirm className="absolute left-8 top-4" />
-              salvar usuário
+              <SvgConfirm className="absolute left-6 top-4" />
+              atualizar usuário
             </button>
           </div>
         </form>
@@ -251,4 +275,4 @@ const PainelRegisterFormUser = ({
   )
 }
 
-export default PainelRegisterFormUser
+export default FormEditUser
