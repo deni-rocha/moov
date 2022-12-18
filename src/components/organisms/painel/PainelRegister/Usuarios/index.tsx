@@ -18,6 +18,7 @@ import { useFilter } from '../../../../../hooks/useFilter'
 import { FormEditUser } from '../Forms'
 import { reducerUserEdit } from './reducerUserEdit'
 import AuthContext from '../../../../../contexts/auth/AuthContext'
+import { SearchListContext } from '../../../../../contexts/painel/SearchList'
 
 interface Props {
   refreshList: boolean
@@ -44,6 +45,7 @@ const Usuarios = ({ refreshList, setRefreshList }: Props): JSX.Element => {
     reducerUserEdit,
     dataUserForEdit
   )
+  const { dispatchSearch } = useContext(SearchListContext)
   const [formEditIsOpen, setFormEditIsOpen] = useState(false)
   const currentDataList = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize
@@ -101,6 +103,7 @@ const Usuarios = ({ refreshList, setRefreshList }: Props): JSX.Element => {
       .then((res) => {
         switch (res) {
           case 200:
+            dispatchSearch({ type: 'USERS_CHANGE_VALUE', payload: '' })
             alertDeleteSuccessed()
             fetchUsers()
             break
@@ -133,7 +136,10 @@ const Usuarios = ({ refreshList, setRefreshList }: Props): JSX.Element => {
   }, [token])
 
   useEffect(() => {
-    if (refreshList) fetchUsers()
+    if (refreshList) {
+      fetchUsers()
+      setRefreshList(false)
+    }
   }, [refreshList])
 
   return (

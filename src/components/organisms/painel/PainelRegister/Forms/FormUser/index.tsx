@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react'
+import React, { useState, useReducer, useContext } from 'react'
 import Input from '../../../../../atoms/Input'
 import icon from '../../../../../../assets/input/icon/icon.svg'
 import SvgCancel from '../../../../../../assets/painel/painelRegister/SvgCancel'
@@ -7,6 +7,7 @@ import { initialState, reducerForm } from './reducerForm'
 import Swal from 'sweetalert2'
 import { useErrors } from '../../../../../../hooks/useErrors'
 import { useApi } from '../../../../../../hooks/useApi'
+import { SearchListContext } from '../../../../../../contexts/painel/SearchList'
 
 interface Props {
   setRefreshList: React.Dispatch<React.SetStateAction<boolean>>
@@ -19,6 +20,8 @@ const FormUser = ({ setFormIsOpen, setRefreshList }: Props): JSX.Element => {
     initialState
   )
   const { createUser } = useApi()
+  const { dispatchSearch } = useContext(SearchListContext)
+
   const alertSuccessed = (): void => {
     void Swal.fire({
       title: 'usuário cadastrado!',
@@ -79,8 +82,9 @@ const FormUser = ({ setFormIsOpen, setRefreshList }: Props): JSX.Element => {
       .then((res) => {
         switch (res) {
           case 200: {
-            alertSuccessed()
+            dispatchSearch({ type: 'USERS_CHANGE_VALUE', payload: '' })
             setRefreshList(true)
+            alertSuccessed()
             break
           }
           case 0:

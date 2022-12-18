@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react'
+import React, { useState, useReducer, useContext } from 'react'
 import Input from '../../../../../atoms/Input'
 import icon from '../../../../../../assets/input/icon/icon.svg'
 import SvgCancel from '../../../../../../assets/painel/painelRegister/SvgCancel'
@@ -7,6 +7,7 @@ import { reducerFormEdit } from './reducerFormEdit'
 import { useApi } from '../../../../../../hooks/useApi'
 import Swal from 'sweetalert2'
 import { useErrors } from '../../../../../../hooks/useErrors'
+import { SearchListContext } from '../../../../../../contexts/painel/SearchList'
 
 interface Props {
   currentId: number
@@ -38,7 +39,7 @@ const FormEditUser = ({
       perfil: currentPerfil
     }
   )
-
+  const { dispatchSearch } = useContext(SearchListContext)
   const { updateUser } = useApi()
 
   window.scrollTo(0, 0)
@@ -104,6 +105,7 @@ const FormEditUser = ({
       .then((res) => {
         switch (res) {
           case 200: {
+            dispatchSearch({ type: 'USERS_CHANGE_VALUE', payload: '' })
             alertSuccessed()
             setRefreshList(true)
             break
