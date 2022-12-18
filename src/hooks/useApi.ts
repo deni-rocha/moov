@@ -13,15 +13,25 @@ export const useApi = () => {
   const { user, token, setToken } = useContext(AuthContext)
   const { email, senha } = user
 
+  // adiciona cabeçalho com token para todas as requisições
+  api.defaults.headers.common.Authorization = `Bearer ${token}`
+
   const verifyLogin = async (
     emailLogin: string,
     senhaLogin: string
   ): Promise<AxiosResponse<ILogin, any> | null> => {
     try {
-      const response = await api.post<ILogin>('/usuario/login', {
-        email: emailLogin,
-        senha: senhaLogin
-      })
+      // no login não é possível passar um Authorization
+      const response = await api.post<ILogin>(
+        '/usuario/login',
+        {
+          email: emailLogin,
+          senha: senhaLogin
+        },
+        {
+          headers: { Authorization: undefined }
+        }
+      )
 
       return response
     } catch (err) {
@@ -43,6 +53,7 @@ export const useApi = () => {
   }
 
   return {
+    apiInstance: api,
     signin: async (emailLogin: string, senhaLogin: string) => {
       const responseApi = await verifyLogin(emailLogin, senhaLogin)
 
@@ -63,15 +74,11 @@ export const useApi = () => {
     },
     getAllUsers: async () => {
       try {
-        const reponse = await api.get<IUserList>('/usuario/list', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
+        const reponse = await api.get<IUserList>('/usuario/list')
 
         return reponse.data
       } catch (error) {
-        console.log('deu ruim expirou o bagulho')
+        console.log('o token expirou')
         refreshToken()
         return null
       }
@@ -84,21 +91,13 @@ export const useApi = () => {
       sexo: string
     ) => {
       try {
-        const res = await api.post(
-          '/usuario/',
-          {
-            perfil,
-            email,
-            nome,
-            senha,
-            sexo
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          }
-        )
+        const res = await api.post('/usuario/', {
+          perfil,
+          email,
+          nome,
+          senha,
+          sexo
+        })
 
         return res.status
       } catch (error) {
@@ -110,11 +109,7 @@ export const useApi = () => {
     },
     deleteUser: async (id: number) => {
       try {
-        const responseApi = await api.delete(`/usuario/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
+        const responseApi = await api.delete(`/usuario/${id}`)
 
         return responseApi.status
       } catch (error) {
@@ -133,22 +128,14 @@ export const useApi = () => {
       sexo: string
     ) => {
       try {
-        const res = await api.put(
-          '/usuario/',
-          {
-            perfil,
-            email,
-            nome,
-            senha,
-            sexo,
-            id
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          }
-        )
+        const res = await api.put('/usuario/', {
+          perfil,
+          email,
+          nome,
+          senha,
+          sexo,
+          id
+        })
 
         return res.status
       } catch (error) {
