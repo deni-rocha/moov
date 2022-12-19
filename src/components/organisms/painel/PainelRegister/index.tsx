@@ -12,7 +12,11 @@ import FormTipoDespesa from './Forms/FormTipoDespesa'
 const PainelRegister = (): JSX.Element => {
   const { state, dispatch } = useContext(PainelGlobalContext)
   const { registerBtnActive } = state.register
-  const [formIsOpen, setFormIsOpen] = useState(false)
+  const [formIsOpen, setFormIsOpen] = useState({
+    usuarios: false,
+    despesa: false,
+    aprovacao: false
+  })
 
   const [refreshList, setRefreshList] = useState(false)
   return (
@@ -26,7 +30,7 @@ const PainelRegister = (): JSX.Element => {
                   <div
                     className={`max-w-[1105px] border-2 mb-3 items-center p-4 justify-between rounded-md border-zinc-300 flex`}
                   >
-                    {formIsOpen && (
+                    {formIsOpen.usuarios && (
                       <FormUser
                         setFormIsOpen={setFormIsOpen}
                         setRefreshList={setRefreshList}
@@ -41,7 +45,10 @@ const PainelRegister = (): JSX.Element => {
                           type: 'REGISTER_CHANGE_BTN',
                           payload: 'usuários'
                         })
-                        setFormIsOpen(true)
+                        setFormIsOpen((prev) => ({
+                          ...prev,
+                          usuarios: true
+                        }))
                       }}
                       className="bg-[#31d760] w-48 relative h-11 flex items-center justify-center rounded-md text-white p-4"
                     >
@@ -73,7 +80,9 @@ const PainelRegister = (): JSX.Element => {
                   <div
                     className={`max-w-[1105px] border-2 mb-3 items-center p-4 justify-between rounded-md border-zinc-300 flex`}
                   >
-                    {formIsOpen && <FormTipoDespesa />}
+                    {formIsOpen.despesa && (
+                      <FormTipoDespesa setFormIsOpen={setFormIsOpen} />
+                    )}
                     <p className="font-bold uppercase text-sm">
                       cadastrar novo tipo e despesa
                     </p>
@@ -81,9 +90,12 @@ const PainelRegister = (): JSX.Element => {
                       onClick={() => {
                         dispatch({
                           type: 'REGISTER_CHANGE_BTN',
-                          payload: 'usuários'
+                          payload: 'tipo de despesa'
                         })
-                        setFormIsOpen(true)
+                        setFormIsOpen((prev) => ({
+                          ...prev,
+                          despesa: true
+                        }))
                       }}
                       className="bg-[#31d760] w-48 relative h-11 flex items-center justify-center rounded-md text-white p-4"
                     >

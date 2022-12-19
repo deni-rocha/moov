@@ -58,7 +58,7 @@ const FormEditUser = ({
 
   function alertPreviewData(): void {
     void Swal.fire({
-      title: 'Deseja prosseguir?',
+      title: 'confira os dados',
       html: `
       <ul class="preview-data">
       <li class="preview-data-li">
@@ -84,12 +84,12 @@ const FormEditUser = ({
     </ul>
         `,
       color: '#4C4C4C',
-      icon: 'question',
+      icon: 'info',
       background: '#ffffff',
       customClass: { confirmButton: 'preview-data-confirmBtn' },
       position: 'top-end',
-      confirmButtonText: 'Sim. Atualizar usuário',
-      cancelButtonText: 'Não. Voltar para editar',
+      confirmButtonText: 'confirmar',
+      cancelButtonText: 'cancelar',
       confirmButtonColor: '#31d760',
       cancelButtonColor: '#EB5A46',
       showConfirmButton: true,

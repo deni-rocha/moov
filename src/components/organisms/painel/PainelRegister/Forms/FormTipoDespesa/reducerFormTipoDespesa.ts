@@ -1,18 +1,18 @@
 const initialState = {
   despesa: '',
-  valor: 0,
+  valor: '0',
   arquivo: ''
 }
 
 interface IState {
   despesa: string
-  valor: number
+  valor: string
   arquivo: string
 }
 
 type Action =
   | { type: 'despesa'; payload: string }
-  | { type: 'valor'; payload: number }
+  | { type: 'valor'; payload: string }
   | { type: 'arquivo'; payload: string }
 
 function reducerFormTipoDespesa(state: IState, action: Action): IState {

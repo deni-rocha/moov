@@ -11,7 +11,13 @@ import { SearchListContext } from '../../../../../../contexts/painel/SearchList'
 
 interface Props {
   setRefreshList: React.Dispatch<React.SetStateAction<boolean>>
-  setFormIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setFormIsOpen: React.Dispatch<
+    React.SetStateAction<{
+      usuarios: boolean
+      despesa: boolean
+      aprovacao: boolean
+    }>
+  >
 }
 const FormUser = ({ setFormIsOpen, setRefreshList }: Props): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false)
@@ -29,13 +35,16 @@ const FormUser = ({ setFormIsOpen, setRefreshList }: Props): JSX.Element => {
       confirmButtonColor: '#4C4C4C'
     }).then((result) => {
       if (result.isConfirmed) {
-        setFormIsOpen(false)
+        setFormIsOpen((prev) => ({
+          ...prev,
+          usuarios: false
+        }))
       }
     })
   }
   function alertPreviewData(): void {
     void Swal.fire({
-      title: 'Deseja prosseguir?',
+      title: 'confira os dados:',
       html: `
       <ul class="preview-data">
       <li class="preview-data-li">
@@ -61,12 +70,12 @@ const FormUser = ({ setFormIsOpen, setRefreshList }: Props): JSX.Element => {
     </ul>
         `,
       color: '#4C4C4C',
-      icon: 'question',
+      icon: 'info',
       background: '#ffffff',
       customClass: { confirmButton: 'preview-data-confirmBtn' },
       position: 'top-end',
-      confirmButtonText: 'Sim. Cadastrar usuário',
-      cancelButtonText: 'Não. Voltar para editar',
+      confirmButtonText: 'confirmar',
+      cancelButtonText: 'cancelar',
       confirmButtonColor: '#31d760',
       cancelButtonColor: '#EB5A46',
       showConfirmButton: true,
@@ -231,7 +240,10 @@ const FormUser = ({ setFormIsOpen, setRefreshList }: Props): JSX.Element => {
           <div className="w-full justify-end pt-5 flex xs:flex-col items-center xs:space-y-4 gap-2">
             <button
               onClick={() => {
-                setFormIsOpen(false)
+                setFormIsOpen((prev) => ({
+                  ...prev,
+                  usuarios: false
+                }))
               }}
               className="w-52 relative h-11 text-white font-bold bg-[#EB5A46] rounded-md"
             >
